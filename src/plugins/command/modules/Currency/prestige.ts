@@ -61,6 +61,7 @@ export default class extends Command {
 					tries.tries++;
 					return ask(`Are you really sure?`);
 				case 'n':
+				default:
 					return 'Ok weirdo';
 			}
 		} 
@@ -68,7 +69,7 @@ export default class extends Command {
 		const nice = await ask(`Do you wanna prestige to **Prestige ${romanize(next.prestige)}** right now?`);
 		if (typeof nice === 'string') return ctx.reply(nice).then(() => false);
 
-		const items: [string, number][] = [['card', 10], ['computer', 3], ['coin', 1]];
+		const items: [string, number][] = [['card', 100], ['bacon', 25], ['statue', 1]];
 		const got = items.map(i => ({ item: entry.props.items.get(i[0]).upgrade, amount: i[1]}));
 		const owo = await entry.prestige(next.prestige)
 			.setItems(items.map(([id, amount]) => ({ id, amount })))

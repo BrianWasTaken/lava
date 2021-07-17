@@ -196,6 +196,10 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 			set: () => {
 				this.data.props.vault.amount = amount;
 				return this;
+			},
+			space: () => {
+				this.data.props.space = amount;
+				return this
 			}
 		}
 	}
@@ -416,7 +420,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 	 * Set your bank space to some amount.
 	 */
 	setSpace(amount: number) {
-		return this.vault(amount).set();
+		return this.vault(amount).space();
 	}
 
 	/** Set your level to something you want. */

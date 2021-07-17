@@ -10,7 +10,9 @@ export declare interface UserPlus extends User {
 }
 
 export class UserPlus extends User implements Structure {
-	get mutualGuilds() {
+	
+	
+	public get mutualGuilds() {
 		return this.client.guilds.cache.filter(g => g.members.cache.has(this.id));
 	}
 }

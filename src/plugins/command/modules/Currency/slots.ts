@@ -12,15 +12,15 @@ export default class extends GambleCommand {
 
 	get slots() {
 		return (multi: number) => ({
-			coin: [25, 50],
-			gem: [25, 50],
-			medal: [25, 50],
-			ring: [25, 50],
-			trophy: [50, 100],
-			crown: [50, 100],
-			trident: [50, 100],
-			fist: [50, 100],
-			fire: [multi, multi * 2],
+			coin: [50, 100],
+			gem: [50, 100],
+			medal: [50, 100],
+			ring: [50, 100],
+			trophy: [75, 150],
+			crown: [75, 150],
+			trident: [75, 150],
+			fist: [75, 150],
+			fire: [multi, multi * 2]
 		});
 	}
 
@@ -29,6 +29,8 @@ export default class extends GambleCommand {
 		const first = randomInArray(emojis);
 		const odds = randomNumber(1, 100);
 
+		return randomsInArray(emojis);
+		
 		if (odds > 95) {
 			return Array(3).fill(first);
 		}

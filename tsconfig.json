@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "commonJS",
-		"target": "ESNext",
+		"target": "esnext",
 		"outDir": "dist",
 		"strict": true,
 		"incremental": true,
