@@ -29,7 +29,7 @@ export default class extends GambleCommand {
 		const first = randomInArray(emojis);
 		const odds = randomNumber(1, 100);
 
-		return randomsInArray(emojis);
+		return Array.from({ length: 3 }, () => randomInArray(emojis));
 		
 		if (odds > 95) {
 			return Array(3).fill(first);
