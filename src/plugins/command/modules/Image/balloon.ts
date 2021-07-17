@@ -7,7 +7,6 @@ export default class extends Command {
 			aliases: ['balloon'],
 			channel: 'guild',
 			clientPermissions: ['ATTACH_FILES'],
-			cooldown: 15 * 1000,
 			name: 'Balloon',
 			args: [
 				{ 

@@ -6,7 +6,7 @@ export default class Collectible extends CollectibleItem {
 			assets: {
 				name: 'Neptune\'s Trident',
 				emoji: ':trident:',
-				price: 80e6,
+				price: 80e7,
 				intro: 'Ready for ultimate grinding?',
 				info: 'Grants you a great amount of XP boost NO ONE could ever get!',
 			},
@@ -14,14 +14,14 @@ export default class Collectible extends CollectibleItem {
 				push: true,
 			},
 			upgrades: [
-				{ price: 100e6 }, 
-				{ price: 120e6 }, 
-				{ price: 150e6 },
-				{ price: 200e6 },
-				{ price: 250e6 }
+				{ price: 100e7 }, 
+				{ price: 120e7 }, 
+				{ price: 150e7 },
+				{ price: 200e7 },
+				{ price: 250e7 }
 			],
 			entities: {
-				xpBoost: [10, 20, 30, 40, 50, 100]
+				xpBoost: [100, 200, 300, 400, 500, 1000]
 			}
 		});
 	}
