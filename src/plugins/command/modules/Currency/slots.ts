@@ -12,15 +12,15 @@ export default class extends GambleCommand {
 
 	get slots() {
 		return (multi: number) => ({
-			coin: [50, 100],
-			gem: [50, 100],
-			medal: [50, 100],
-			ring: [50, 100],
-			trophy: [75, 150],
-			crown: [75, 150],
-			trident: [75, 150],
-			fist: [75, 150],
-			fire: [multi, multi * 2]
+			coin: [50, 250],
+			gem: [50, 250],
+			medal: [50, 250],
+			ring: [50, 250],
+			trophy: [100, 500],
+			crown: [100, 500],
+			trident: [100, 500],
+			fist: [100, 500],
+			fire: [multi * 5, multi * 10]
 		});
 	}
 
