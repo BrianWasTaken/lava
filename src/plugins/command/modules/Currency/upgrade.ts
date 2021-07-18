@@ -36,14 +36,14 @@ export default class extends Command {
 		await ctx.channel.send({ embed: { color: 'ORANGE', description: `Are you sure you wanna upgrade your **${item.emoji} ${item.name}** to **Level ${inv.level + 1}** for **${upgrade.toLocaleString()} ${e}** right now?` }});
 		const choice = await ctx.awaitMessage();
 		if (!choice || !choice.content) {
-			return ctx.reply({ embed: { color: 'RED', description: 'Imagine not answering to me lmfaooo' }}).then(() => false);
+			return ctx.reply({ embeds: [{ color: 'RED', description: 'Imagine not answering to me lmfaooo' }] }).then(() => false);
 		}
 		if (choice.content.toLowerCase().slice(0, 1) === 'n') {
-			return ctx.reply({ embed: { color: 'INDIGO', description: 'ok then.' }}).then(() => false);
+			return ctx.reply({ embeds: [{ color: 'INDIGO', description: 'ok then.' }] }).then(() => false);
 		}
 
 		const newInv = await entry.removePocket(inv.upgrade.upgrade).upgradeItem(item.id).save().then(e => e.props.items.get(item.id));
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			color: 'GREEN', author: { 
 				name: `${inv.upgrade.name} finally reached ${
 					newInv.isMaxLevel() ? 'MAX LEVEL' : `Level ${newInv.level}`
@@ -52,6 +52,6 @@ export default class extends Command {
 					dynamic: true 
 				})
 			},
-		}}).then(() => true);
+		}]}).then(() => true);
 	}
 }

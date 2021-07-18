@@ -40,7 +40,7 @@ export default class extends Command {
 		const recorded = entry.donos.reduce((p, c) => p + c.records.length, 0);
 		const donated = entry.donos.reduce((p, c) => p + c.amount, 0);
 
-		return ctx.channel.send({ embed: {
+		return ctx.channel.send({ embeds: [{
 			author: {
 				name: `${member.user.username}'s donations`,
 				iconURL: member.user.avatarURL({ dynamic: true })
@@ -59,6 +59,6 @@ export default class extends Command {
 			footer: {
 				text: `Page ${page} of ${pages.length}`
 			}
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 }

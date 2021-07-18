@@ -108,20 +108,20 @@ export default class extends Command {
 				? `You lost **${pocket.toLocaleString()} coins** ${item ? `and **${lost.toLocaleString()} ${item.upgrade.emoji} ${item.upgrade.name}** RIP LOL!` : 'RIP!'}`
 				: `Your **${saver.item.upgrade.emoji} ${saver.item.upgrade.name}** saved you from death!`;
 			
-			return ctx.reply({ embed: {
+			return ctx.reply({ embeds: [{
 				author: { name: getHeader(), iconURL: ctx.author.avatarURL({ dynamic: true }) },
 				description: `${searched.death.msg}\n${sampleText}`,
 				footer: { text: 'Lol u died' },
 				color: 'RED',
-			}}).then(() => true);
+			}]}).then(() => true);
 		}
 
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			description: `${searched.successMsg(nice.coinsWon)}${nice.itemGot ? `\nand **1 ${nice.itemGot.module.emoji} ${nice.itemGot.module.name}** wow you're very lucky!` : ''}`,
 			footer: { text: `Multiplier Bonus: +${multi}% (${nice.coinsRaw.toLocaleString()} coins)` },
 			author: { name: getHeader(), iconURL: ctx.author.avatarURL({ dynamic: true }) },
 			color: 'GREEN'
-		}}).then(() => true);
+		}]}).then(() => true);
 	}
 }
 

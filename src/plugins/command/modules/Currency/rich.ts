@@ -21,7 +21,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context) {		
-		return ctx.channel.send({ embed: {
+		return ctx.channel.send({ embeds: [{
 			author: { name: 'richest users in this server' },
 			footer: { text: 'These are WALLETS, not net worths' },
 			color: 'RED', description: await this.top(ctx.guild.members.cache)
@@ -30,6 +30,6 @@ export default class extends Command {
 					const emoji = Array(3).fill('coin')[i] ?? 'small_red_triangle';
 					return `**:${emoji}: ${doc.props.pocket.toLocaleString()}** - ${user}`;
 				}).join('\n')),
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 }

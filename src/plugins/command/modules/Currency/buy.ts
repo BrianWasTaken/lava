@@ -66,7 +66,7 @@ export default class extends Command {
 		const { amount, item } = args;
 		const { price } = await item.buy(entry, amount);
 
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			author: {
 				name: 'Successful Purchase',
 				iconURL: ctx.author.avatarURL({
@@ -78,6 +78,6 @@ export default class extends Command {
 			footer: {
 				text: 'Thanks for your purchase!'
 			}
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 }

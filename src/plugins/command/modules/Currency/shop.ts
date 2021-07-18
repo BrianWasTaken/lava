@@ -50,7 +50,7 @@ export default class extends Command {
 				return ctx.reply(`Page \`${args.query}\` doesn't exist.`).then(() => false);
 			}
 
-			return ctx.channel.send({ embed: {
+			return ctx.channel.send({ embeds: [{
 				title: 'Lava Shop', color: 'ORANGE', footer: {
 					text: `Lava Shop — Page ${args.query} of ${shop.length}`
 				}, fields: [
@@ -63,7 +63,7 @@ export default class extends Command {
 						value: shop[args.query - 1].join('\n\n')
 					}
 				]
-			}}).then(() => false);
+			}]}).then(() => false);
 		}
 
 		const { query } = args;
@@ -77,7 +77,7 @@ export default class extends Command {
 		const { owned, level } = entry.props.items.get(query.id);
 
 		return ctx.channel.send({ 
-			embed: query.getEmbed(this.client.util.embed({
+			embeds: [query.getEmbed(this.client.util.embed({
 				title: `${emoji} ${name}${owned > 0 ? ` (${owned.toLocaleString()} owned)` : ''} — Level ${level === query.upgrades.length - 1 ? `${level} (Max)` : level}`,
 				color: 'RANDOM', 
 				description: [
@@ -86,7 +86,7 @@ export default class extends Command {
 						`**SELL** — ${query.sellable ?	 `${icon} ${Math.round(price * sellRate).toLocaleString()}` : '**Not Sellable**'}`
 					].join('\n')
 				].join('\n')
-			}))
+			}))]
 		}).then(() => false);
 	}
 }

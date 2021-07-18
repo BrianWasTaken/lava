@@ -18,13 +18,13 @@ export default class extends Command {
 		const won = Math.round(raw + (raw * (multi / 100))) * 100;
 		await entry.addPocket(won).save();
 
-		return ctx.channel.send({ embed: {
+		return ctx.channel.send({ embeds: [{
 			title: `Here are your hourly coins, ${ctx.author.username}`,
 			description: `**${won.toLocaleString()} coins** were placed in your pocket.`,
 			color: 'BLUE',
 			footer: {
 				text: `Multiplier Bonus: +${multi}% (+${(won - raw).toLocaleString()} bonus)`,
 			},
-		}}).then(() => true);
+		}]}).then(() => true);
 	}
 }

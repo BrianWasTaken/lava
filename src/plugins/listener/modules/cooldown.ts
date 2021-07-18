@@ -19,7 +19,7 @@ export default class extends Listener {
 		const defaultCD = parseTime(cmd.cooldown / 1000, true) ?? `${cmd.cooldown / 1e3}s`;
 		const cooldown = parseTime(remaining / 1000, false) ?? `${(remaining / 1e3).toFixed(1)}s`;
 
-		await ctx.reply({ embed: {
+		await ctx.reply({ embeds: [{
 			title: randomInArray(this.titleCD),
 			color: 'INDIGO',
 			description: [
@@ -27,6 +27,6 @@ export default class extends Listener {
 				`Wait **${cooldown}** to run this command again.`,
 				`You have to wait \`${defaultCD}\` by default!`
 			].join('\n')
-		}});
+		}]});
 	}
 }

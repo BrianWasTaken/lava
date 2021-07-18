@@ -181,7 +181,7 @@ export default class extends GambleCommand {
 					? `${first ? 'What do you want to do?\n' : ''
 					}Type \`h\` to **hit**, type \`s\` to **stand**, or type \`e\` to **end** the game.`
 					: null,
-				embed: {
+				embeds: [{
 					author: {
 						name: `${ctx.author.username}'s${state ? ` ${state} ` : ' '
 							}blackjack game`,
@@ -228,7 +228,7 @@ export default class extends GambleCommand {
 							? 'K, Q, J = 10  |  A = 1 or 11'
 							: `Percent Won: ${Math.round((winnings / bet) * 100)}%`,
 					},
-				},
+				}],
 			});
 			first = false;
 			if (final) return;

@@ -216,10 +216,10 @@ export abstract class Item extends AbstractModule {
 	 * Main method to use items.
 	*/
 	public use(context: Context, entry: CurrencyEntry, times = 1): PromiseUnion<any> {
-		return context.reply({ embed: {
+		return context.reply({ embeds: [{
 			description: 'Used your item, now what?',
 			title: `${this.emoji} ${this.name}`, color: 0xfafafa,
-		}});
+		}]});
 	}
 
 	/**

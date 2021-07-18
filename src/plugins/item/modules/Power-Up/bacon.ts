@@ -35,10 +35,10 @@ export default class PowerUp extends PowerUpItem {
 		const multi = randomNumber(1, 10);
 
 		await entry.addPocket(won).setItemMulti(this.id, multi).activateItem(this.id, expire).save();
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will begone in ${parseTime(duration / 1000)}`,
 			color: 'FUCHSIA', author: { name: `You activated your ${this.name}!` },
 			footer: { text: `Coin Bonus: +${won.toLocaleString()} coins` }
-		}});
+		}]});
 	}
 }

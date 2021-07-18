@@ -49,6 +49,6 @@ export abstract class CollectibleItem extends Item {
 	 */
 	public use(ctx: Context, entry: CurrencyEntry) {
 		const thisItem = entry.props.items.get(this.id);
-		return ctx.reply(`**${this.emoji} WHAT A FLEX!**\nImagine having **${thisItem.owned.toLocaleString()}**, couldn't be me`);
+		return ctx.reply(`**${this.emoji} WHAT A FLEX!**\nImagine having **${thisItem.owned.toLocaleString()} ${thisItem.upgrade.emoji} ${thisItem.upgrade.name}** couldn't be me`);
 	}
 }

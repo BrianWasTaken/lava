@@ -57,7 +57,7 @@ export default class extends Command {
 		const { amount, item } = args;
 		const { price, sellRate } = await item.sell(entry, amount);
 
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			author: {
 				name: 'Successfully Sold',
 				iconURL: ctx.author.avatarURL({
@@ -69,6 +69,6 @@ export default class extends Command {
 			footer: {
 				text: 'Thanks for stopping by!'
 			}
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 }

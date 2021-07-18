@@ -82,7 +82,7 @@ export default class extends Listener {
 				const questions: { [q: string]: string } = donorQuestions[type];
 				await dm.send(`**Welcome to our interactive donation menu!**\nI'll be asking you questions to assist you with your giveaway. You have 60 seconds for each question. Type \`cancel\` anytime to cancel. Type anything to continue.`)
 
-				const firstRes = (await dm.awaitMessages(m => m.author.id === ctx.author.id, { max: 1, time: 60000 })).first();
+				const firstRes = (await dm.awaitMessages({ filter: m => m.author.id === ctx.author.id, max: 1, time: 60000 })).first();
 				if (!firstRes || firstRes.content === 'cancel') return dm.send('Your dono has been cancelled.');
 
 				const questionsArr = Object.keys(questions);
@@ -90,7 +90,7 @@ export default class extends Listener {
 
 				const collect = async (question: string): Promise<boolean | Function> => {
 					await dm.send(question);
-					const donRes = (await dm.awaitMessages(m => m.author.id === ctx.author.id, { max: 1, time: 60000 })).first();
+					const donRes = (await dm.awaitMessages({ filter: m => m.author.id === ctx.author.id, max: 1, time: 60000 })).first();
 
 					if (!donRes || donRes.content === 'cancel') return false;
 					res.set(questionsArr[currentIndex], donRes.content);
@@ -109,7 +109,7 @@ export default class extends Listener {
 				await donoChan.send({
 					content: `${mngrRole.toString()} ${ctx.author.toString()}`,
 					allowedMentions: { roles: [mngrRole.id], users: [ctx.author.id] },
-					embed: {
+					embeds: [{
 						description: res.map((v, k) => `**${k}:** ${v}`).join('\n'),
 						title: `${type.charAt(0).toUpperCase() + type.slice(1)} Donation`,
 						color: 'RANDOM',
@@ -117,16 +117,16 @@ export default class extends Listener {
 							text: `${ctx.author.tag} (${ctx.author.id})`,
 							icon_url: ctx.author.avatarURL({ dynamic: true }),
 						},
-					},
+					}],
 				});
 
 				await ctx.member.roles.add(this.roles.donQ);
 				return dm.send(`You now have access to ${donoChan.toString()} to let our staff handle your donation. Thanks!`);
 			} catch(error) {
-				return dm.send({ embed: { 
+				return dm.send({ embeds: [{ 
 					color: 'RED', 
 					description: 'Something wrong occured :c'
-				}});
+				}]});
 			}
 		} catch {
 			const msg = await ctx.channel.send(`${ctx.author} open your DMs.`);

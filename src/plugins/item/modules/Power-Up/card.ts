@@ -77,7 +77,7 @@ export default class Tool extends PowerUpItem {
 			return ctx.reply(`It needs to be a real number and no more than what you own alright?`);
 		}
 
-		const gained = Array(Number(choice.content)).fill(null).map(() => randomNumber(1000, this.thresholds[level])).reduce((p, c) => p + c, 0);
+		const gained = Array.from({ length: Number(choice.content) }, () => randomNumber(1000, this.thresholds[level])).reduce((p, c) => p + c, 0);
 		const space = await entry.subItem(this.id, Number(choice.content)).expandVault(gained).save(false).then(e => e.props.space);
 		return ctx.reply(`**You swiped __${
 			Number(choice.content).toLocaleString()

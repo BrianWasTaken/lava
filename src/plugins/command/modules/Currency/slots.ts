@@ -57,7 +57,7 @@ export default class extends GambleCommand {
 		if ([1, 2].every(l => l !== length)) {
 			const { props } = await entry.removePocket(bet).updateStats(this.id, bet, false).save();
 			return ctx.channel.send({
-				embed: {
+				embeds: [{
 					color: 'RED',
 					author: {
 						name: `${ctx.author.username}'s slot machine`,
@@ -70,13 +70,13 @@ export default class extends GambleCommand {
 					footer: {
 						text: 'sucks to suck'
 					}
-				}
+				}]
 			}).then(() => true);
 		}
 
 		const { props } = await entry.addPocket(winnings).updateStats(this.id, winnings, true).save();
 		return ctx.channel.send({
-			embed: {
+			embeds: [{
 				color: length === 1 ? 'GOLD' : 'GREEN',
 				author: {
 					name: `${ctx.author.username}'s slot machine`,
@@ -90,7 +90,7 @@ export default class extends GambleCommand {
 				footer: {
 					text: length === 1 ? 'poggers' : 'winner winner'
 				}
-			}
+			}]
 		}).then(() => true);
 	}
 

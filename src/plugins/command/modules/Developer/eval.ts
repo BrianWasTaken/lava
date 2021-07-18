@@ -39,7 +39,7 @@ export default class extends Command {
 		token = new RegExp(ctx.client.token, 'gi');
 		evaled = evaled.replace(token, '*');
 
-		return ctx.channel.send({ embed: {
+		return ctx.channel.send({ embeds: [{
 			color: 'RED',
 			description: this.codeblock(evaled),
 			footer: { text: `Latency: ${time}ms` },
@@ -47,6 +47,6 @@ export default class extends Command {
 				name: 'Return Type',
 				value: this.codeblock(type),
 			}],
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 }

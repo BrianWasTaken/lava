@@ -39,9 +39,9 @@ export default class extends Command {
 			.filter(cd => cd.isActive())
 			.map(cd => `${cd.id}: this.calc(cd.expiresAt).join(':')`);
 
-		return ctx.channel.send({ embed: {
+		return ctx.channel.send({ embeds: [{
 			author: { name: `${member.user.username}'s cooldowns` },
 			color: 'ORANGE', description: cooldowns.length > 0 ? cooldowns.join('\n') : 'No active cooldowns.'
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 }

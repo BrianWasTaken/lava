@@ -51,7 +51,7 @@ export default class extends Command {
 		}
 
 		return ctx.channel.send({
-			embed: {
+			embeds: [{
 				color: 'BLURPLE',
 				author: {
 					name: `${member.user.username}'s inventory`,
@@ -66,7 +66,7 @@ export default class extends Command {
 				footer: {
 					text: `Owned Items — Page ${page} of ${inventory.length}`
 				}
-			}
+			}]
 		}).then(() => false);
 	}
 
