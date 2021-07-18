@@ -49,7 +49,7 @@ export default class extends Command {
 		const entry = await ctx.currency.fetch(ctx.author.id);
 		const entry2 = await ctx.currency.fetch(member.user.id);
 		const inv = entry.props.items.get(item.id);
-		const inv2 = entry.props.items.get(item.id);
+		const inv2 = entry2.props.items.get(item.id);
 
 		if (amount > inv.owned) {
 			return ctx.reply(`You only have ${inv.owned.toLocaleString()} of this don't try and lie to me.`).then(() => false);
