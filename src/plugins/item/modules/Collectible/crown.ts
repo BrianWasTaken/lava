@@ -21,7 +21,7 @@ export default class Collectible extends CollectibleItem {
 				{ price: 10000e6 }
 			],
 			entities: {
-				discount: [5, 10, 20, 40, 60, 100]
+				discount: [5, 10, 20, 40, 60, 99]
 			}
 		});
 	}
