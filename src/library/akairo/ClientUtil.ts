@@ -121,6 +121,11 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 	randomColor = (): number => Math.random() * 0xffffff;
 
 	/**
+	 * Shuffle the array.
+	 */
+	shuffle = <T>(array: T[]): T[] => array.sort(() => Math.random() - 0.5);
+
+	/**
 	 * Delay something for x time.
 	*/
 	sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
