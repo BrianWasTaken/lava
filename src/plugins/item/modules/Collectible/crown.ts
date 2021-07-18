@@ -14,14 +14,14 @@ export default class Collectible extends CollectibleItem {
 				push: true,
 			},
 			upgrades: [
-				{ price: 70e6 }, 
-				{ price: 85e6 }, 
-				{ price: 10e7 },
-				{ price: 15e7 },
-				{ price: 20e7 }
+				{ price: 100e6 }, 
+				{ price: 200e6 }, 
+				{ price: 500e6 },
+				{ price: 5000e6 },
+				{ price: 10000e6 }
 			],
 			entities: {
-				discount: [2, 4, 8, 10, 15, 20]
+				discount: [5, 10, 20, 40, 60, 100]
 			}
 		});
 	}

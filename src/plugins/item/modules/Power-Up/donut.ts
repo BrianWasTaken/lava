@@ -5,7 +5,7 @@ export default class PowerUp extends PowerUpItem {
 	constructor() {
 		super('donut', {
 			assets: {
-				name: 'Bob\'s Donut',
+				name: 'KC\'s Donut',
 				emoji: ':doughnut:',
 				price: 20000,
 				intro: 'Coin madness!',

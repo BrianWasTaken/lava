@@ -52,7 +52,7 @@ const Currency = {
  * Spawner stuff.
  */
 const Spawner = {
-	UNPAIDS_CAP: 100000,
+	UNPAIDS_CAP: 10000000,
 	COOLDOWN: 60000,
 };
 

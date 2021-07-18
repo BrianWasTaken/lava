@@ -8,7 +8,7 @@ export default new Plugin(
 			classToHandle: Item,
 			debug: true,
 			directory: join(__dirname, 'modules'),
-			saleInterval: 1000 * 60 * 15,
+			saleInterval: 1000 * 60 * 60,
 		}
 	)
 );
