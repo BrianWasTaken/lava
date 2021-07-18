@@ -107,7 +107,7 @@ export default class extends Listener {
 					allowedMentions: { roles: [mngrRole.id], users: [ctx.author.id] },
 					embed: {
 						description: res.map((v, k) => `**${k}:** ${v}`).join('\n'),
-						title: `${type.charAt(0).toUpperCase() + type.slice(1)} Support Request`,
+						title: `${type.charAt(0).toUpperCase() + type.slice(1)}`,
 						color: 'RANDOM',
 						footer: {
 							text: `${ctx.author.tag} (${ctx.author.id})`,
