@@ -4,10 +4,8 @@
 
 <div align="center">
   
-[![Support](https://img.shields.io/discord/691416705917779999?color=FB8B23&label=Support&style=for-the-badge)](https://discord.gg/memer)
-[![Stars](https://img.shields.io/github/stars/BrianWasTaken/lava?color=FB8B23&logo=github&style=for-the-badge)](.)
-
-[![Typescript](https://forthebadge.com/images/badges/made-with-typescript.svg)](https://typescriptlang.org)
+[![Support](https://img.shields.io/discord/691416705917779999?color=007ACC&label=Support&style=for-the-badge)](https://discord.gg/memer)
+[![Stars](https://img.shields.io/github/stars/BrianWasTaken/lava?color=007ACC&logo=github&style=for-the-badge)](.)
 
 </div>
 

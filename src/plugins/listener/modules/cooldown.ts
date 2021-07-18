@@ -16,8 +16,8 @@ export default class extends Listener {
 
 	async exec(ctx: Context, cmd: Command, remaining: number) {
 		const { parseTime, randomInArray } = ctx.client.util;
-		const defaultCD = parseTime((cmd.cooldown < 1 ? 1 : cmd.cooldown) / 1000, false, true);
-		const cooldown = parseTime((remaining < 1 ? 1 : remaining) / 1000, true);
+		const defaultCD = parseTime(cmd.cooldown / 1000, true) ?? cmd.cooldown / 1e3;
+		const cooldown = parseTime(remaining / 1000, false) ?? remaining.toFixed(1);
 
 		await ctx.reply({ embed: {
 			title: randomInArray(this.titleCD),

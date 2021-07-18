@@ -19,7 +19,7 @@ export default class extends GambleCommand {
 		const state = this.checkArgs(bet, entry);
 		if (typeof state === 'string') return ctx.reply(state).then(() => false);
 
-		const { userD, botD } = this.roll(true);
+		const { userD, botD } = this.roll(false);
 		if (botD > userD || botD === userD) {
 			const lost = botD === userD ? 0 : bet;
 			if (botD > userD) entry.updateStats(this.id, lost, false);
