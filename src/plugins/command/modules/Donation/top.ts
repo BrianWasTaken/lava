@@ -1,4 +1,4 @@
-import { Command, Context, Donation, CribEntry } from 'lava/index';
+import { Command, Context, Donation, CribEntry, Colors } from 'lava/index';
 import { Snowflake } from 'discord.js';
 
 export default class extends Command {
@@ -47,7 +47,7 @@ export default class extends Command {
 				name: `${event.name} Donations`,
 				iconURL: ctx.guild.iconURL({ dynamic: true })
 			},
-			color: 'BLUE',
+			color: Colors.BLUE,
 			description: pages[page - 1].join('\n'),
 		}]}).then(() => false);
 	}

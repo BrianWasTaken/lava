@@ -1,4 +1,4 @@
-import { Command, Context, Item, ItemMessages, Currency, CurrencyEntry } from 'lava/index';
+import { Command, Context, Item, ItemMessages, Currency, CurrencyEntry, Colors } from 'lava/index';
 
 interface SellArgs { 
 	amount: number;
@@ -64,7 +64,7 @@ export default class extends Command {
 					dynamic: true
 				})
 			},
-			color: 'GREEN',
+			color: Colors.GREEN,
 			description: ItemMessages.SELL_MSG(item, price * sellRate * amount, amount),
 			footer: {
 				text: 'Thanks for stopping by!'

@@ -18,7 +18,7 @@ export default class extends Command {
 	constructor() {
 		super('prestige', {
 			aliases: ['prestige'],
-			cooldown: 1000 * 60 * 60,
+			cooldown: 1000 * 60,
 			description: 'Upgrade your progress!',
 			name: 'Prestige',
 		});
@@ -44,7 +44,7 @@ export default class extends Command {
 		if (!Object.values(current).every(c => c >= 100)) {
 			return ctx.reply({ embeds: [{
 				author: { name: `Prestige ${next.prestige} Requirements for ${ctx.author.username}` },
-				color: 'RANDOM', description: [
+				color: ctx.client.util.randomNumber(), description: [
 					`**Pocket Amount**: \`${pocket.toLocaleString()}/${next.pocket.toLocaleString()}\` \`(${current.pocket}%)\``,
 					`**Levels Required**: \`${Math.trunc(xp / XP_COST).toLocaleString()}/${next.level.toLocaleString()}\` \`(${current.level}%)\``,
 				].join('\n'), footer: { text: 'Imagine thinking you can prestige already' }
@@ -66,10 +66,10 @@ export default class extends Command {
 			}
 		} 
 
-		const nice = await ask(`Do you wanna prestige to **Prestige ${romanize(next.prestige)}** right now?`);
+		const nice = await ask(`Do you wanna prestige to **${emojis[next.prestige - 1] ?? emojis[emojis.length - 1]} Prestige ${romanize(next.prestige)}** right now?`);
 		if (typeof nice === 'string') return ctx.reply(nice).then(() => false);
 
-		const items: [string, number][] = [['card', 100], ['bacon', 25], ['statue', 1]];
+		const items: [string, number][] = [['card', next.prestige * 100], ['bacon', 50], ['statue', 1]];
 		const got = items.map(i => ({ item: entry.props.items.get(i[0]).upgrade, amount: i[1]}));
 		const owo = await entry.prestige(next.prestige)
 			.setItems(items.map(([id, amount]) => ({ id, amount })))

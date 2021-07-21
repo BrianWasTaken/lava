@@ -1,4 +1,4 @@
-import { Command, Context, GuildMemberPlus } from 'lava/index';
+import { Command, Context, GuildMemberPlus, } from 'lava/index';
 import { MessageOptions } from 'discord.js';
 
 export default class extends Command {

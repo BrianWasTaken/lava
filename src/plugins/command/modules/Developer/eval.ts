@@ -1,4 +1,4 @@
-import { Command, Context } from 'lava/index';
+import { Command, Context, Colors } from 'lava/index';
 import { inspect } from 'util';
 
 export default class extends Command {
@@ -40,7 +40,7 @@ export default class extends Command {
 		evaled = evaled.replace(token, '*');
 
 		return ctx.channel.send({ embeds: [{
-			color: 'RED',
+			color: Colors.RED,
 			description: this.codeblock(evaled),
 			footer: { text: `Latency: ${time}ms` },
 			fields: [{

@@ -3,12 +3,14 @@
  * @author BrianWasTaken
 */
 
+import { Constants } from 'discord.js';
 import { Item } from 'lava/index';
 
 /**
  * Colors for discord.js
 */
 const Colors: { [color: string]: number } = {
+	...Constants.COLORS,
 	// RED: 0xf44336,
 	RED: 0xFF5050,
 	ORANGE: 0xff9800,
@@ -34,17 +36,17 @@ const Colors: { [color: string]: number } = {
 const Currency = {
 	PRESTIGE_LEVEL_REQ_CAP: 10,
 	PRESTIGE_MULTI_VALUE: 5, 
-	PRESTIGE_POCKET_REQ: 10000000,
+	PRESTIGE_POCKET_REQ: 750000,
 	PRESTIGE_LEVEL_REQ: 10,
 	MAX_SAFE_POCKET: 1000e6,
 	MAX_INVENTORY: 100000,
-	MAX_PRESTIGE: 100,
+	MAX_PRESTIGE: 1000,
 	MAX_POCKET: 1000000000,
 	MAX_LEVEL: 1000,
 	MAX_MULTI: 250,
-	MAX_WIN: 5000001,
+	MAX_WIN: 1111111,
 	MAX_BET: 500000,
-	MIN_BET: 10,
+	MIN_BET: 100,
 	XP_COST: 100,
 };
 

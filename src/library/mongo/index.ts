@@ -4,6 +4,7 @@
 */
 
 export * from './UserEntry';
+export * from './BaseEntry';
 export * from './Connector';
 export * from './Endpoint';
 

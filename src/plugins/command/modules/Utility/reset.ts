@@ -1,4 +1,4 @@
-import { Command, Context } from 'lava/index';
+import { Command, Context, Colors } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -29,7 +29,7 @@ export default class extends Command {
 			return false;
 		}
 		if (!['yes', 'y', 'ye'].includes(prompt1.content)) {
-			await prompt1.reply({ embed: { color: 'INDIGO', description: 'Okay then.' } });
+			await prompt1.reply({ embeds: [{ color: Colors.INDIGO, description: 'Okay then.' }] });
 			return false;
 		}
 
@@ -39,6 +39,6 @@ export default class extends Command {
 			await data.delete();
 		}
 
-		return ctx.reply({ embed: { color: 'GREEN', description: 'Ok ur data has been deleted, enjoy the new life kid' } }).then(() => false);
+		return ctx.reply({ embeds: [{ color: Colors.GREEN, description: 'Ok ur data has been deleted, enjoy the new life kid' }] }).then(() => false);
 	}
 }

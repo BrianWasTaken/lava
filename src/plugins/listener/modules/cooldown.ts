@@ -1,4 +1,4 @@
-import { Listener, Context, Command } from 'lava/index';
+import { Listener, Context, Command, Colors } from 'lava/index';
 
 export default class extends Listener {
 	constructor() {
@@ -21,7 +21,7 @@ export default class extends Listener {
 
 		await ctx.reply({ embeds: [{
 			title: randomInArray(this.titleCD),
-			color: 'INDIGO',
+			color: Colors.INDIGO,
 			description: [
 				`You're under cooldown for the \`${cmd.aliases[0]}\` command.`,
 				`Wait **${cooldown}** to run this command again.`,

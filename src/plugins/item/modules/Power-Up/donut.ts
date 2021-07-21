@@ -1,4 +1,4 @@
-import { Context, CurrencyEntry, ItemEffects } from 'lava/index';
+import { Context, CurrencyEntry, ItemEffects, Colors } from 'lava/index';
 import { PowerUpItem } from '../..';
 
 export default class PowerUp extends PowerUpItem {
@@ -36,7 +36,7 @@ export default class PowerUp extends PowerUpItem {
 		await entry.addPocket(won).activateItem(this.id, expire).save();
 		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will begone in ${parseTime(duration / 1000)}`,
-			color: 'FUCHSIA', author: { name: `You activated your ${this.name}!` },
+			color: Colors.FUCHSIA, author: { name: `You activated your ${this.name}!` },
 			footer: { text: `Coin Bonus: +${won.toLocaleString()} coins` }
 		}]});
 	}

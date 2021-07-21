@@ -1,4 +1,4 @@
-import { Command, Context, GuildMemberPlus, Cooldown } from 'lava/index';
+import { Command, Context, GuildMemberPlus, Cooldown, Colors } from 'lava/index';
 import { MessageOptions } from 'discord.js';
 
 export default class extends Command {
@@ -37,11 +37,11 @@ export default class extends Command {
 		const entry = await ctx.lava.fetch(ctx.author.id);
 		const cooldowns = entry.cooldowns
 			.filter(cd => cd.isActive())
-			.map(cd => `${cd.id}: this.calc(cd.expiresAt).join(':')`);
+			.map(cd => `${cd.id}: this.calc(cd.expiresAt - Date.now()).join(':')`);
 
 		return ctx.channel.send({ embeds: [{
 			author: { name: `${member.user.username}'s cooldowns` },
-			color: 'ORANGE', description: cooldowns.length > 0 ? cooldowns.join('\n') : 'No active cooldowns.'
+			color: Colors.ORANGE, description: cooldowns.length > 0 ? cooldowns.join('\n') : 'No active cooldowns.'
 		}]}).then(() => false);
 	}
 }

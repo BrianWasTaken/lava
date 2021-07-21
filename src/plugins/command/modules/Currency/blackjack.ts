@@ -1,5 +1,5 @@
+import { Context, Colors } from 'lava/index';
 import { GambleCommand } from '../..';
-import { Context } from 'lava/index';
 
 export default class extends GambleCommand {
 	constructor() {
@@ -189,10 +189,10 @@ export default class extends GambleCommand {
 					},
 					color: final
 						? status.result === null
-							? 'ORANGE'
+							? Colors.ORANGE
 							: winnings
-								? 'GREEN'
-								: 'RED'
+								? Colors.GREEN
+								: Colors.RED
 						: 2533018,
 					description: desc,
 					fields: [

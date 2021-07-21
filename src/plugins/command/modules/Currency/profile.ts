@@ -1,4 +1,4 @@
-import { Command, Context, GuildMemberPlus, Currency } from 'lava/index';
+import { Command, Context, GuildMemberPlus, Currency, Colors } from 'lava/index';
 const { MAX_LEVEL, XP_COST } = Currency;
 
 interface ProfileArgs {
@@ -73,7 +73,7 @@ export default class extends Command {
 
 			return ctx.channel.send({ embeds: [{
 				author: { name: `${member.user.username}'s gambling stats` },
-				color: 'GREEN', fields: [...entry.props.gambles.map(g => ({
+				color: Colors.GREEN, fields: [...entry.props.gambles.map(g => ({
 					inline: true, name: `${g.id.toUpperCase()} (${(g.wins + g.loses).toLocaleString()})`,
 					value: [
 						`Won: ${g.won.toLocaleString()}`,
@@ -102,8 +102,8 @@ export default class extends Command {
 			});
 
 			return ctx.channel.send({ embeds: [{
-				author: { name: `${member.user.username}'s active items` },
-				color: 'BLUE', description: actives.length > 0 ? actives.join('\n') : `No active items.`
+				title: `${member.user.username}'s active items`,
+				color: Colors.BLUE, description: actives.length > 0 ? actives.join('\n') : `No active items.`
 			}]}).then(() => false);
 		}
 
@@ -125,7 +125,7 @@ export default class extends Command {
 			description: [
 				prestige > 0 ? `**${emojis[prestige - 1] ?? emojis[emojis.length - 1]} Prestige ${ctx.client.util.romanize(prestige)}**` : ''
 			].join('\n'),
-			color: 'BLURPLE', fields: [
+			color: Colors.BLURPLE, fields: [
 				{
 					name: 'Level',
 					inline: true,

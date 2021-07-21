@@ -1,4 +1,4 @@
-import { Context, UserPlus } from 'lava/index';
+import { Context, UserPlus, Colors } from 'lava/index';
 import { EmbedFieldData } from 'discord.js';
 import { GambleCommand } from '../..';
 
@@ -21,9 +21,8 @@ export default class extends GambleCommand {
 
 		const { userD, botD } = this.roll(false);
 		if (botD > userD || botD === userD) {
-			const lost = botD === userD ? 0 : bet;
-			if (botD > userD) entry.updateStats(this.id, lost, false);
-			const props = await entry.removePocket(lost).save().then(d => d.props);
+			if (botD > userD) entry.updateStats(this.id, bet, false);
+			const props = await entry.removePocket(bet).save().then(d => d.props);
 
 			return ctx.channel.send({
 				embeds: [{
@@ -31,7 +30,7 @@ export default class extends GambleCommand {
 						name: `${ctx.author.username}'s ${userD === botD ? 'tie' : 'losing'} gambling game`,
 						iconURL: ctx.author.avatarURL({ dynamic: true })
 					},
-					color: userD === botD ? 'YELLOW' : 'RED',
+					color: Colors[userD === botD ? 'YELLOW' : 'RED'],
 					description: [
 						`You lost ${botD === userD ? 'nothing!' : `**${bet.toLocaleString()}** coins.`}\n`,
 						botD === userD 
@@ -46,8 +45,8 @@ export default class extends GambleCommand {
 			}).then(() => true);
 		}
 
-		const multi = this.calcMulti(ctx, entry);
-		const winnings = this.calcWinnings(multi, bet);
+		const multi = GambleCommand.getMulti(ctx, entry);
+		const winnings = GambleCommand.getWinnings(multi, bet);
 		const { props } = await entry.addPocket(winnings).updateStats(this.id, winnings, true).save();
 
 		return ctx.channel.send({
@@ -56,7 +55,7 @@ export default class extends GambleCommand {
 					name: `${ctx.author.username}'s winning gambling game`,
 					iconURL: ctx.author.avatarURL({ dynamic: true })
 				},
-				footer: { text: 'winner winner' }, color: 'GREEN', description: [
+				footer: { text: 'winner winner' }, color: Colors.GREEN, description: [
 					`You won **${winnings.toLocaleString()}** coins.\n`,
 					`**Percent Won:** ${Math.round(winnings / bet * 100)}%`,
 					`**New Balance:** ${props.pocket.toLocaleString()}`

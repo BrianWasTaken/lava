@@ -112,7 +112,7 @@ export default class extends Listener {
 					embeds: [{
 						description: res.map((v, k) => `**${k}:** ${v}`).join('\n'),
 						title: `${type.charAt(0).toUpperCase() + type.slice(1)} Donation`,
-						color: 'RANDOM',
+						color: ctx.client.util.randomColor(),
 						footer: {
 							text: `${ctx.author.tag} (${ctx.author.id})`,
 							icon_url: ctx.author.avatarURL({ dynamic: true }),

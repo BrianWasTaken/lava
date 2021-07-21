@@ -38,21 +38,11 @@ export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
 	}
 
 	/**
-	 * Test for callbacks
-	 */
-	public callback(predicate: (entry: this) => this) {
-		return predicate(this);
-	}
-
-	/**
 	 * Map all raw slot array from data to a certain structure.
 	 */
 	public map<K extends keyof Data, S>(key: K, structure: Constructable<S>) {
 		const collection = new Collection<string, S>();
 		const slots = this.data[key] as unknown;
-		if (!slots || !Array.isArray(this.data[key])) {
-			return collection;
-		}
 
 		return (slots as DataSlot[]).reduce((coll, slot) => {
 			const instance = new structure(this.client, slot);

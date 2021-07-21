@@ -56,7 +56,7 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 	/**
 	 * Construct an item effect. 
 	*/
-	effects = () => ItemEffects.createInstance();
+	effects = () => ItemEffects.create();
 
 	/**
 	 * Deeply filter an array.

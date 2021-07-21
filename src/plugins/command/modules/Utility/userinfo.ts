@@ -27,7 +27,7 @@ export default class extends Command {
 			title: `${user.tag} — ${user.id}`,
 			thumbnail: { url: user.avatarURL({
 				dynamic: true
-			}) }, color: 'RANDOM',
+			}) }, color: ctx.client.util.randomColor(),
 			fields: [
 				{ name: 'Created at', value: created.toDateString(), inline: true },
 				{ name: 'Joined at', value: joined.toDateString(), inline: true },

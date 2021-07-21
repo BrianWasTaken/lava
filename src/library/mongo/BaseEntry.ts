@@ -18,27 +18,26 @@ export class BaseEntry<Profile extends BaseProfile> {
 	/**
 	 * The cached data from the database.
 	 */
-	public data: Profile;
+	public cache: Profile;
 
 	/**
 	 * Construct the base entry.
 	 * @param context the main discord.js who owns this entry
 	 * @param model the source collection to manage this entry
-	 * @param [data] the optional data to manage this entry
 	 */
-	public constructor(context: Structure, model: Model<Profile>, data?: Profile) {
+	public constructor(context: Structure, model: Model<Profile>) {
 		this.client = context.client;
 		this.context = context;
 		this.model = model;
-		this.data = data ?? null;
+		this.cache = null;
 	}
 
 	/**
 	 * Fetch the document from the db, or return the cached one.
 	 */
 	public async fetch(): Promise<this> {
-		if (typeof this.data !== 'undefined') return this;
-		this.data = await this.model.findById(this.context.id);
+		if (typeof this.cache !== 'undefined') return this;
+		this.cache = await this.model.findById(this.context.id);
 		return this;
 	}
 
@@ -46,7 +45,8 @@ export class BaseEntry<Profile extends BaseProfile> {
 	 * Save the changes modified by this entry.
 	 */
 	public async save(): Promise<this> {
-		const { data } = await this.fetch();
-		return data.save().then(() => this);
+		const { cache } = await this.fetch();
+		await cache.save();
+		return this;
 	}
 } 

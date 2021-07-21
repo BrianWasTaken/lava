@@ -1,4 +1,4 @@
-import { Command, Context, Currency } from 'lava/index';
+import { Command, Context, Currency, Colors } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -30,7 +30,7 @@ export default class extends Command {
 		return ctx.channel.send({ embeds: [{
 			author: { name: `${ctx.author.username}'s Multipliers`, iconURL: ctx.author.avatarURL({ dynamic: true }) },
 			footer: { text: `${multis.unlocked.length}/${multis.all.length} Active — Page ${page} of ${pages.length}` },
-			color: 'BLURPLE', fields: [{
+			color: Colors.BLURPLE, fields: [{
 				name: `Total Multi: ${multis.unlocked.reduce((p, c) => p + c.value, 0)}% (max of ${Currency.MAX_MULTI}%)`,
 				value: pages[page - 1].join('\n')
 			}],

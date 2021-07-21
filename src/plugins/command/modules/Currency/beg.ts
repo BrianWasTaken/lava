@@ -1,4 +1,4 @@
-import { Context, Command, LavaClient } from 'lava/index';
+import { Context, Command, LavaClient, Colors } from 'lava/index';
 import { MessageEmbedOptions } from 'discord.js';
 
 type PersonPredicate = (ctx: Context) => string;
@@ -48,7 +48,7 @@ export default class extends Command {
 			author: { name: typeof person === 'function' ? person(ctx) : person },
 			footer: { text: `Multiplier Bonus: +${multi}% (${raw.toLocaleString()} coins)` },
 			description: `"${msgs.success(won)}"`,
-			color: 'GREEN'
+			color: Colors.GREEN
 		};
 	}
 
@@ -57,7 +57,7 @@ export default class extends Command {
 			author: { name: typeof person === 'function' ? person(ctx) : person },
 			footer: { text: 'Imagine begging lol' },
 			description: `"${msgs.fail}"`,
-			color: 'RED',
+			color: Colors.RED,
 		};
 	}
 
@@ -94,8 +94,8 @@ const beg = (client: LavaClient): BegData[] => [
 			])
 		},
 		coins: {
-			max: 5000,
-			min: 500
+			max: client.util.randomNumber(3, 5) * 1e6,
+			min: client.util.randomNumber(1, 2) * 1e6
 		},
 	},
 	{
@@ -107,7 +107,7 @@ const beg = (client: LavaClient): BegData[] => [
 		},
 		coins: {
 			max: 50000,
-			min: 10000
+			min: 5000
 		}
 	},
 	{
@@ -130,20 +130,32 @@ const beg = (client: LavaClient): BegData[] => [
 			fail: `The phaser gram phaser test suggests you to fuck off <3`
 		},
 		coins: {
-			max: 100000,
-			min: 10000
+			max: client.util.randomNumber(51, 100) * 1000,
+			min: client.util.randomNumber(1, 50) * 1000
 		}
 	},
 	{
-		odds: 0.9,
+		odds: 0.45,
 		person: 'You in a parallel universe',
 		msgs: {
 			success: w => `I can give myself **${w.toLocaleString()}** coins what?`,
 			fail: 'Begone thot',
 		},
 		coins: {
-			max: 500000,
+			max: 5000,
 			min: 1000
+		}
+	},
+	{
+		odds: 0.9,
+		person: 'Melmsie',
+		msgs: {
+			success: w => `You're so lucky despite all the nerfs I gave to my bot, here's **${w.toLocaleString()}** coins.`,
+			fail: 'Go away'
+		},
+		coins: {
+			max: 300,
+			min: 100
 		}
 	}
 ];

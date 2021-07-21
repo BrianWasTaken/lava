@@ -1,4 +1,4 @@
-import { Command, Context, GuildMemberPlus } from 'lava/index';
+import { Command, Context, GuildMemberPlus, Colors } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -45,7 +45,7 @@ export default class extends Command {
 				name: `${member.user.username}'s donations`,
 				iconURL: member.user.avatarURL({ dynamic: true })
 			},
-			color: 'BLUE',
+			color: Colors.BLUE,
 			fields: [
 				{
 					name: 'Total Donations',

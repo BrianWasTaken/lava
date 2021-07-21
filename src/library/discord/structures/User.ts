@@ -1,20 +1,17 @@
-import { User, Structures } from 'discord.js';
+import { User, Structures, Snowflake, Guild } from 'discord.js';
+import { BaseEntry, CurrencyModel } from 'lava/mongo';
 import { LavaClient } from 'lava/akairo';
 import { Structure } from '.';
 
-export declare interface UserPlus extends User {
-	/**
-	 * The client instance.
-	 */
-	client: LavaClient;
+declare module 'discord.js' {
+	interface User {
+		currency: BaseEntry<CurrencyProfile>;
+		client: LavaClient;
+	}
 }
 
 export class UserPlus extends User implements Structure {
-	
-	
-	public get mutualGuilds() {
-		return this.client.guilds.cache.filter(g => g.members.cache.has(this.id));
-	}
+	public currency = new BaseEntry<CurrencyProfile>(this, CurrencyModel);
 }
 
 Structures.extend('User', () => UserPlus);
