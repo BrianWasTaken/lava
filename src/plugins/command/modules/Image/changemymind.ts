@@ -23,7 +23,7 @@ export default class extends Command {
 		params.set('text', text);
 		
 		const g = await ctx.client.memer.generate('changemymind', params, 'png');
-		await ctx.channel.send(g);
+		await ctx.channel.send({ files: [g] });
 		return false;
 	}
 }

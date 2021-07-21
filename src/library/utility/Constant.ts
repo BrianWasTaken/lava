@@ -10,7 +10,7 @@ import { Item } from 'lava/index';
  * Colors for discord.js
 */
 const Colors: { [color: string]: number } = {
-	...Constants.COLORS,
+	...Constants.Colors,
 	// RED: 0xf44336,
 	RED: 0xFF5050,
 	ORANGE: 0xff9800,

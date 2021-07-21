@@ -23,7 +23,7 @@ export default class extends Command {
 		params.set('avatar1', member.user.avatarURL({ format: 'png' }));
 		
 		const g = await ctx.client.memer.generate('trigger', params, 'gif');
-		await ctx.channel.send(g);
+		await ctx.channel.send({ files: [g] });
 		return false;
 	}
 }

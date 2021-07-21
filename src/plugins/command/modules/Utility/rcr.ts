@@ -16,7 +16,7 @@ export default class extends Command {
 		const color = ctx.client.util.randomColor();
 
 		const prompt = async (color: number): Promise<number | Function> => {
-			await ctx.reply({ embed: { color, description: 'Do you like this color? Type `(y / n)` only.' }});
+			await ctx.reply({ embeds: [{ color, description: 'Do you like this color? Type `(y / n)` only.' }]});
 			const choice = await ctx.awaitMessage();
 			switch(choice.content.toLowerCase().slice(0, 1)) {
 				case 'n':
@@ -29,9 +29,9 @@ export default class extends Command {
 
 		const newColor = await prompt(color) as number;
 		await rcr.edit({ color: newColor });
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			description: `Ok, color changed. Enjoy!`,
 			color: newColor,
-		}}).then(() => true);
+		}]}).then(() => true);
 	}
 }

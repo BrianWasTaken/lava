@@ -44,7 +44,7 @@ export default class extends Command {
 		if (!Object.values(current).every(c => c >= 100)) {
 			return ctx.reply({ embeds: [{
 				author: { name: `Prestige ${next.prestige} Requirements for ${ctx.author.username}` },
-				color: ctx.client.util.randomNumber(), description: [
+				color: ctx.client.util.randomColor(), description: [
 					`**Pocket Amount**: \`${pocket.toLocaleString()}/${next.pocket.toLocaleString()}\` \`(${current.pocket}%)\``,
 					`**Levels Required**: \`${Math.trunc(xp / XP_COST).toLocaleString()}/${next.level.toLocaleString()}\` \`(${current.level}%)\``,
 				].join('\n'), footer: { text: 'Imagine thinking you can prestige already' }

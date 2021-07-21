@@ -22,7 +22,7 @@ export default class extends Command {
 	async exec(ctx: Context, args: { all: boolean; }) {
 		const { data } = await ctx.currency.fetch(ctx.author.id);
 
-		await ctx.reply({ embed: { color: 'RED', description: 'Are u sure you wanna reset rn?' } });
+		await ctx.reply({ embeds: [{ color: Colors.RED, description: 'Are u sure you wanna reset rn?' }] });
 		const prompt1 = await ctx.awaitMessage();
 		if (!prompt1 || !prompt1.content) {
 			await ctx.reply('Imagine not replying to me with a yes or no.');
