@@ -1,4 +1,5 @@
-import { LavaClient, Structure } from 'lava/index';
+import { LavaClient } from 'lava/index';
+import { Structure } from 'lava/discord';
 
 export class Mission extends Structure {
 	/**
