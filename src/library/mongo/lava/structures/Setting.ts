@@ -1,5 +1,5 @@
 import { LavaClient } from 'lava/index';
-import { Structure } from 'lava/discord';
+import { Structure } from '../../../discord/structures/Structure';
 
 export class UserSetting extends Structure {
 	/**
