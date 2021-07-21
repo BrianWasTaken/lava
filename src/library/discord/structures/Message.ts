@@ -56,7 +56,7 @@ export class Context extends Message implements Structure {
 	 * Await a single message from the idiots.
 	 */
 	public awaitMessage(userID = this.author.id, time = 30000) {
-		return this.channel.awaitMessages(m => m.author.id === userID, { time, max: 1 }).then(col => col.first()) as Promise<this>;
+		return this.channel.awaitMessages({ time, max: 1, filter: m => m.author.id === userID }).then(col => col.first()) as Promise<this>;
 	}
 }
 

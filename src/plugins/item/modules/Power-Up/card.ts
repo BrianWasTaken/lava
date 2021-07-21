@@ -7,53 +7,53 @@ export default class Tool extends PowerUpItem {
 			assets: {
 				name: 'Porsche\'s Card',
 				emoji: ':credit_card:',
-				price: 50000,
+				price: 15000,
 				intro: 'Do you need coin space?',
-				info: 'Gives you 5000-500000 coins of expanded storage!'
+				info: 'Gives you 1000-5000 coins of expanded storage!'
 			},
 			config: {
 				push: true
 			},
 			upgrades: [
 				{
-					price: 78000,
-					info: 'Give yourself up to 700K bank storage!',
+					price: 18000,
+					info: 'Give yourself up to 7K bank storage!',
 				},
 				{
-					price: 81000,
-					info: 'Expand up to 1M bank storage!'
+					price: 21000,
+					info: 'Expand up to 10K bank storage!'
 				},
 				{
-					price: 90000,
-					info: 'Expand up to 2M bank storage NICE!'
+					price: 30000,
+					info: 'Expand up to 20K bank storage NICE!'
 				},
 				{
-					price: 105000,
-					info: 'Expand up to 3M bank storage NICE!'
+					price: 45000,
+					info: 'Expand up to 30K bank storage NICE!'
 				},
 				{
-					price: 125000,
-					info: 'Expand up to 5M bank storage NICE!'
+					price: 65000,
+					info: 'Expand up to 50K bank storage NICE!'
 				},
 				{
-					price: 150000,
-					info: 'Expand up to 10M bank storage NICE!'
+					price: 120000,
+					info: 'Expand up to 100K bank storage NICE!'
+				},
+				{
+					price: 160000,
+					info: 'Expand up to 150K bank storage NICE!'
 				},
 				{
 					price: 250000,
-					info: 'Expand up to 15M bank storage NICE!'
+					info: 'Expand up to 200K bank storage NICE!'
 				},
 				{
-					price: 750000,
-					info: 'Expand up to 20M bank storage NICE!'
+					price: 500000,
+					info: 'Expand up to 300K bank storage NICE!'
 				},
 				{
 					price: 1000000,
-					info: 'Expand up to 30M bank storage NICE!'
-				},
-				{
-					price: 2500000,
-					info: 'Expand up to 50M bank storage NICE!'
+					info: 'Expand up to 500K bank storage NICE!'
 				},
 
 			]
@@ -61,7 +61,7 @@ export default class Tool extends PowerUpItem {
 	}
 
 	get thresholds() {
-		return [5e5, 7e5, 1e6, 2e6, 3e6, 5e6, 1e7, 15e6, 20e6, 30e6, 50e6];
+		return [5e3, 7e3, 10e3, 20e3, 30e3, 50e3, 100e3, 150e3, 200e3, 300e3, 500e3];
 	}
 
 	async use(ctx: Context, entry: CurrencyEntry) {
@@ -77,7 +77,7 @@ export default class Tool extends PowerUpItem {
 			return ctx.reply(`It needs to be a real number and no more than what you own alright?`);
 		}
 
-		const gained = Array(Number(choice.content)).fill(null).map(() => randomNumber(5000, this.thresholds[level])).reduce((p, c) => p + c, 0);
+		const gained = Array.from({ length: Number(choice.content) }, () => randomNumber(1000, this.thresholds[level])).reduce((p, c) => p + c, 0);
 		const space = await entry.subItem(this.id, Number(choice.content)).expandVault(gained).save(false).then(e => e.props.space);
 		return ctx.reply(`**You swiped __${
 			Number(choice.content).toLocaleString()

@@ -23,11 +23,11 @@ export default class extends Command {
 		const created = new Date(createdAt);
 		const joined = new Date(joinedAt);
 
-		return ctx.channel.send({ embed: {
+		return ctx.channel.send({ embeds: [{
 			title: `${user.tag} — ${user.id}`,
 			thumbnail: { url: user.avatarURL({
 				dynamic: true
-			}) }, color: 'RANDOM',
+			}) }, color: ctx.client.util.randomColor(),
 			fields: [
 				{ name: 'Created at', value: created.toDateString(), inline: true },
 				{ name: 'Joined at', value: joined.toDateString(), inline: true },
@@ -36,6 +36,6 @@ export default class extends Command {
 				{ name: 'Nickname', value: nickname ?? 'No Nickname here', inline: true },
 				{ name: 'Last Command ran', value: data.data.commands.last_cmd, inline: true }
 			]
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 } 

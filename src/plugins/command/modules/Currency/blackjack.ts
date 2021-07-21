@@ -1,5 +1,5 @@
+import { Context, Colors } from 'lava/index';
 import { GambleCommand } from '../..';
-import { Context } from 'lava/index';
 
 export default class extends GambleCommand {
 	constructor() {
@@ -155,7 +155,7 @@ export default class extends GambleCommand {
 				// Win
 				if (status.result) {
 					const multi = newEntry.calcMulti(ctx).unlocked.reduce((p, c) => p + c.value, 0);
-					winnings = this.calcWinnings(multi, bet);
+					winnings = GambleCommand.getWinnings(multi, bet);
 					const pocket = await newEntry.addPocket(winnings).updateStats(this.id, winnings, true).save().then(d => d.props.pocket);
 					finalMsg += `\nYou won **${winnings.toLocaleString()}**. You now have ${pocket.toLocaleString()}.`;
 					state = 'winning';
@@ -181,7 +181,7 @@ export default class extends GambleCommand {
 					? `${first ? 'What do you want to do?\n' : ''
 					}Type \`h\` to **hit**, type \`s\` to **stand**, or type \`e\` to **end** the game.`
 					: null,
-				embed: {
+				embeds: [{
 					author: {
 						name: `${ctx.author.username}'s${state ? ` ${state} ` : ' '
 							}blackjack game`,
@@ -189,10 +189,10 @@ export default class extends GambleCommand {
 					},
 					color: final
 						? status.result === null
-							? 'ORANGE'
+							? Colors.ORANGE
 							: winnings
-								? 'GREEN'
-								: 'RED'
+								? Colors.GREEN
+								: Colors.RED
 						: 2533018,
 					description: desc,
 					fields: [
@@ -228,7 +228,7 @@ export default class extends GambleCommand {
 							? 'K, Q, J = 10  |  A = 1 or 11'
 							: `Percent Won: ${Math.round((winnings / bet) * 100)}%`,
 					},
-				},
+				}],
 			});
 			first = false;
 			if (final) return;

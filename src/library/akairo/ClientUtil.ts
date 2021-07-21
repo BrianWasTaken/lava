@@ -56,7 +56,7 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 	/**
 	 * Construct an item effect. 
 	*/
-	effects = () => ItemEffects.createInstance();
+	effects = () => ItemEffects.create();
 
 	/**
 	 * Deeply filter an array.
@@ -119,6 +119,11 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 	 * Generate a random decimal color. 
 	*/
 	randomColor = (): number => Math.random() * 0xffffff;
+
+	/**
+	 * Shuffle the array.
+	 */
+	shuffle = <T>(array: T[]): T[] => array.sort(() => Math.random() - 0.5);
 
 	/**
 	 * Delay something for x time.

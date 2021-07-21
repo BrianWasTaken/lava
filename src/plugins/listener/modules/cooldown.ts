@@ -1,4 +1,4 @@
-import { Listener, Context, Command } from 'lava/index';
+import { Listener, Context, Command, Colors } from 'lava/index';
 
 export default class extends Listener {
 	constructor() {
@@ -16,17 +16,17 @@ export default class extends Listener {
 
 	async exec(ctx: Context, cmd: Command, remaining: number) {
 		const { parseTime, randomInArray } = ctx.client.util;
-		const defaultCD = parseTime(cmd.cooldown / 1000, true) ?? cmd.cooldown / 1e3;
-		const cooldown = parseTime(remaining / 1000, false) ?? remaining.toFixed(1);
+		const defaultCD = parseTime(cmd.cooldown / 1000, true) ?? `${cmd.cooldown / 1e3}s`;
+		const cooldown = parseTime(remaining / 1000, false) ?? `${(remaining / 1e3).toFixed(1)}s`;
 
-		await ctx.reply({ embed: {
+		await ctx.reply({ embeds: [{
 			title: randomInArray(this.titleCD),
-			color: 'INDIGO',
+			color: Colors.INDIGO,
 			description: [
 				`You're under cooldown for the \`${cmd.aliases[0]}\` command.`,
 				`Wait **${cooldown}** to run this command again.`,
 				`You have to wait \`${defaultCD}\` by default!`
 			].join('\n')
-		}});
+		}]});
 	}
 }

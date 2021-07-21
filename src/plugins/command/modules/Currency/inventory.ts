@@ -1,4 +1,4 @@
-import { Command, Context, GuildMemberPlus, Inventory } from 'lava/index';
+import { Command, Context, GuildMemberPlus, Inventory, Colors } from 'lava/index';
 import { Argument } from 'discord-akairo';
 
 interface InventoryArgs {
@@ -51,8 +51,8 @@ export default class extends Command {
 		}
 
 		return ctx.channel.send({
-			embed: {
-				color: 'BLURPLE',
+			embeds: [{
+				color: Colors.BLURPLE,
 				author: {
 					name: `${member.user.username}'s inventory`,
 					icon_url: member.user.avatarURL({ dynamic: true })
@@ -66,7 +66,7 @@ export default class extends Command {
 				footer: {
 					text: `Owned Items — Page ${page} of ${inventory.length}`
 				}
-			}
+			}]
 		}).then(() => false);
 	}
 

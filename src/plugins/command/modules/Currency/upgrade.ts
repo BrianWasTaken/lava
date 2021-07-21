@@ -1,4 +1,4 @@
-import { Command, Context, Item } from 'lava/index';
+import { Command, Context, Colors, Item } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -33,18 +33,18 @@ export default class extends Command {
 			return ctx.reply(`Your **${inv.upgrade.emoji} ${inv.upgrade.name}** is already at max level!`).then(() => false);
 		}
 
-		await ctx.channel.send({ embed: { color: 'ORANGE', description: `Are you sure you wanna upgrade your **${item.emoji} ${item.name}** to **Level ${inv.level + 1}** for **${upgrade.toLocaleString()} ${e}** right now?` }});
+		await ctx.channel.send({ embeds: [{ color: Colors.ORANGE, description: `Are you sure you wanna upgrade your **${item.emoji} ${item.name}** to **Level ${inv.level + 1}** for **${upgrade.toLocaleString()} ${e}** right now?` }] });
 		const choice = await ctx.awaitMessage();
 		if (!choice || !choice.content) {
-			return ctx.reply({ embed: { color: 'RED', description: 'Imagine not answering to me lmfaooo' }}).then(() => false);
+			return ctx.reply({ embeds: [{ color: 'RED', description: 'Imagine not answering to me lmfaooo' }] }).then(() => false);
 		}
 		if (choice.content.toLowerCase().slice(0, 1) === 'n') {
-			return ctx.reply({ embed: { color: 'INDIGO', description: 'ok then.' }}).then(() => false);
+			return ctx.reply({ embeds: [{ color: Colors.INDIGO, description: 'ok then.' }] }).then(() => false);
 		}
 
 		const newInv = await entry.removePocket(inv.upgrade.upgrade).upgradeItem(item.id).save().then(e => e.props.items.get(item.id));
-		return ctx.reply({ embed: {
-			color: 'GREEN', author: { 
+		return ctx.reply({ embeds: [{
+			color: Colors.GREEN, author: { 
 				name: `${inv.upgrade.name} finally reached ${
 					newInv.isMaxLevel() ? 'MAX LEVEL' : `Level ${newInv.level}`
 				}!`,
@@ -52,6 +52,6 @@ export default class extends Command {
 					dynamic: true 
 				})
 			},
-		}}).then(() => true);
+		}]}).then(() => true);
 	}
 }

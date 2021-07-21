@@ -127,7 +127,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 		}
 
 		// Memers Crib Staff
-		unlock('Crib Staff', -5, ctx.member.roles.cache.has('692941106475958363'));
+		unlock('Crib Staff', -0, ctx.member.roles.cache.has('692941106475958363'));
 		// Chips Cult
 		unlock('Chips Cult', 5, ctx.member.nickname?.toLowerCase().includes('chips'));
 		// Probber Cult
@@ -136,14 +136,10 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 		unlock('Lava Channel', 5, (ctx.channel as TextChannel).name.toLowerCase().includes('lava'));
 		// Maxed All Items
 		unlock('Maxed All Items', 5, this.props.items.every(i => i.isMaxLevel()));
-		// 10x of Max Inventory
+		// 10 items have reached max inventory cap.
 		unlock('Item Collector Plus', this.props.items.size * 2, this.props.items.filter(i => i.owned >= Currency.MAX_INVENTORY).size >= 10);
 		// 1B Space
 		unlock('Billion Storage', 10, this.props.space >= 1e9);
-		// 1T Space
-		unlock('Trillion Storage', 10, this.props.space >= 1e12);
-		// 1Q Space
-		unlock('Quadrillion Storage', 10, this.props.space >= 1e15);
 		// Prestige 10s
 		unlock(`Prestige ${this.props.prestige.level}`, 5, this.props.prestige.level % 10 === 0 && this.props.prestige.level > 0);
 
@@ -358,8 +354,6 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 		}
 	}
 
-
-
 	/** Add coins to ur pocket */
 	addPocket(amount: number, isShare = false) {
 		return this.pocket(amount).inc();
@@ -469,7 +463,8 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 		const powerUps = modules.filter(i => i.category.id === 'Power-Up').array() as PowerUpItem[];
 		const instance = this.client.util.effects();
 
-		powerUps.forEach(p => p.effect(instance, this));
+		const filter = (p: PowerUpItem) => this.props.items.get(p.id).isActive();
+		powerUps.filter(filter).forEach(p => p.effect(instance, this));
 		effects.set(this.data._id as Snowflake, instance);
 		return this;
 	}
@@ -521,7 +516,9 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 	*/
 	save(runPost = true) {
 		if (runPost) {
-			this.calc().xp(true);
+			const prestige = this.props.prestige.level;
+			const xpBoost = this.effects.xpBoost;
+			this.calc().xp(true, xpBoost + prestige);
 			this.updateEffects();
 		}
 

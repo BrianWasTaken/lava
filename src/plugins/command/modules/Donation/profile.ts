@@ -1,4 +1,4 @@
-import { Command, Context, GuildMemberPlus } from 'lava/index';
+import { Command, Context, GuildMemberPlus, Colors } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -40,12 +40,12 @@ export default class extends Command {
 		const recorded = entry.donos.reduce((p, c) => p + c.records.length, 0);
 		const donated = entry.donos.reduce((p, c) => p + c.amount, 0);
 
-		return ctx.channel.send({ embed: {
+		return ctx.channel.send({ embeds: [{
 			author: {
 				name: `${member.user.username}'s donations`,
 				iconURL: member.user.avatarURL({ dynamic: true })
 			},
-			color: 'BLUE',
+			color: Colors.BLUE,
 			fields: [
 				{
 					name: 'Total Donations',
@@ -59,6 +59,6 @@ export default class extends Command {
 			footer: {
 				text: `Page ${page} of ${pages.length}`
 			}
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 }

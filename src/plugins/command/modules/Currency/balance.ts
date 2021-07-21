@@ -22,7 +22,7 @@ export default class extends Command {
 		const { user } = args.member;
 
 		return ctx.channel.send({
-			embed: <MessageEmbedOptions>{
+			embeds: [{
 				title: `${user.username}'s balance`,
 				color: ctx.client.util.randomColor(),
 				description: Object.entries({
@@ -36,7 +36,7 @@ export default class extends Command {
 				})
 					.map(([label, val]) => `**${label}:** ${val}`)
 					.join('\n')
-			}
+			}]
 		}).then(() => false);
 	}
 }

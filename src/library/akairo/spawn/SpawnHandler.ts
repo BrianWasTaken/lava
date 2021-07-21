@@ -55,9 +55,10 @@ export class SpawnHandler extends AbstractHandler<Spawn> {
 						// Ensure the user ain't a bot
 						&& !m.author.bot;
 				};
-				const collector = new MessageCollector(ctx.channel as TextChannel, filter as ((m: Message) => PromiseUnion<boolean>), { 
+				const collector = new MessageCollector(ctx.channel as TextChannel, { 
 					max: spawn.config.maxEntries, 
-					time: spawn.config.duration
+					time: spawn.config.duration,
+					filter: filter as ((m: Message) => PromiseUnion<boolean>)
 				});
 
 				collector.on('collect', m => { 

@@ -1,4 +1,4 @@
-import { Command, Context, Item, ItemMessages, Currency, CurrencyEntry } from 'lava/index';
+import { Command, Context, Item, ItemMessages, Currency, CurrencyEntry, Colors } from 'lava/index';
 
 interface BuyArgs { 
 	amount: number;
@@ -66,18 +66,18 @@ export default class extends Command {
 		const { amount, item } = args;
 		const { price } = await item.buy(entry, amount);
 
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			author: {
 				name: 'Successful Purchase',
 				iconURL: ctx.author.avatarURL({
 					dynamic: true
 				})
 			},
-			color: 'GREEN',
+			color: Colors.GREEN,
 			description: ItemMessages.BUY_MSG(item, price * amount, amount),
 			footer: {
 				text: 'Thanks for your purchase!'
 			}
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 }

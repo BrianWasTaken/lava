@@ -20,7 +20,7 @@ export default class extends Command {
 
 	exec(ctx: Context, { query }: { query: Command }) {
 		if (query instanceof Command) {
-			return ctx.channel.send({ embed: {
+			return ctx.channel.send({ embeds: [{
 				title: `${query.name} Command`,
 				color: ctx.guild.me.roles.highest?.color,
 				fields: [
@@ -29,10 +29,10 @@ export default class extends Command {
 					{ name: 'Cooldown', value: `Normie: ${ctx.client.util.parseTime(query.cooldown / 1000, true)}` },
 					{ name: 'Permissions', value: `\`${['SEND_MESSAGES'].concat(query.userPermissions as string[] ?? []).join('\n')}\`` }
 				]
-			}}).then(() => false);
+			}]}).then(() => false);
 		}
 
-		return ctx.channel.send({ embed: {
+		return ctx.channel.send({ embeds: [{
 			thumbnail: { url: ctx.client.user.avatarURL() },
 			title: `${ctx.client.user.username} Commands`,
 			color: ctx.guild.me.roles.highest.color,
@@ -48,6 +48,6 @@ export default class extends Command {
 				text: `${this.handler.modules.size.toLocaleString()} Total Commands`,
 				iconURL: ctx.client.user.avatarURL()
 			}
-		}}).then(() => false);
+		}]}).then(() => false);
 	} 
 }

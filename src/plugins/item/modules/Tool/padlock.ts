@@ -1,4 +1,4 @@
-import { Context, CurrencyEntry } from 'lava/index';
+import { Context, CurrencyEntry, Colors } from 'lava/index';
 import { ToolItem } from '../..';
 
 export default class Tool extends ToolItem {
@@ -26,10 +26,10 @@ export default class Tool extends ToolItem {
 		const won = randomNumber(100, 1000);
 
 		await entry.addPocket(won).activateItem(this.id, expire).save();
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will automatically break in ${parseTime(duration / 1000)}`,
-			color: 'YELLOW', author: { name: `You activated your ${this.name}!` },
+			color: Colors.YELLOW, author: { name: `You activated your ${this.name}!` },
 			footer: { text: `Coin Bonus: +${won.toLocaleString()} coins` }
-		}});
+		}]});
 	}
 }

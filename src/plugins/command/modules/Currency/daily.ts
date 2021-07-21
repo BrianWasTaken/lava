@@ -1,4 +1,4 @@
-import { Command, Context } from 'lava/index';
+import { Command, Context, Colors } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -28,13 +28,13 @@ export default class extends Command {
 		const won = streak > 1 ? baseCoins + streakBonus : baseCoins;
 		await entry.addPocket(won).recordDailyStreak().save();
 
-		return ctx.channel.send({ embed: {
+		return ctx.channel.send({ embeds: [{
 			title: `Here are your daily coins, ${ctx.author.username}`,
 			description: `**${won.toLocaleString()} coins** were placed in your pocket.`,
-			color: 'BLUE',
+			color: Colors.BLUE,
 			footer: {
 				text: `Streak: ${streak} days ${(streak > 1 ? `(+${streakBonus.toLocaleString()} bonus)` : '')}`,
 			},
-		}}).then(() => true);
+		}]}).then(() => true);
 	}
 }

@@ -1,4 +1,4 @@
-import { Command, Context, LavaClient, CurrencyEntry, Inventory } from 'lava/index';
+import { Command, Context, LavaClient, CurrencyEntry, Inventory, Colors } from 'lava/index';
 import { CollectorFilter, Message } from 'discord.js';
 
 interface SearchData {
@@ -90,7 +90,7 @@ export default class extends Command {
 		const choice = await ctx.awaitMessage();
 
 		if (!choice || !choice.content || !places.some(p => choice.content.toLowerCase() === p)) {
-			return ctx.reply('Imagine not picking the right place, idiot.').then(() => false);
+			return ctx.reply('Imagine not picking the right place, idiot.').then(() => true);
 		}
 
 		const searched = searchables.find(s => choice.content.toLowerCase() === s.place);
@@ -108,20 +108,20 @@ export default class extends Command {
 				? `You lost **${pocket.toLocaleString()} coins** ${item ? `and **${lost.toLocaleString()} ${item.upgrade.emoji} ${item.upgrade.name}** RIP LOL!` : 'RIP!'}`
 				: `Your **${saver.item.upgrade.emoji} ${saver.item.upgrade.name}** saved you from death!`;
 			
-			return ctx.reply({ embed: {
+			return ctx.reply({ embeds: [{
 				author: { name: getHeader(), iconURL: ctx.author.avatarURL({ dynamic: true }) },
 				description: `${searched.death.msg}\n${sampleText}`,
 				footer: { text: 'Lol u died' },
-				color: 'RED',
-			}}).then(() => true);
+				color: Colors.RED
+			}]}).then(() => true);
 		}
 
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			description: `${searched.successMsg(nice.coinsWon)}${nice.itemGot ? `\nand **1 ${nice.itemGot.module.emoji} ${nice.itemGot.module.name}** wow you're very lucky!` : ''}`,
 			footer: { text: `Multiplier Bonus: +${multi}% (${nice.coinsRaw.toLocaleString()} coins)` },
 			author: { name: getHeader(), iconURL: ctx.author.avatarURL({ dynamic: true }) },
-			color: 'GREEN'
-		}}).then(() => true);
+			color: Colors.GREEN
+		}]}).then(() => true);
 	}
 }
 
@@ -142,28 +142,32 @@ const search = (client: LavaClient): SearchData[] => [
 		minCoins: 25000,
 		successMsg: w => `How the heck you got **${w.toLocaleString()}** coins from air?`,
 		death: {
-			msg: 'You caught the coronavirus and you died.',
+			msg: 'You caught the coronavirus.',
 			odds: 15
 		}
 	},
 	{
 		place: 'memers crib',
-		maxCoins: 1000000,
-		minCoins: 200000,
+		maxCoins: 100000,
+		minCoins: 5000,
 		items: ['gem', 'trophy', 'pizza', 'wine', 'card'],
 		successMsg: w => `We wanna make u rich here so here's **${w.toLocaleString()}** bits, enjoy :)`,
 	},
 	{
 		place: 'mars',
-		maxCoins: 1000000,
-		minCoins: 50000,
+		maxCoins: 30000,
+		minCoins: 150,
 		items: ['bacon'],
-		successMsg: w => `You suffocated for **${w.toLocaleString()}** coins.`
+		successMsg: w => `You suffocated for **${w.toLocaleString()}** coins.`,
+		death: {
+			msg: 'You suffocated for nothing.',
+			odds: 45
+		}
 	},
 	{
 		place: 'discord',
 		maxCoins: 100000,
-		minCoins: 10000,
+		minCoins: 5000,
 		items: ['coin', 'phone', 'computer'],
 		successMsg: w => `You typed \`lava gimme\` in the chats and got **${w.toLocaleString()}** coins`,
 		death: {
@@ -173,13 +177,13 @@ const search = (client: LavaClient): SearchData[] => [
 	},
 	{
 		place: 'club',
-		maxCoins: 20000,
-		minCoins: 5000,
+		maxCoins: 200000,
+		minCoins: 500,
 		items: ['beer', 'alcohol', 'soda', 'wine'],
-		successMsg: w => `Wow you danced for **${w.toLocaleString()}** coins`,
+		successMsg: w => `You danced for **${w.toLocaleString()}** coins`,
 		death: {
 			msg: 'Being drunk is bad and bad leads to death, you died.',
-			odds: 25
+			odds: 45
 		}
 	},
 	{
@@ -189,14 +193,14 @@ const search = (client: LavaClient): SearchData[] => [
 		items: ['gem', 'donut'],
 		successMsg: w => `Wtf who left **${w.toLocaleString()}** coins up this tree?`,
 		death: {
-			msg: 'You fell off and got a fracture in ur head, u died upon hospital arrival',
+			msg: 'You fell off and got a fracture in ur head, u died upon hospital arrival.',
 			odds: 10
 		}
 	},
 	{
 		place: 'space',
 		maxCoins: 5000000,
-		minCoins: 100000,
+		minCoins: 25000,
 		items: ['medal', 'cheese', 'taco', 'totem'],
 		successMsg: w => `Wow you dodged the space debris, you got **${w.toLocaleString()}** ggs`,
 		death: {
@@ -204,7 +208,7 @@ const search = (client: LavaClient): SearchData[] => [
 			msg: client.util.randomInArray([
 				'You got sucked from the blackhole.',
 				'The star burnt you and your soul.',
-				'Sadly you didn\'t dodged the debris, too late.'
+				'You didn\'t dodged the debris, sucks to suck.'
 			])
 		}
 	},

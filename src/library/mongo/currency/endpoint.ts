@@ -29,12 +29,11 @@ export class CurrencyEndpoint extends Endpoint<CurrencyProfile> {
 	/** 
 	 * Fetch something from the db. 
 	 */
-	public fetch(_id: string): Promise<CurrencyEntry> {
-		return this.model.findOne({ _id }).then(async data => {
-			const doc = data ?? await (new this.model({ _id })).save();
-			const pushed = [this.updateItems(doc), this.updateGames(doc), this.updateTrade(doc)];
-			return pushed.some(s => s.length > 1) ? doc.save() : doc;
-		}).then(doc => new CurrencyEntry(this, doc));
+	public async fetch(_id: string): Promise<CurrencyEntry> {
+		const doc = await this.model.findOne({ _id }) ?? await this.model.create({ _id });
+		const pushed = [this.updateItems(doc), this.updateGames(doc), this.updateTrade(doc)];
+		const real = pushed.some(s => s.length > 1) ? await doc.save() : doc;
+		return new CurrencyEntry(this, real);
 	}
 
 	/**

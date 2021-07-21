@@ -1,4 +1,4 @@
-import { Command, Context, Item, ItemMessages, Currency, CurrencyEntry } from 'lava/index';
+import { Command, Context, Item, ItemMessages, Currency, CurrencyEntry, Colors } from 'lava/index';
 
 interface SellArgs { 
 	amount: number;
@@ -57,18 +57,18 @@ export default class extends Command {
 		const { amount, item } = args;
 		const { price, sellRate } = await item.sell(entry, amount);
 
-		return ctx.reply({ embed: {
+		return ctx.reply({ embeds: [{
 			author: {
 				name: 'Successfully Sold',
 				iconURL: ctx.author.avatarURL({
 					dynamic: true
 				})
 			},
-			color: 'GREEN',
+			color: Colors.GREEN,
 			description: ItemMessages.SELL_MSG(item, price * sellRate * amount, amount),
 			footer: {
 				text: 'Thanks for stopping by!'
 			}
-		}}).then(() => false);
+		}]}).then(() => false);
 	}
 }

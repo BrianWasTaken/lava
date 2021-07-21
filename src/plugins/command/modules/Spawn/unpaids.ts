@@ -1,4 +1,4 @@
-import { Command, Context, GuildMemberPlus } from 'lava/index';
+import { Command, Context, GuildMemberPlus, } from 'lava/index';
 import { MessageOptions } from 'discord.js';
 
 export default class extends Command {
@@ -24,7 +24,7 @@ export default class extends Command {
 		};
 
 		return ctx.channel.send({ 
-			embed: {
+			embeds: [{
 				author: { 
 					name: `Spawn Balance — ${args.member.user.username}`, 
 					iconURL: args.member.user.avatarURL({ dynamic: true }) 
@@ -35,7 +35,7 @@ export default class extends Command {
 					text: ctx.client.user.username,
 					icon_url: ctx.client.user.avatarURL()
 				}
-			}
+			}]
 		}).then(() => false);
 	};
 }

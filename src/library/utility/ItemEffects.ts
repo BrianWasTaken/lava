@@ -37,8 +37,9 @@ export class ItemEffects {
 		keys: []
 	};
 
-	public static createInstance() {
-		return new this();
+	public static create() {
+		const instance = new this();
+		return instance;
 	}
 
 	public discount(v: number) {

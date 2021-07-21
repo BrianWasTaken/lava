@@ -1,4 +1,4 @@
-import { Command, Context, ItemSale, Item, Inventory } from 'lava/index';
+import { Command, Context, ItemSale, Item, Inventory, Colors } from 'lava/index';
 import { Argument } from 'discord-akairo';
 
 export default class extends Command {
@@ -50,8 +50,8 @@ export default class extends Command {
 				return ctx.reply(`Page \`${args.query}\` doesn't exist.`).then(() => false);
 			}
 
-			return ctx.channel.send({ embed: {
-				title: 'Lava Shop', color: 'ORANGE', footer: {
+			return ctx.channel.send({ embeds: [{
+				title: 'Lava Shop', color: Colors.ORANGE, footer: {
 					text: `Lava Shop — Page ${args.query} of ${shop.length}`
 				}, fields: [
 					{
@@ -63,7 +63,7 @@ export default class extends Command {
 						value: shop[args.query - 1].join('\n\n')
 					}
 				]
-			}}).then(() => false);
+			}]}).then(() => false);
 		}
 
 		const { query } = args;
@@ -77,16 +77,19 @@ export default class extends Command {
 		const { owned, level } = entry.props.items.get(query.id);
 
 		return ctx.channel.send({ 
-			embed: query.getEmbed(this.client.util.embed({
+			embeds: [query.getEmbed(this.client.util.embed({
 				title: `${emoji} ${name}${owned > 0 ? ` (${owned.toLocaleString()} owned)` : ''} — Level ${level === query.upgrades.length - 1 ? `${level} (Max)` : level}`,
-				color: 'RANDOM', 
+				color: ctx.client.util.randomColor(), 
 				description: [
 					`${info}\n`, [
 						`**BUY** — ${query.buyable ? `${icon} ${price.toLocaleString()}` : '**Not Buyable**'}`,
 						`**SELL** — ${query.sellable ?	 `${icon} ${Math.round(price * sellRate).toLocaleString()}` : '**Not Sellable**'}`
 					].join('\n')
-				].join('\n')
-			}))
+				].join('\n'),
+				footer: {
+					text: `Item Type: ${query.category.id}`
+				}
+			}))],
 		}).then(() => false);
 	}
 }

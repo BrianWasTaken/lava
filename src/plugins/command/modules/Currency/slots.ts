@@ -1,4 +1,4 @@
-import { Context, Currency } from 'lava/index';
+import { Context, Currency, Colors } from 'lava/index';
 import { GambleCommand } from '../..';
 
 export default class extends GambleCommand {
@@ -12,15 +12,15 @@ export default class extends GambleCommand {
 
 	get slots() {
 		return (multi: number) => ({
-			coin: [50, 250],
-			gem: [50, 250],
-			medal: [50, 250],
-			ring: [50, 250],
-			trophy: [100, 500],
-			crown: [100, 500],
-			trident: [100, 500],
-			fist: [100, 500],
-			fire: [multi * 5, multi * 10]
+			coin: [4, 10],
+			gem: [4, 10],
+			medal: [4, 10],
+			ring: [4, 10],
+			trophy: [10, 25],
+			crown: [10, 25],
+			trident: [10, 25],
+			fist: [10, 25],
+			fire: [multi, multi * 10]
 		});
 	}
 
@@ -50,15 +50,15 @@ export default class extends GambleCommand {
 		const state = this.checkArgs(bet, entry);
 		if (typeof state === 'string') return ctx.reply(state).then(() => false);
 
-		const multi = this.calcMulti(ctx, entry);
+		const multi = GambleCommand.getMulti(ctx, entry);
 		const slots = this.getSlots(Object.keys(this.slots(multi)), multi);
 		const { winnings, length } = this.calcSlots(slots, bet, multi);
 
 		if ([1, 2].every(l => l !== length)) {
 			const { props } = await entry.removePocket(bet).updateStats(this.id, bet, false).save();
 			return ctx.channel.send({
-				embed: {
-					color: 'RED',
+				embeds: [{
+					color: Colors.RED,
 					author: {
 						name: `${ctx.author.username}'s slot machine`,
 					},
@@ -70,14 +70,14 @@ export default class extends GambleCommand {
 					footer: {
 						text: 'sucks to suck'
 					}
-				}
+				}]
 			}).then(() => true);
 		}
 
 		const { props } = await entry.addPocket(winnings).updateStats(this.id, winnings, true).save();
 		return ctx.channel.send({
-			embed: {
-				color: length === 1 ? 'GOLD' : 'GREEN',
+			embeds: [{
+				color: Colors[length === 1 ? 'GOLD' : 'GREEN'],
 				author: {
 					name: `${ctx.author.username}'s slot machine`,
 				},
@@ -90,7 +90,7 @@ export default class extends GambleCommand {
 				footer: {
 					text: length === 1 ? 'poggers' : 'winner winner'
 				}
-			}
+			}]
 		}).then(() => true);
 	}
 

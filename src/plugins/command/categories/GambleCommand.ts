@@ -5,7 +5,9 @@ import { Context } from 'lava/discord';
 import { Command } from 'lava/akairo';
 
 export class GambleCommand extends Command {
-	constructor(id: string, options: CommandOptions) {
+	public ['constructor']: typeof GambleCommand;
+
+	public constructor(id: string, options: CommandOptions) {
 		super(id, { 
 			category: 'Currency',
 			clientPermissions: ['EMBED_LINKS'],
@@ -13,7 +15,7 @@ export class GambleCommand extends Command {
 			args: [
 				{ 
 					id: 'amount', 
-					type: Argument.union('number', 'string') 
+					type: Argument.union('string') 
 				}
 			], 
 			...options
@@ -67,13 +69,26 @@ export class GambleCommand extends Command {
 		}
 	}
 
-	calcMulti(ctx: Context, entry: CurrencyEntry, cap = true) {
-		const multis = entry.calcMulti(ctx).unlocked.reduce((p, c) => c.value + p, 0);
-		return cap ? Math.min(Currency.MAX_MULTI, multis) : multis;
+	/**
+	 * Shortcut to get user multipliers.
+	 * @param ctx The discord message object
+	 * @param entry The user's currency entry
+	 * @param [cap] Wether to cap the multis or not.
+	 */
+	public static getMulti(ctx: Context, entry: CurrencyEntry, cap = true) {
+		const multi = entry.calcMulti(ctx).unlocked.reduce((p, c) => c.value + p, 0);
+		return cap ? Math.min(Currency.MAX_MULTI, multi) : multi;
 	}
 
-	calcWinnings(multi: number, bet: number) {
-		const winnings = Math.ceil(bet * (Math.random() + 0.1));
-		return Math.min(Currency.MAX_WIN, winnings + Math.ceil(winnings * (multi / 100)));
+	/**
+	 * Get the winnings of multiplier-based gamble commands.
+	 * @param multi the user multipliers
+	 * @param bet the user gamble amount
+	 * @param [extra] any extra winnings
+	 */
+	public static getWinnings(multi: number, bet: number, cap = true) {
+		const base = Math.ceil(bet * ((Math.random() * 0.5) + 0.2));
+		const raw = base + Math.ceil(base * (multi / 100));
+		return cap ? Math.min(Currency.MAX_WIN, raw) : raw;
 	}
 }
