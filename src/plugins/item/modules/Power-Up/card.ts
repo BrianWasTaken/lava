@@ -16,43 +16,43 @@ export default class Tool extends PowerUpItem {
 			},
 			upgrades: [
 				{
-					price: 18000,
+					price: 12500,
 					info: 'Give yourself up to 7K bank storage!',
 				},
 				{
-					price: 21000,
+					price: 10000,
 					info: 'Expand up to 10K bank storage!'
 				},
 				{
-					price: 30000,
+					price: 7000,
 					info: 'Expand up to 20K bank storage NICE!'
 				},
 				{
-					price: 45000,
+					price: 4000,
 					info: 'Expand up to 30K bank storage NICE!'
 				},
 				{
-					price: 65000,
+					price: 1000,
 					info: 'Expand up to 50K bank storage NICE!'
 				},
 				{
-					price: 120000,
+					price: 750,
 					info: 'Expand up to 100K bank storage NICE!'
 				},
 				{
-					price: 160000,
+					price: 500,
 					info: 'Expand up to 150K bank storage NICE!'
 				},
 				{
-					price: 250000,
+					price: 250,
 					info: 'Expand up to 200K bank storage NICE!'
 				},
 				{
-					price: 500000,
+					price: 100,
 					info: 'Expand up to 300K bank storage NICE!'
 				},
 				{
-					price: 1000000,
+					price: 10,
 					info: 'Expand up to 500K bank storage NICE!'
 				},
 

@@ -33,7 +33,7 @@ export abstract class PowerUpItem extends Item {
 		super(id, {
 			assets: {
 				sellRate: 0.1,
-				upgrade: 10e6,
+				upgrade: 25e6,
 				category: 'Power-Up',
 				...assets
 			},

@@ -30,12 +30,11 @@ export default class Tool extends ToolItem {
 	async use(ctx: Context, entry: CurrencyEntry) {
 		const [k, v] = [Object.keys(this.options), Object.values(this.options)];
 		const options = Array(k.length).fill(null).map((_, i) => `**\`${k[i]}\` ■ ${v[i]} Meme**`);
-		await ctx.channel.send({
+		const choice = await ctx.channel.send({
 			content: `**__${ctx.author} What type of meme?__**\n${options.join('\n')}`, 
 			allowedMentions: { users: [ctx.author.id] } 
-		});
+		}).then(() => ctx.awaitMessage());
 
-		const choice = await ctx.awaitMessage();
 		if (!choice) {
 			return ctx.reply(`imagine ignoring me smh`);
 		}
@@ -44,7 +43,7 @@ export default class Tool extends ToolItem {
 		}
 
 		const karma = ctx.client.util.randomNumber(-5e3, 1e4);
-		const won = karma * 10;
+		const won = karma * ctx.client.util.randomNumber(1, 10);
 
 		if (karma < 1) {
 			await entry.subItem(this.id).save(false);

@@ -28,7 +28,7 @@ export abstract class CollectibleItem extends Item {
 		super(id, {
 			assets: {
 				sellRate: 0,
-				upgrade: 100e6,
+				upgrade: 250e6,
 				category: 'Collectible',
 				...assets
 			},

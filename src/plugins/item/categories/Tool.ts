@@ -33,7 +33,7 @@ export abstract class ToolItem extends Item {
 		super(id, {
 			assets: {
 				sellRate: 0.1,
-				upgrade: 1e6,
+				upgrade: 2.5e6,
 				category: 'Tool',
 				...assets
 			},

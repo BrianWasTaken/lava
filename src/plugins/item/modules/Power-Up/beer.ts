@@ -16,9 +16,9 @@ export default class PowerUp extends PowerUpItem {
 				push: true
 			},
 			upgrades: [
-				{ price: 3000, duration: 1000 * 60 * 3 },
-				{ price: 5000, duration: 1000 * 60 * 5 },
-				{ price: 10000, duration: 1000 * 60 * 10 },
+				{ price: 27000, duration: 1000 * 60 * 3 },
+				{ price: 20000, duration: 1000 * 60 * 5 },
+				{ price: 15000, duration: 1000 * 60 * 10 },
 			]
 		});
 	}
