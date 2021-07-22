@@ -25,7 +25,7 @@ export default class extends GambleCommand {
 	}
 
 	getSlots(emojis: string[], multi: number) {
-		const { randomInArray, randomsInArray, randomNumber, deepFilter } = this.client.util;
+		const { randomInArray, randomsInArray, randomNumber, deepFilter, shuffle } = this.client.util;
 		const first = randomInArray(emojis);
 		const odds = randomNumber(1, 100);
 
@@ -35,8 +35,7 @@ export default class extends GambleCommand {
 			return Array(3).fill(first);
 		}
 		if (odds > 85) {
-			return [randomInArray(deepFilter(emojis, [first])), first, first]
-				.sort(() => Math.random() * 0.5);
+			return shuffle([...Array(2).fill(first), deepFilter(emojis, [first])]);
 		}
 
 		return randomsInArray(emojis, 3);

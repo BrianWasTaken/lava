@@ -24,7 +24,7 @@ export default class PowerUp extends PowerUpItem {
 	}
 
 	effect(effects: ItemEffects, entry: CurrencyEntry) {
-		return effects.xpBoost(200);
+		return effects.xpBoost(2);
 	}
 
 	async use(ctx: Context, entry: CurrencyEntry) {

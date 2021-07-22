@@ -150,7 +150,7 @@ const beg = (client: LavaClient): BegData[] => [
 		odds: 0.9,
 		person: 'Melmsie',
 		msgs: {
-			success: w => `You're so lucky despite all the nerfs I gave to my bot, here's **${w.toLocaleString()}** coins.`,
+			success: w => `You're so lucky despite all the nerfs I did to my bot, here's **${w.toLocaleString()}** coins.`,
 			fail: 'Go away'
 		},
 		coins: {

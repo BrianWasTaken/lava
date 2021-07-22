@@ -15,7 +15,7 @@ export class GambleCommand extends Command {
 			args: [
 				{ 
 					id: 'amount', 
-					type: Argument.union('string') 
+					type: 'string'
 				}
 			], 
 			...options

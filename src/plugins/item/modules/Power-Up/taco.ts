@@ -31,14 +31,13 @@ export default class PowerUp extends PowerUpItem {
 		const { parseTime, randomNumber } = ctx.client.util;
 		const duration = this.getDuration(entry);
 		const expire = Date.now() + duration;
-		const won = randomNumber(100, 1000);
 		const multi = 15;
 
-		await entry.addPocket(won).setItemMulti(this.id, multi).activateItem(this.id, expire).save();
+		await entry.setItemMulti(this.id, multi).activateItem(this.id, expire).save();
+		
 		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will begone in ${parseTime(duration / 1000)}`,
-			color: Colors.FUCHSIA, author: { name: `You activated your ${this.name}!` },
-			footer: { text: `Coin Bonus: +${won.toLocaleString()} coins` }
+			color: Colors.FUCHSIA, title: `You activated your ${this.name}!`,
 		}]});
 	}
 }

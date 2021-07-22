@@ -23,13 +23,12 @@ export default class Tool extends ToolItem {
 		const { parseTime, randomNumber } = ctx.client.util;
 		const duration = 1000 * 60 * 60;
 		const expire = Date.now() + duration;
-		const won = randomNumber(100, 1000);
 
-		await entry.addPocket(won).activateItem(this.id, expire).save();
+		await entry.activateItem(this.id, expire).save();
+
 		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will stop beating in ${parseTime(duration / 1000)}`,
-			color: Colors.YELLOW, author: { name: `You activated your ${this.name}!` },
-			footer: { text: `Coin Bonus: +${won.toLocaleString()} coins` }
+			color: Colors.YELLOW, title: `You activated your ${this.name}!`,
 		}]});
 	}
 }

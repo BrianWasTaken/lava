@@ -45,7 +45,7 @@ export default class extends Command {
 		const newInv = await entry.removePocket(inv.upgrade.upgrade).upgradeItem(item.id).save().then(e => e.props.items.get(item.id));
 		return ctx.reply({ embeds: [{
 			color: Colors.GREEN, author: { 
-				name: `${inv.upgrade.name} finally reached ${
+				name: `Your ${inv.upgrade.name} finally reached ${
 					newInv.isMaxLevel() ? 'MAX LEVEL' : `Level ${newInv.level}`
 				}!`,
 				iconURL: ctx.author.avatarURL({ 

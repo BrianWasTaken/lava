@@ -1,4 +1,4 @@
-import { Item, ItemOptions, ItemAssets, ItemConfig, ItemUpgrade, Context, CurrencyEntry, ItemEffects, Inventory } from 'lava/index';
+import { Item, ItemOptions, ItemAssets, ItemConfig, ItemUpgrade, Colors, Context, CurrencyEntry, ItemEffects, Inventory } from 'lava/index';
 
 export type PowerItemAssets = Omit<ItemAssets, 'sellRate' | 'upgrade'>;
 
@@ -57,5 +57,18 @@ export abstract class PowerUpItem extends Item {
 
 	public getDuration(entry: CurrencyEntry) {
 		return this.getUpgrade(entry.props.items.get(this.id)).duration ?? 0;
+	}
+
+	public async use(ctx: Context, entry: CurrencyEntry) {
+		const { parseTime, randomNumber } = ctx.client.util;
+		const duration = this.getDuration(entry);
+		const expire = Date.now() + duration;
+
+		await entry.activateItem(this.id, expire).save();
+
+		return ctx.reply({ embeds: [{
+			description: `Your ${this.id} will begone in **${parseTime(duration / 1000)}**`,
+			color: Colors.FUCHSIA, title: `You activated your ${this.name}!`,
+		}]});
 	}
 }
