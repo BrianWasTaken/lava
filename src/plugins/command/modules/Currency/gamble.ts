@@ -13,7 +13,7 @@ export default class extends GambleCommand {
 
 	async exec(ctx: Context, args: { amount: string }) {
 		const entry = await ctx.currency.fetch(ctx.author.id);
-		const bet = this.constructor.parseBet(entry, args.amount);
+		const bet = GambleCommand.parseBet(entry, args.amount);
 		if (typeof bet === 'string') return ctx.reply(bet).then(() => false);
 
 		const { userD, botD } = this.roll(false);
