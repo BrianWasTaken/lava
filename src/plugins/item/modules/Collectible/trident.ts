@@ -14,11 +14,11 @@ export default class Collectible extends CollectibleItem {
 				push: true,
 			},
 			upgrades: [
-				{ price: 100e6 }, 
-				{ price: 120e6 }, 
-				{ price: 150e6 },
-				{ price: 200e6 },
-				{ price: 250e6 }
+				{ price: 50e6 }, 
+				{ price: 40e6 }, 
+				{ price: 35e6 },
+				{ price: 30e6 },
+				{ price: 25e6 }
 			],
 			entities: {
 				xpBoost: [10, 20, 30, 40, 50, 100]
