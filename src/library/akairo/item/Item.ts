@@ -225,27 +225,35 @@ export abstract class Item extends AbstractModule {
 	/**
 	 * Simple method to buy this item from the shop.
 	 */
-	public buy(entry: CurrencyEntry, amount: number) {
-		const inventory = entry.props.items.get(this.id);
-		const { price, sellRate, premium } = this.getUpgrade(inventory);
-		const p = Math.round(price) * Math.trunc(amount);
-		
-		return (premium ? entry.subKeys(p) : entry.removePocket(p))
-			.addItem(this.id, amount).save()
-			.then(() => this.getUpgrade(inventory));
+	public buy(entry: CurrencyEntry, options: {
+		discount?: number;
+		amount: number;
+	}) {
+		const thisItem = entry.props.items.get(this.id);
+		const { price, sellRate, premium } = this.getUpgrade(thisItem);
+		const discounted = this.calcDiscount(price, options.discount ?? 0);
+		const calced = Math.round(discounted) * Math.trunc(options.amount);
+
+		return (premium ? entry.subKeys(calced) : entry.removePocket(calced))
+			.addItem(this.id, options.amount).save()
+			.then(() => this.getUpgrade(thisItem));
 	}
 
 	/**
 	 * Simple method to sell this item to the shop.
 	 */
-	public sell(entry: CurrencyEntry, amount: number) {
-		const inventory = entry.props.items.get(this.id);
-		const { price, sellRate, premium } = this.getUpgrade(inventory);
-		const p = Math.round(price * sellRate) * Math.trunc(amount);
+	public sell(entry: CurrencyEntry, options: {
+		discount?: number;
+		amount: number;
+	}) {
+		const thisItem = entry.props.items.get(this.id);
+		const { price, sellRate, premium } = this.getUpgrade(thisItem);
+		const discounted = this.calcDiscount(price * sellRate, options.discount ?? 0);
+		const calced = Math.round(discounted) * Math.trunc(options.amount);
 
-		return (premium ? entry.addKeys(p) : entry.addPocket(p))
-			.subItem(this.id, amount).save()
-			.then(() => this.getUpgrade(inventory));
+		return (premium ? entry.subKeys(calced) : entry.removePocket(calced))
+			.addItem(this.id, options.amount).save()
+			.then(() => this.getUpgrade(thisItem));
 	}
 
 	/**
@@ -256,7 +264,8 @@ export abstract class Item extends AbstractModule {
 		const upgrade = this.upgrades[level];	
 
 		const icon = upgrade.premium ? ':key:' : ':coin:';	
-		const price = item.id === this.id ? this.calcDiscount(upgrade.price, discount) : upgrade.price;
+		const discounted = this.calcDiscount(upgrade.price, discount);
+		const price = item.id === this.id ? discounted : upgrade.price;
 
 		return { ...upgrade, price, icon };
 	}
@@ -265,18 +274,11 @@ export abstract class Item extends AbstractModule {
 	 * Get the sale of this item.
 	 */
 	public getSale(inv: Inventory) {
-		const { discount, item } = this.handler.sale;
-		const calc = (amount: number) => {
-			return item.id === this.id 
-				? this.calcDiscount(amount, discount) 
-				: amount;
-		};
-
 		const { price, sellRate } = this.getUpgrade(inv);
-		return {
-			sell: calc(price * sellRate),
-			cost: calc(price),
-		};
+		const { discount, item } = this.handler.sale;
+		
+		const calc = (amount: number) => item.id === this.id ? this.calcDiscount(amount, discount) : amount;
+		return { sell: calc(price * sellRate), cost: calc(price) };
 	}
 
 	/**

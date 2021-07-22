@@ -64,7 +64,9 @@ export default class extends Command {
 		if (check) return ctx.reply(check).then(() => false);
 
 		const { amount, item } = args;
-		const { price } = await item.buy(entry, amount);
+		const { price } = await item.buy(entry, { 
+			amount, discount: entry.effects.discount
+		});
 
 		return ctx.reply({ embeds: [{
 			author: {
