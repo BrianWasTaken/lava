@@ -41,13 +41,10 @@ export default class extends GambleCommand {
 		return randomsInArray(emojis, 3);
 	}
 
-	async exec(ctx: Context, args: { amount: string | number }) {
+	async exec(ctx: Context, args: { amount: string }) {
 		const entry = await ctx.currency.fetch(ctx.author.id);
-
-		const bet = this.parseArgs(ctx, args, entry);
+		const bet = this.constructor.parseBet(entry, args.amount);
 		if (typeof bet === 'string') return ctx.reply(bet).then(() => false);
-		const state = this.checkArgs(bet, entry);
-		if (typeof state === 'string') return ctx.reply(state).then(() => false);
 
 		const multi = GambleCommand.getMulti(ctx, entry);
 		const slots = this.getSlots(Object.keys(this.slots(multi)), multi);

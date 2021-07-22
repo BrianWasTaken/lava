@@ -7,6 +7,11 @@ import { Command } from 'lava/akairo';
 export class GambleCommand extends Command {
 	public ['constructor']: typeof GambleCommand;
 
+	/**
+	 * Construct a gambling command.
+	 * @param id the id of this command
+	 * @param options the command options
+	 */
 	public constructor(id: string, options: CommandOptions) {
 		super(id, { 
 			category: 'Currency',
@@ -22,51 +27,53 @@ export class GambleCommand extends Command {
 		});
 	}
 
-	parseArgs(ctx: Context, args: { amount: string | number }, entry: CurrencyEntry) {
+	/**
+	 * The new disgusting parser I made for gambling.
+	 * @param entry the user's entry from mongodb
+	 * @param amount the amount akairo parsed for us
+	 */
+	public static parseBet(entry: CurrencyEntry, amount: string) {
 		const { MIN_BET, MAX_BET } = Currency;
-		const { isInteger } = ctx.client.util;
+		const { isInteger } = entry.client.util;
 		const { pocket } = entry.props;
-		const { amount } = args;
+		let bet: number;
 
-		if (!amount) return null;
+		if (!amount) return 'You need something to play!';
 
 		if (!isInteger(Number(amount))) {
-			switch((amount as string).toLowerCase()) {
-				case 'all':
-					return pocket;
-				case 'max':
-					return Math.min(MAX_BET, pocket);
-				case 'half':
-					return Math.trunc(Math.min(MAX_BET, pocket) / 2);
-				case 'min':
-					return MIN_BET;
-				default:
-					if ((amount as string).match(/k/g)) {
-						const kay = (amount as string).replace(/k$/g, '');
-						return isInteger(kay) ? Number(kay) * 1e3 : null;
-					}
-					return GambleMessages.IS_NAN;
-			}
+			const amt = amount.toLowerCase();
+			if (amt === 'all') bet = pocket;
+			if (amt === 'min') bet = MIN_BET;
+			if (amt === 'max') bet = Math.min(MAX_BET, pocket);
+			if (amt === 'half') bet = Math.trunc(Math.min(MAX_BET, pocket) / 2);
+			if (amt.match(/k/g)) bet = Number(amt.replace(/k$/g, '')) * 1000;
+		} else if (typeof amount !== 'undefined') {
+			bet = parseFloat(amount);
 		}
 
-		return parseFloat(amount as string) || parseFloat(args.amount as string) || null;
+		return this.checkBet(bet, entry);
 	}
 
-	checkArgs(bet: string | number, entry: CurrencyEntry) {
-		switch(true) {
-			case entry.props.pocket <= 0:
-				return GambleMessages.NO_COINS;
-			case entry.props.pocket > Currency.MAX_POCKET:
-				return GambleMessages.TOO_RICH;
-			case bet > entry.props.pocket:
-				return GambleMessages.BET_HIGHER_POCKET(entry.props.pocket);
-			case bet < Currency.MIN_BET:
-				return GambleMessages.BET_IS_LOWER;
-			case bet > Currency.MAX_BET:
-				return GambleMessages.BET_IS_HIGHER;
-			default:
-				return bet as number;
-		}
+	/**
+	 * Check if the bet or user's pocket are blocked.
+	 * @param bet the parsed bet amount
+	 * @param entry the user's entry from mongodb
+	 */
+	public static checkBet(bet: number, entry: CurrencyEntry) {
+		if (!bet || typeof bet === 'undefined') 
+			return 'You need something to play!';
+		if (entry.props.pocket <= 0) 
+			return 'You have no coins to gamble with.';
+		if (entry.props.pocket > Currency.MAX_POCKET)
+			return 'You are too rich to play!';
+		if (bet < Currency.MIN_BET)
+			return `You can't bet lower than **${Currency.MIN_BET.toLocaleString()}** :rage:`;
+		if (bet > Currency.MAX_BET) 
+			return `You can't bet higher than **${Currency.MAX_BET.toLocaleString()}** smh`;
+		if (bet > entry.props.pocket)
+			return `You only have **${entry.props.pocket.toLocaleString()}** coins lol`;
+
+		return bet;
 	}
 
 	/**
@@ -87,7 +94,7 @@ export class GambleCommand extends Command {
 	 * @param [extra] any extra winnings
 	 */
 	public static getWinnings(multi: number, bet: number, cap = true) {
-		const base = Math.ceil(bet * ((Math.random() * 0.5) + 0.2));
+		const base = Math.ceil(bet * ((Math.random() * 0.8) + 0.2));
 		const raw = base + Math.ceil(base * (multi / 100));
 		return cap ? Math.min(Currency.MAX_WIN, raw) : raw;
 	}

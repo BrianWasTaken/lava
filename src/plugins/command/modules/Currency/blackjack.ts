@@ -10,13 +10,10 @@ export default class extends GambleCommand {
 		});
 	}
 
-	async exec(ctx: Context, args: { amount: number | string }) {
+	async exec(ctx: Context, args: { amount: string }) {
 		const entry = await ctx.currency.fetch(ctx.author.id);
-
-		const bet = this.parseArgs(ctx, args, entry);
+		const bet = this.constructor.parseBet(entry, args.amount);
 		if (typeof bet === 'string') return ctx.reply(bet).then(() => false);
-		const state = this.checkArgs(bet, entry);
-		if (typeof state === 'string') return ctx.reply(state).then(() => false);
 
 		const faces = [ 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 		const suits = ['spades', 'hearts', 'diamonds', 'clubs'];
