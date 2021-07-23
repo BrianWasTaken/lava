@@ -251,8 +251,8 @@ export abstract class Item extends AbstractModule {
 		const discounted = this.calcDiscount(price * sellRate, options.discount ?? 0);
 		const calced = Math.round(discounted) * Math.trunc(options.amount);
 
-		return (premium ? entry.subKeys(calced) : entry.removePocket(calced))
-			.addItem(this.id, options.amount).save()
+		return (premium ? entry.addKeys(calced) : entry.addPocket(calced))
+			.subItem(this.id, options.amount).save()
 			.then(() => this.getUpgrade(thisItem));
 	}
 
