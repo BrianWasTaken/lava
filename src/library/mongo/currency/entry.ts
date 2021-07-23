@@ -275,7 +275,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 				if (newLevel > previousLevel) this.endpoint.emit('levelUp', this, user as UserPlus);
 				return space ? this.calc().space() : this;
 			},
-			space: (os = 55) => {
+			space: (os = 110) => {
 				if (this.data.props.xp > maxLevel) return this;
 				const { level } = this.data.prestige;
 				const amount = Math.ceil(os * (level / 2) + os);

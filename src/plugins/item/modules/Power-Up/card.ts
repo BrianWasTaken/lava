@@ -12,7 +12,8 @@ export default class Tool extends PowerUpItem {
 				info: 'Gives you 1000-5000 coins of expanded storage!'
 			},
 			config: {
-				push: true
+				push: true,
+				buyable: false // this is ur punishment
 			},
 			upgrades: [
 				{
