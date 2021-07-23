@@ -94,8 +94,8 @@ const beg = (client: LavaClient): BegData[] => [
 			])
 		},
 		coins: {
-			max: client.util.randomNumber(3, 5) * 1e6,
-			min: client.util.randomNumber(1, 2) * 1e6
+			max: 100000,
+			min: 100
 		},
 	},
 	{
@@ -130,12 +130,12 @@ const beg = (client: LavaClient): BegData[] => [
 			fail: `The phaser gram phaser test suggests you to fuck off <3`
 		},
 		coins: {
-			max: client.util.randomNumber(51, 100) * 1000,
-			min: client.util.randomNumber(1, 50) * 1000
+			max: 10000,
+			min: 1000
 		}
 	},
 	{
-		odds: 0.45,
+		odds: 0.35,
 		person: 'You in a parallel universe',
 		msgs: {
 			success: w => `I can give myself **${w.toLocaleString()}** coins what?`,
@@ -147,15 +147,15 @@ const beg = (client: LavaClient): BegData[] => [
 		}
 	},
 	{
-		odds: 0.9,
+		odds: 0.6,
 		person: 'Melmsie',
 		msgs: {
 			success: w => `You're so lucky despite all the nerfs I did to my bot, here's **${w.toLocaleString()}** coins.`,
 			fail: 'Go away'
 		},
 		coins: {
-			max: 300,
-			min: 100
+			max: 30000,
+			min: 10000
 		}
 	}
 ];

@@ -199,7 +199,7 @@ const search = (client: LavaClient): SearchData[] => [
 	},
 	{
 		place: 'space',
-		maxCoins: 5000000,
+		maxCoins: 500000,
 		minCoins: 25000,
 		items: ['medal', 'cheese', 'taco', 'totem'],
 		successMsg: w => `Wow you dodged the space debris, you got **${w.toLocaleString()}** ggs`,
