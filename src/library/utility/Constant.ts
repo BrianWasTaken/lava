@@ -41,12 +41,12 @@ const Currency = {
 	MAX_SAFE_POCKET: 1000e6,
 	MAX_INVENTORY: 100000,
 	MAX_PRESTIGE: 1000,
-	MAX_POCKET: 1000000000,
+	MAX_POCKET: 100000000,
 	MAX_LEVEL: 1000,
 	MAX_MULTI: 250,
-	MAX_WIN: 1515151,
-	MAX_BET: 500000,
-	MIN_BET: 100,
+	MAX_WIN: 15151515,
+	MAX_BET: 5000000,
+	MIN_BET: 500,
 	XP_COST: 100,
 };
 
@@ -56,20 +56,6 @@ const Currency = {
 const Spawner = {
 	UNPAIDS_CAP: 100000,
 	COOLDOWN: 60000,
-};
-
-/**
- * Gamble messages. 
-*/
-const GambleMessages = {
-	IS_NAN: 'It needs to be a real number yeah?',
-	NO_ARGS: 'You need something to play!',
-	TOO_RICH: 'You are too rich to play!',
-	NO_COINS: 'You have no coins to play for RIP',
-	BET_IS_NAN: 'It should be a positive number yeah?',
-	BET_IS_LOWER: `You can't bet lower than **${Currency.MIN_BET.toLocaleString()}**, sorry not sorry`,
-	BET_IS_HIGHER: `You can't bet higher than **${Currency.MAX_BET.toLocaleString()}** coins :rage:`,
-	BET_HIGHER_POCKET: (pocket: number) => `You only have **${pocket.toLocaleString()}** coins lol don't try and lie to me hoe`,
 };
 
 /**
@@ -105,4 +91,4 @@ const Emojis = {
 	SQUARE_GREEN: '<:memerGreen:729863510296887398>',
 };
 
-export { Emojis, Colors, Currency, Spawner, GambleMessages, ItemMessages };
+export { Emojis, Colors, Currency, Spawner, ItemMessages };
