@@ -1,6 +1,6 @@
 import { Argument, CommandOptions } from 'discord-akairo';
-import { Currency, GambleMessages } from 'lava/utility';
 import { CurrencyEntry } from 'lava/mongo';
+import { Currency } from 'lava/utility';
 import { Context } from 'lava/discord';
 import { Command } from 'lava/akairo';
 
