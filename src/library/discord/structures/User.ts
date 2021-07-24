@@ -18,7 +18,6 @@ export declare interface UserPlus extends User {
 }
 
 export class UserPlus extends User implements Structure {
-	public client: LavaClient;
 	public currency = new CurrencyEntry(this, this.client.db.currency);
 	public spawn = new SpawnEntry(this, this.client.db.spawn);
 	public crib = new CribEntry(this, this.client.db.crib);
