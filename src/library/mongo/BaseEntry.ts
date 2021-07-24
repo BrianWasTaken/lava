@@ -4,7 +4,7 @@ import { Snowflake } from 'discord.js';
 import { Endpoint } from 'lava/mongo';
 import { Model } from 'mongoose';
 
-class BaseEntry<Profile extends BaseProfile> {
+export class BaseEntry<Profile extends BaseProfile> {
 	/**
 	 * The client instance for this entry.
 	 */
@@ -43,7 +43,7 @@ class BaseEntry<Profile extends BaseProfile> {
 		const endpointCache = this.endpoint.cache.get(this.context.id as Snowflake);
 		if (endpointCache) {
 			this.cache = endpointCache;
-			return this;
+			// return this;
 		}
 
 		const fetched = await this.endpoint.fetch(this.context.id as Snowflake);
@@ -61,7 +61,3 @@ class BaseEntry<Profile extends BaseProfile> {
 		return this;
 	}
 } 
-
-const ThisEntry = BaseEntry;
-
-export { BaseEntry };
