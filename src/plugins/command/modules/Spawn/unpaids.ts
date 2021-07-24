@@ -1,5 +1,5 @@
 import { Command, Context, GuildMemberPlus, } from 'lava/index';
-import { MessageOptions } from 'discord.js';
+import { MessageOptions, Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -16,7 +16,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context, args: { member: GuildMemberPlus }) {
+	async exec(ctx: Message, args: { member: GuildMemberPlus }) {
 		const entry = await args.member.user.spawn.fetch();
 		const balance = {
 			'Remaining Unpaids': entry.props.unpaids.toLocaleString(),

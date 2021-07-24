@@ -1,5 +1,6 @@
 import { Context, CurrencyEntry, Colors } from 'lava/index';
 import { ToolItem } from '../..';
+import { Message } from 'discord.js';
 
 export default class Tool extends ToolItem {
 	constructor() {
@@ -19,7 +20,7 @@ export default class Tool extends ToolItem {
 		});
 	}
 
-	async use(ctx: Context, entry: CurrencyEntry) {
+	async use(ctx: Message, entry: CurrencyEntry) {
 		const { parseTime, randomNumber } = ctx.client.util;
 		const duration = 1000 * 60 * 60;
 		const expire = Date.now() + duration;

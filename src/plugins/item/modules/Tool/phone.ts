@@ -1,5 +1,6 @@
 import { Context, CurrencyEntry } from 'lava/index';
 import { ToolItem } from '../..';
+import { Message } from 'discord.js';
 
 export default class Tool extends ToolItem {
 	constructor() {
@@ -18,7 +19,7 @@ export default class Tool extends ToolItem {
 		});
 	}
 
-	async use(ctx: Context, entry: CurrencyEntry) {
+	async use(ctx: Message, entry: CurrencyEntry) {
 		return ctx.reply('Your phone is currently off.'); // Prompt `y / n` for 1000 coins to turn it on.
 	}
 }

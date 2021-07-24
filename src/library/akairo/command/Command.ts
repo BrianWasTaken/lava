@@ -78,7 +78,7 @@ export class Command extends OldCommand implements AbstractModule {
 		if (this.category.id !== 'Currency') return;
 		if (this.handler.events.get(ctx.channel.id)) return;
 
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		const actives = entry.actives.find(a => a.effects.entities.keys.length > 0);
 		if (!actives) return;
 
@@ -95,7 +95,7 @@ export class Command extends OldCommand implements AbstractModule {
 	 * Method to run this command.
 	 * Return `true` to add cooldown, `false` otherwise.
 	 */
-	public exec(context: Context, args?: any): PromiseUnion<boolean> {
+	public exec(context: Message, args?: any): PromiseUnion<boolean> {
 		return super.exec(context, args);
 	}
 

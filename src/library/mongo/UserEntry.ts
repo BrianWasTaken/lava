@@ -15,7 +15,7 @@ export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
 	public client: LavaClient;
 	public cache: Data;
 
-	public constructor(context: Structure, endpoint: Endpoint<Data>) {
+	public constructor(context: Structure, endpoint: Endpoint<Data>, cache?: Data) {
 		/** @type {Endpoint} */
 		this.endpoint = endpoint;
 		/** @type {Structure} */
@@ -23,7 +23,7 @@ export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
 		/** @type {LavaClient} */
 		this.client = endpoint.client;
 		/** @type {Data} */
-		this.cache = null;
+		this.cache = cache ?? null;
 	}
 
 	/**

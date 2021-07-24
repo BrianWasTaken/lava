@@ -1,5 +1,6 @@
 import { Command, Context, GuildMemberPlus, Currency } from 'lava/index';
 import { Argument, ArgumentTypeCaster } from 'discord-akairo';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -17,9 +18,9 @@ export default class extends Command {
 				},
 				{
 					id: 'amount',
-					type: Argument.union('number', ((c: Context, a: string) => {
+					type: Argument.union('number', (c: Message, a: string) => {
 						return ['all', 'max'].some(e => e.includes(a.toLowerCase())) ? a.toLowerCase() : null;
-					}) as ArgumentTypeCaster),
+					}),
 					default: null,
 					unordered: true
 				}
@@ -27,7 +28,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context, { member, amount }: { member: GuildMemberPlus, amount: number }) {
+	async exec(ctx: Message, { member, amount }: { member: GuildMemberPlus, amount: number }) {
 		const entry = await ctx.author.currency.fetch();
 		if (!member) {
 			return ctx.reply('Bruh who are you giving coins to?').then(() => false);

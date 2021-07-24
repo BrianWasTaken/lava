@@ -1,4 +1,5 @@
 import { Command, Context, GuildMemberPlus } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -16,10 +17,10 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context, { member }: { member: GuildMemberPlus }) {
+	async exec(ctx: Message, { member }: { member: GuildMemberPlus }) {
 		const { user, joinedAt, nickname } = member;
 		const { createdAt } = user;
-		const data = await ctx.lava.fetch(user.id);
+		const data = await member.user.lava.fetch();
 		const created = new Date(createdAt);
 		const joined = new Date(joinedAt);
 
@@ -31,10 +32,10 @@ export default class extends Command {
 			fields: [
 				{ name: 'Created at', value: created.toDateString(), inline: true },
 				{ name: 'Joined at', value: joined.toDateString(), inline: true },
-				{ name: 'Commands Ran', value: data.data.commands.commands_ran.toLocaleString(), inline: true },
+				{ name: 'Commands Ran', value: data.cache.commands.commands_ran.toLocaleString(), inline: true },
 				{ name: 'Avatar URL', value: `[Click Here](${user.avatarURL({ dynamic: true })})`, inline: true },
 				{ name: 'Nickname', value: nickname ?? 'No Nickname here', inline: true },
-				{ name: 'Last Command ran', value: data.data.commands.last_cmd, inline: true }
+				{ name: 'Last Command ran', value: data.cache.commands.last_cmd, inline: true }
 			]
 		}]}).then(() => false);
 	}

@@ -1,5 +1,5 @@
+import { MessageOptions, Message } from 'discord.js';
 import { Command, Context } from 'lava/index';
-import { MessageOptions } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -18,7 +18,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context, { text }: { text: string }) {
+	async exec(ctx: Message, { text }: { text: string }) {
 		const params = new URLSearchParams();
 		params.set('text', text);
 		

@@ -1,6 +1,6 @@
 import { AbstractModule, AbstractModuleOptions, } from 'lava/akairo';
 import { ArgumentHandler } from '.';
-import { Context } from 'lava/discord';
+import { Message } from 'discord.js';
 
 export abstract class Argument extends AbstractModule {
 	/**
@@ -11,8 +11,7 @@ export abstract class Argument extends AbstractModule {
 	/**
 	 * Method to run this argument.
 	 */
-	public exec(ctx: Context, args: string): PromiseUnion<any>;
-	public exec(ctx: Context, args: string): PromiseUnion<any> {
+	public exec(ctx: Message, args: string): PromiseUnion<any> {
 		return null;
 	}
 }

@@ -1,4 +1,5 @@
 import { Command, Context, Currency, Colors } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -17,7 +18,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context, { page }: { page: number }) {
+	async exec(ctx: Message, { page }: { page: number }) {
 		const multis = await ctx.author.currency.fetch().then(d => d.calcMulti(ctx));
 		const pages = ctx.client.util.paginateArray(
 			multis.unlocked.map(({ name, value }) => `${name} (\`${value < 1 ? `${value}` : `+${value}`}%\`)`

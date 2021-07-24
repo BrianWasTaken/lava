@@ -1,5 +1,6 @@
 import { Command, Context, ItemSale, Item, Inventory, Colors } from 'lava/index';
 import { Argument } from 'discord-akairo';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -37,7 +38,7 @@ export default class extends Command {
 		return `**${emoji} ${name}** — ${icon} [${price.toLocaleString()}](https://google.com)\n${intro}`;
 	}
 
-	async exec(ctx: Context, args: { query: number | Item }) {
+	async exec(ctx: Message, args: { query: number | Item }) {
 		const { paginateArray, parseTime } = ctx.client.util;
 		const { item: handler } = ctx.client.handlers;
 		const entry = await ctx.author.currency.fetch();

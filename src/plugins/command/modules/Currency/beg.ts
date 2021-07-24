@@ -1,7 +1,7 @@
 import { Context, Command, LavaClient, Colors } from 'lava/index';
-import { MessageEmbedOptions } from 'discord.js';
+import { MessageEmbedOptions, Message } from 'discord.js';
 
-type PersonPredicate = (ctx: Context) => string;
+type PersonPredicate = (ctx: Message) => string;
 type MessagePredicate = (won: number) => string;
 
 interface BegCoins {
@@ -43,7 +43,7 @@ export default class extends Command {
 		return { raw, won };
 	}
 
-	getSuccessMsg(ctx: Context, { coins, person, msgs }: BegData, { multi, raw, won }: { multi: number, raw: number, won: number; }): MessageEmbedOptions {
+	getSuccessMsg(ctx: Message, { coins, person, msgs }: BegData, { multi, raw, won }: { multi: number, raw: number, won: number; }): MessageEmbedOptions {
 		return {
 			author: { name: typeof person === 'function' ? person(ctx) : person },
 			footer: { text: `Multiplier Bonus: +${multi}% (${raw.toLocaleString()} coins)` },
@@ -52,7 +52,7 @@ export default class extends Command {
 		};
 	}
 
-	getFailMsg(ctx: Context, { coins, person, msgs }: BegData): MessageEmbedOptions {
+	getFailMsg(ctx: Message, { coins, person, msgs }: BegData): MessageEmbedOptions {
 		return {
 			author: { name: typeof person === 'function' ? person(ctx) : person },
 			footer: { text: 'Imagine begging lol' },
@@ -61,7 +61,7 @@ export default class extends Command {
 		};
 	}
 
-	async exec(ctx: Context) {
+	async exec(ctx: Message) {
 		const entry = await ctx.author.currency.fetch();
 		const beg = ctx.client.util.randomInArray(this.beg);
 		const multi = entry.calcMulti(ctx).unlocked.reduce((p, c) => p + c.value, 0);

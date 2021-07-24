@@ -1,5 +1,6 @@
 import { Command, Context } from 'lava/index';
 import { Flag } from 'discord-akairo';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -12,14 +13,14 @@ export default class extends Command {
 		});
 	}
 
-	*args(ctx: Context) {
+	*args(ctx: Message) {
 		const subs = this.subCommands.filter(c => c.parent === this.id);
 		const sub: string = yield [...subs.map(s => [s.id])];
 
 		return sub ? Flag.continue(sub) : null;
 	}
 
-	async exec(ctx: Context, args: any) {
+	async exec(ctx: Message, args: any) {
 		ctx.client.console.log('Client', args);
 		await ctx.reply('what');
 		return false;

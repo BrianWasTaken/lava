@@ -4,8 +4,8 @@
  */
 
 import { AbstractModuleOptions, AbstractModule } from 'lava/akairo';
+import { MessageOptions, MessageEmbed, Message } from 'discord.js';
 import { Context, CurrencyEntry, Inventory } from 'lava/index'; 
-import { MessageOptions, MessageEmbed } from 'discord.js';
 import { ItemHandler } from '.';
 
 export interface ItemUpgrade extends ItemAssets {
@@ -215,8 +215,8 @@ export abstract class Item extends AbstractModule {
 	/**
 	 * Main method to use items.
 	*/
-	public use(context: Context, entry: CurrencyEntry, times = 1): PromiseUnion<any> {
-		return context.reply({ embeds: [{
+	public use(message: Message, entry: CurrencyEntry, times = 1): PromiseUnion<any> {
+		return message.reply({ embeds: [{
 			description: 'Used your item, now what?',
 			title: `${this.emoji} ${this.name}`, color: 0xfafafa,
 		}]});

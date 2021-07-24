@@ -1,4 +1,6 @@
 import { Command, Context, Currency } from 'lava/index';
+import { Message } from 'discord.js';
+
 const { PRESTIGE_POCKET_REQ, PRESTIGE_LEVEL_REQ, XP_COST, PRESTIGE_LEVEL_REQ_CAP } = Currency;
 
 const emojis = [
@@ -24,7 +26,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context) {
+	async exec(ctx: Message) {
 		const entry = await ctx.author.currency.fetch();
 		const prestige = entry.props.prestige.level;
 		const { romanize } = ctx.client.util;

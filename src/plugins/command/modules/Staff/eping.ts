@@ -1,4 +1,5 @@
 import { SubCommand, Context } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends SubCommand {
 	constructor() {
@@ -21,7 +22,7 @@ export default class extends SubCommand {
 		});
 	}
 
-	async exec(ctx: Context, { msg }: { msg: string }) {
+	async exec(ctx: Message, { msg }: { msg: string }) {
 		const role = ctx.guild.roles.cache.get('704013651887128707');
 
 		await ctx.delete();

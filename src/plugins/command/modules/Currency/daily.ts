@@ -1,4 +1,5 @@
-import { Command, Context, Colors } from 'lava/index';
+import { Command, Colors } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -11,9 +12,9 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context) {
+	async exec(ctx: Message) {
 		const entry = await ctx.author.currency.fetch();
-		let { streak, time } = entry.data.daily;
+		let { streak, time } = entry.cache.daily;
 
 		if (Date.now() - time > 172800000) {
 			entry.resetDailyStreak();

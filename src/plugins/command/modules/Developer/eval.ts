@@ -1,4 +1,5 @@
 import { Command, Context, Colors } from 'lava/index';
+import { Message } from 'discord.js';
 import { inspect } from 'util';
 
 export default class extends Command {
@@ -22,7 +23,7 @@ export default class extends Command {
 		return `${'```'}${lang}\n${code}\n${'```'}`;
 	}
 
-	async exec(ctx: Context, args: { code: string }) {
+	async exec(ctx: Message, args: { code: string }) {
 		const { code } = args;
 		if (!code) return;
 

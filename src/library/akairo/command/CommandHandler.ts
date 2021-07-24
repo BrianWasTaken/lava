@@ -5,8 +5,8 @@
 
 import { AbstractHandler, AbstractHandlerOptions, AbstractModuleOptions, LavaClient, InhibitorHandler, ListenerHandler } from 'lava/akairo';
 import { CommandHandler as OldCommandHandler, CommandHandlerOptions, Category, Constants } from 'discord-akairo';
-import { Collection, Snowflake } from 'discord.js';
 import { Context, CommandQueue, Cooldown } from 'lava/index';
+import { Collection, Snowflake, Message } from 'discord.js';
 import { Command } from '.';
 
 const { CommandHandlerEvents, BuiltInReasons } = Constants;
@@ -54,12 +54,12 @@ export class CommandHandler extends OldCommandHandler implements AbstractHandler
 	/**
 	 * Events spawned by using some commands.
 	 */
-	public events = new Collection<Snowflake, Context>();
+	public events = new Collection<Snowflake, Message>();
 
 	/**
 	 * Run all post type inhibitors.
 	 */
-	public async runPostTypeInhibitors(context: Context, command: Command): Promise<boolean> {
+	public async runPostTypeInhibitors(context: Message, command: Command): Promise<boolean> {
 		if (command.ownerOnly) {
 			const isOwner = this.client.isOwner(context.author);
 			if (!isOwner) {
@@ -98,7 +98,7 @@ export class CommandHandler extends OldCommandHandler implements AbstractHandler
 	/**
 	 * Run cooldowns.
 	 */
-	public async checkCooldowns(context: Context, command: Command): Promise<boolean> {
+	public async checkCooldowns(context: Message, command: Command): Promise<boolean> {
 		const ignorer = command.ignoreCooldown || this.ignoreCooldown;
 		const isIgnored = Array.isArray(ignorer)
 			? ignorer.includes(context.author.id)
@@ -127,7 +127,7 @@ export class CommandHandler extends OldCommandHandler implements AbstractHandler
 	/**
 	 * Run a command.
 	 */
-	public async runCommand(context: Context, command: Command, args: any) {
+	public async runCommand(context: Message, command: Command, args: any) {
 		// await this.commandQueue.wait(context.author.id);
 		if (command.typing) {
 			context.channel.startTyping();

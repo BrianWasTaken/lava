@@ -1,5 +1,5 @@
+import { MessageOptions, Message } from 'discord.js';
 import { Command, Context } from 'lava/index';
-import { MessageOptions } from 'discord.js';
 
 export default class Utility extends Command {
 	public constructor() {
@@ -10,7 +10,7 @@ export default class Utility extends Command {
 		});
 	}
 
-	public exec = (ctx: Context) => ctx.reply({
+	public exec = (ctx: Message) => ctx.reply({
 		content: `**:ping_pong: Ponge:** \`${ctx.guild.shard.ping}ms\``
 	}).then(() => false);
 }

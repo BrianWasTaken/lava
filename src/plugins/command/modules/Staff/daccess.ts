@@ -1,4 +1,5 @@
 import { SubCommand, GuildMemberPlus, Context } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends SubCommand {
 	constructor() {
@@ -19,7 +20,7 @@ export default class extends SubCommand {
 		});
 	}
 
-	async exec(ctx: Context, { some1 }: { some1: GuildMemberPlus }) {
+	async exec(ctx: Message, { some1 }: { some1: GuildMemberPlus }) {
 		const role = ctx.guild.roles.cache.get('715507078860505091');
 		const hasRole = some1.roles.cache.has(role.id);
 		await (hasRole ? some1.roles.remove(role.id) : some1.roles.add(role.id));

@@ -1,4 +1,5 @@
-import { Inhibitor, Context, Command } from 'lava/index';
+import { Inhibitor, Command } from 'lava/index';
+import { Message } from 'discord.js'
 
 export default class extends Inhibitor {
 	constructor() {
@@ -10,7 +11,7 @@ export default class extends Inhibitor {
 		});
 	}
 
-	exec(ctx: Context, cmd: Command): boolean {
+	exec(ctx: Message, cmd: Command): boolean {
 		if (ctx.channel.type !== 'dm') {
 			return !ctx.member.roles.cache.has('692941106475958363') && cmd.staffOnly;
 		}

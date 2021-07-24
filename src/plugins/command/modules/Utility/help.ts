@@ -18,7 +18,7 @@ export default class extends Command {
 		});
 	}
 
-	exec(ctx: Context, { query }: { query: Command }) {
+	exec(ctx: Message, { query }: { query: Command }) {
 		if (query instanceof Command) {
 			return ctx.channel.send({ embeds: [{
 				title: `${query.name} Command`,

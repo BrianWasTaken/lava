@@ -8,16 +8,21 @@ declare module 'discord.js' {
 		currency: CurrencyEntry;
 		client: LavaClient;
 		spawn: SpawnEntry;
-		crib: CurrencyEntry;
+		crib: CribEntry;
 		lava: LavaEntry;
 	}
 }
 
+export declare interface UserPlus extends User {
+	client: LavaClient;
+}
+
 export class UserPlus extends User implements Structure {
+	public client: LavaClient;
 	public currency = new CurrencyEntry(this, this.client.db.currency);
-	public spawn = new CurrencyEntry(this, this.client.db.spawn);
-	public crib = new CurrencyEntry(this, this.client.db.crib);
-	public lava = new CurrencyEntry(this, this.client.db.lava);
+	public spawn = new SpawnEntry(this, this.client.db.spawn);
+	public crib = new CribEntry(this, this.client.db.crib);
+	public lava = new LavaEntry(this, this.client.db.lava);
 }
 
 Structures.extend('User', () => UserPlus);

@@ -1,5 +1,6 @@
 import { Command, Context, GuildMemberPlus, Inventory, Colors } from 'lava/index';
 import { Argument } from 'discord-akairo';
+import { Message } from 'discord.js';
 
 interface InventoryArgs {
 	member: GuildMemberPlus | number;
@@ -28,7 +29,7 @@ export default class extends Command {
 		});
 	}
 
-	resolveArgs(ctx: Context, args: InventoryArgs) {
+	resolveArgs(ctx: Message, args: InventoryArgs) {
 		const isMemberNumber = typeof args.member === 'number';
 		return <{ member: GuildMemberPlus, page: number }>{
 			member: isMemberNumber ? ctx.member : (args.member ?? ctx.member),
@@ -36,7 +37,7 @@ export default class extends Command {
 		}
 	}
 
-	async exec(ctx: Context, args: InventoryArgs) {
+	async exec(ctx: Message, args: InventoryArgs) {
 		const { member, page } = this.resolveArgs(ctx, args);
 		const isContext = ctx.author.id === member.user.id;
 

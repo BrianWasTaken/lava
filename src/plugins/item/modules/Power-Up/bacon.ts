@@ -1,5 +1,6 @@
 import { Context, CurrencyEntry, ItemEffects, Colors } from 'lava/index';
 import { PowerUpItem } from '../..';
+import { Message } from 'discord.js';
 
 export default class PowerUp extends PowerUpItem {
 	constructor() {
@@ -27,7 +28,7 @@ export default class PowerUp extends PowerUpItem {
 		return effects.multi(entry.props.items.get(this.id).multiplier);
 	}
 
-	async use(ctx: Context, entry: CurrencyEntry) {
+	async use(ctx: Message, entry: CurrencyEntry) {
 		const { parseTime, randomNumber } = ctx.client.util;
 		const duration = this.getDuration(entry);
 		const expire = Date.now() + duration;

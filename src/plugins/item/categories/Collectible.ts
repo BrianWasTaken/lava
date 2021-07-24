@@ -1,5 +1,5 @@
 import { Context, Item, ItemOptions, ItemAssets, ItemUpgrade, ItemConfig, ItemEntities, CurrencyEntry } from 'lava/index';
-import { MessageOptions } from 'discord.js';
+import { MessageOptions, Message } from 'discord.js';
 
 export type CollectibleItemAssets = Omit<ItemAssets, 'sellRate' | 'upgrade'>;
 
@@ -47,7 +47,7 @@ export abstract class CollectibleItem extends Item {
 	/**
 	 * Method to use this collectible.
 	 */
-	public use(ctx: Context, entry: CurrencyEntry) {
+	public use(ctx: Message, entry: CurrencyEntry) {
 		const thisItem = entry.props.items.get(this.id);
 		return ctx.reply(`**${this.emoji} WHAT A FLEX!**\nImagine having **${thisItem.owned.toLocaleString()} ${thisItem.upgrade.emoji} ${thisItem.upgrade.name}** couldn't be me`);
 	}

@@ -1,5 +1,6 @@
 import { Command, Context, CurrencyEntry } from 'lava/index';
 import { Argument, ArgumentTypeCaster } from 'discord-akairo';
+import { Message } from 'discord.js'; 
 
 export default class extends Command {
 	constructor() {
@@ -10,9 +11,9 @@ export default class extends Command {
 			args: [
 				{
 					id: 'amount',
-					type: Argument.union('number', ((c: Context, p: string) => {
+					type: Argument.union('number', (c: Message, p: string) => {
 						return ['all', 'max'].some(dep => dep === p.toLowerCase()) ? p.toLowerCase() : 'invalid';
-					}) as ArgumentTypeCaster)
+					})
 				}
 			]
 		});
@@ -23,7 +24,7 @@ export default class extends Command {
 		if (['all', 'max'].some(a => arg === a)) return entry.props.vault.amount;
 	}
 
-	async exec(ctx: Context, { amount }: { amount: number | string }) {
+	async exec(ctx: Message, { amount }: { amount: number | string }) {
 		const entry = await ctx.author.currency.fetch();
 		if (amount === 'invalid') {
 			return ctx.reply('U need to withdraw something lol').then(() => false);

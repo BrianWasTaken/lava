@@ -18,8 +18,9 @@ declare module 'discord-akairo' {
 		LavaClient, AbstractHandler, CommandQueue, 
 		Context, AbstractModule, AbstractModuleOptions,
 	} from 'lava/index';
-
-	import { MessageOptions } from 'discord.js';
+	import { 
+		Message, MessageOptions 
+	} from 'discord.js';
 
 	/**
 	 * Argument Type Caster.
@@ -50,7 +51,7 @@ declare module 'discord-akairo' {
 		/**
 		 * Method to run this command.
 		 */
-		exec(message: Context, args: any): PromiseUnion<boolean>;
+		exec(message: Message, args: any): PromiseUnion<boolean>;
 	}
 
 	/**
@@ -124,19 +125,19 @@ declare module 'discord-akairo' {
 		/**
 		 * Manages cooldowns on our mongodb database.
 		 */
-		checkCooldowns(message: Context, command: Command): Promise<boolean>;
+		checkCooldowns(message: Message, command: Command): Promise<boolean>;
 		/**
 		 * Runs a command.
 		 */
-		runCommand(message: Context, command: Command, args: any): Promise<void>;
+		runCommand(message: Message, command: Command, args: any): Promise<void>;
 		/**
 		 * Run command permissions checks.
 		 */
-		runPermissionChecks(message: Context, command: Command): Promise<boolean>;
+		runPermissionChecks(message: Message, command: Command): Promise<boolean>;
 		/**
 		 * Run all inhibitors with type "pre".
 		 */
-		runPostTypeInhibitors(message: Context, command: Command): Promise<boolean>;
+		runPostTypeInhibitors(message: Message, command: Command): Promise<boolean>;
 	}
 
 	/**
@@ -215,6 +216,7 @@ declare module 'discord-akairo' {
  */
 declare module 'discord-akairo' {
 	import { LavaClient, AbstractModuleOptions, Context } from 'lava/index';
+	import { Message } from 'discord.js';
 
 	interface Inhibitor extends AkairoModule {
 		/**
@@ -224,7 +226,7 @@ declare module 'discord-akairo' {
 		/**
 		 * The method to run this inhibitor.
 		 */
-		exec(message: Context, command: Command): PromiseUnion<boolean>;
+		exec(message: Message, command: Command): PromiseUnion<boolean>;
 	}
 
 	interface InhibitorOptions extends AbstractModuleOptions {

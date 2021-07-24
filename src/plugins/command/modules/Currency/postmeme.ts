@@ -1,4 +1,5 @@
 import { Command, Context } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -10,7 +11,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context) {
+	async exec(ctx: Message) {
 		const entry = await ctx.author.currency.fetch();
 		const comp = entry.props.items.get('computer');
 

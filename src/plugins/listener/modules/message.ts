@@ -1,5 +1,6 @@
 import { Collection, TextChannel, Snowflake } from 'discord.js';
 import { Listener, Context } from 'lava/index';
+import { Message } from 'discord.js';
 
 const donorQuestions = {
 	giveaway: {
@@ -66,7 +67,7 @@ export default class extends Listener {
 		}
 	}
 
-	async handleDonation(ctx: Context) {
+	async handleDonation(ctx: Message) {
 		if (ctx.channel.id !== this.channels.donation) return;
 
 		const type = donorTypes[Number(ctx.content)];
@@ -134,7 +135,7 @@ export default class extends Listener {
 		}
 	}
 
-	exec(ctx: Context) {
+	exec(ctx: Message) {
 		this.handleDonation(ctx);
 	}
 }

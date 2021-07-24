@@ -1,4 +1,5 @@
 import { Command, Context, Item } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -15,7 +16,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context, { item }: { item: Item }) {
+	async exec(ctx: Message, { item }: { item: Item }) {
 		const entry = await ctx.author.currency.fetch();
 		if (!item) {
 			return ctx.reply(`You need to use something!`).then(() => false);

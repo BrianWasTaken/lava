@@ -1,4 +1,5 @@
 import { Command, Context, Colors } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -11,7 +12,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context) {
+	async exec(ctx: Message) {
 		const entry = await ctx.author.currency.fetch();
 		const won = 500000;
 		await entry.addPocket(won).save();

@@ -1,4 +1,5 @@
 import { Argument, Context, Item } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends Argument {
 	constructor() {
@@ -8,7 +9,7 @@ export default class extends Argument {
 		});
 	}
 
-	exec(ctx: Context, args: string): Item {
+	exec(ctx: Message, args: string): Item {
 		if (!args || args.length <= 2) return null;
 		const { modules } = ctx.client.handlers.item;
 		const mod = modules.get(args.toLowerCase());

@@ -18,7 +18,7 @@ export class SpawnHandler extends AbstractHandler<Spawn> {
 		 * Message Listener to spawn bullshit.
 		 */
 		this.client.once('ready', () => {
-			this.client.on('message', ((ctx: Context) => {
+			this.client.on('message', (ctx: Context) => {
 				const { randomInArray, randomNumber } = ctx.client.util;
 				const spawn = randomInArray(this.modules.array());
 				const odds = randomNumber(1, 100);
@@ -29,7 +29,7 @@ export class SpawnHandler extends AbstractHandler<Spawn> {
 				if (odds < 100 - spawn.config.odds) return;
 
 				this.handle(ctx, spawn);
-			}) as (m: Message) => PromiseUnion<void>);
+			});
 		});
 	}
 
@@ -45,7 +45,7 @@ export class SpawnHandler extends AbstractHandler<Spawn> {
 			case 'spam':
 			case 'message':
 				const string = this.client.util.randomInArray(spawn.display.strings);
-				const filter: CollectorFilter<[Context]> = async m => {
+				const filter: CollectorFilter<[Message]> = async m => {
 					// Check if they don't hit the cap
 					return (await m.author.spawn.fetch()).props.unpaids <= Spawner.UNPAIDS_CAP
 						// Check if the spawn is spammable or spammablen't
@@ -58,14 +58,14 @@ export class SpawnHandler extends AbstractHandler<Spawn> {
 				const collector = new MessageCollector(ctx.channel as TextChannel, { 
 					max: spawn.config.maxEntries, 
 					time: spawn.config.duration,
-					filter: filter as ((m: Message) => PromiseUnion<boolean>)
+					filter: filter
 				});
 
 				collector.on('collect', m => { 
 					channelQueue.set(m.author.id, m.member);
 					if (spawn.config.method === 'spam') {
-						const filter: CollectorFilter<[Context]> = msg => msg.author.id === m.author.id;
-						const entry = collector.collected.array().filter(filter as (m: Message) => boolean);
+						const filter: CollectorFilter<[Message]> = msg => msg.author.id === m.author.id;
+						const entry = collector.collected.array().filter(filter);
 						if (entry.length > 1) collector.collected.delete(m.id);
 					}
 

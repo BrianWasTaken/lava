@@ -5,7 +5,7 @@
 
 import { Inhibitor as OldInhibitor, InhibitorOptions, Category } from 'discord-akairo';
 import { AbstractModule, LavaClient, Command } from 'lava/akairo';
-import { Collection, MessageOptions } from 'discord.js';
+import { Collection, MessageOptions, Message } from 'discord.js';
 import { InhibitorHandler } from '.';
 import { Context } from 'lava/index';
 
@@ -42,8 +42,7 @@ export class Inhibitor extends OldInhibitor implements AbstractModule {
 	/**
 	 * Main method to run this inhibitor.
 	 */
-	public exec(context: Context, command?: Command): PromiseUnion<boolean>;
-	public exec(context: Context, command?: Command): PromiseUnion<boolean> {
-		return super.exec(context, command);
+	public exec(message: Message, command?: Command): PromiseUnion<boolean> {
+		return super.exec(message, command);
 	}
 }

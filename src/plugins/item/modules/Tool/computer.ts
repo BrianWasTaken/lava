@@ -1,5 +1,6 @@
 import { Context, CurrencyEntry } from 'lava/index';
 import { ToolItem } from '../..';
+import { Message } from 'discord.js';
 
 export default class Tool extends ToolItem {
 	constructor() {
@@ -27,7 +28,7 @@ export default class Tool extends ToolItem {
 		};
 	}
 
-	async use(ctx: Context, entry: CurrencyEntry) {
+	async use(ctx: Message, entry: CurrencyEntry) {
 		const [k, v] = [Object.keys(this.options), Object.values(this.options)];
 		const options = Array(k.length).fill(null).map((_, i) => `**\`${k[i]}\` ■ ${v[i]} Meme**`);
 		const choice = await ctx.channel.send({

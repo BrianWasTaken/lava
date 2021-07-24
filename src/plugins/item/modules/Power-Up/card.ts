@@ -1,5 +1,6 @@
 import { Context, CurrencyEntry } from 'lava/index';
 import { PowerUpItem } from '../..';
+import { Message } from 'discord.js';
 
 export default class Tool extends PowerUpItem {
 	constructor() {
@@ -65,7 +66,7 @@ export default class Tool extends PowerUpItem {
 		return [5e3, 7e3, 10e3, 20e3, 30e3, 50e3, 100e3, 150e3, 200e3, 300e3, 500e3];
 	}
 
-	async use(ctx: Context, entry: CurrencyEntry) {
+	async use(ctx: Message, entry: CurrencyEntry) {
 		const { randomNumber, isInteger } = ctx.client.util;
 		const { owned, level } = entry.props.items.get(this.id);
 

@@ -1,5 +1,5 @@
 import { SubCommand, Context } from 'lava/index';
-import { Role } from 'discord.js';
+import { Role, Message } from 'discord.js';
 
 export default class extends SubCommand {
 	constructor() {
@@ -18,7 +18,7 @@ export default class extends SubCommand {
 		});
 	}
 
-	async exec(ctx: Context, { role }: { role: Role }) {
+	async exec(ctx: Message, { role }: { role: Role }) {
 		if (!role || role.members.size < 1) {
 			await ctx.reply('No members to dump.');
 			return false;

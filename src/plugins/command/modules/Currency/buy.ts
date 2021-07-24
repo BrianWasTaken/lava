@@ -1,4 +1,5 @@
 import { Command, Context, Item, ItemMessages, Currency, CurrencyEntry, Colors } from 'lava/index';
+import { Message } from 'discord.js';
 
 interface BuyArgs { 
 	amount: number;
@@ -58,7 +59,7 @@ export default class extends Command {
 		}
 	}
 
-	async exec(ctx: Context, args: BuyArgs) {
+	async exec(ctx: Message, args: BuyArgs) {
 		const entry = await ctx.author.currency.fetch();
 		const check = this.check(entry, args);
 		if (check) return ctx.reply(check).then(() => false);

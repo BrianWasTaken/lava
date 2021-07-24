@@ -1,4 +1,5 @@
 import { Command, Context, Item, Currency, GuildMemberPlus, CurrencyEntry } from 'lava/index';
+import { Message } from 'discord.js';
 const { MAX_INVENTORY } = Currency;
 
 interface GiftArgs {
@@ -32,7 +33,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context, { amount, item, member }: GiftArgs) {
+	async exec(ctx: Message, { amount, item, member }: GiftArgs) {
 		if (!amount || !item || !member) {
 			return ctx.reply(`**Wrong Usage:**\n\`${ctx.util.parsed.prefix} ${this.aliases[0]} <amount> <item> <user>\``).then(() => false);
 		}

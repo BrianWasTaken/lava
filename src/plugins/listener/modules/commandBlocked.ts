@@ -1,5 +1,7 @@
 import { Listener, Context, Command } from 'lava/index';
 import { Constants } from 'discord-akairo';
+import { Message } from 'discord.js';
+
 const { BuiltInReasons } = Constants;
 
 export default class extends Listener {
@@ -29,7 +31,7 @@ export default class extends Listener {
 		}
 	}
 
-	exec(ctx: Context, cmd: Command, reason: string) {
+	exec(ctx: Message, cmd: Command, reason: string) {
 		return ctx.reply(this.getReason(reason));
 	}
 }

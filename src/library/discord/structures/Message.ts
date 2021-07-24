@@ -1,20 +1,27 @@
 import { CurrencyEndpoint, SpawnEndpoint, LavaEndpoint, CribEndpoint } from 'lava/mongo';
+import { UserPlus, GuildMemberPlus, Structure } from '.';
 import { Message, Structures } from 'discord.js';
-import { UserPlus, Structure } from '.';
 import { LavaClient } from 'lava/akairo';
 
+declare module 'discord.js' {
+	interface Message {
+		client: LavaClient;
+		author: User;
+		readonly currency: CurrencyEndpoint;
+		readonly spawn: SpawnEndpoint;
+		readonly lava: LavaEndpoint;
+		readonly crib: CribEndpoint;
+		awaitMessage(userID?: Snowflake, time?: number): Promise<Message>;
+	}
+}
+
 export declare interface Context extends Message {
-	/**
-	 * The client instance.
-	 */
 	client: LavaClient;
-	/**
-	 * The author.
-	 */
-	author: UserPlus;
 }
 
 export class Context extends Message implements Structure {
+	public client: LavaClient;
+	
 	/**
 	 * Currency Endpoint shortcut.
 	 * * Inventory - Manage user inventories.
@@ -56,7 +63,7 @@ export class Context extends Message implements Structure {
 	 * Await a single message from the idiots.
 	 */
 	public awaitMessage(userID = this.author.id, time = 30000) {
-		return this.channel.awaitMessages({ time, max: 1, filter: m => m.author.id === userID }).then(col => col.first()) as Promise<this>;
+		return this.channel.awaitMessages({ time, max: 1, filter: m => m.author.id === userID }).then(col => col.first());
 	}
 }
 

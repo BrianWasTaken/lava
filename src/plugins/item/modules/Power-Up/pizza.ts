@@ -1,5 +1,6 @@
 import { Context, CurrencyEntry, ItemEffects, Colors } from 'lava/index';
 import { PowerUpItem } from '../..';
+import { Message } from 'discord.js';
 
 export default class PowerUp extends PowerUpItem {
 	constructor() {
@@ -27,13 +28,13 @@ export default class PowerUp extends PowerUpItem {
 		return effects.xpBoost(20);
 	}
 
-	async use(ctx: Context, entry: CurrencyEntry) {
+	async use(ctx: Message, entry: CurrencyEntry) {
 		const { parseTime, randomNumber } = ctx.client.util;
 		const duration = this.getDuration(entry);
 		const expire = Date.now() + duration;
 		const won = randomNumber(100, 1000);
 
-		await entry.addPocket(won).activateItem(this.id, expire).save();
+		await entry.subItem(this.id).addPocket(won).activateItem(this.id, expire).save();
 		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will begone in ${parseTime(duration / 1000)}`,
 			color: Colors.FUCHSIA, author: { name: `You activated your ${this.name}!` },

@@ -1,5 +1,6 @@
 import { LavaClient } from 'lava/index';
 import { Structure } from 'lava/discord';
+import { Snowflake } from 'discord.js';
 import { Endpoint } from 'lava/mongo';
 import { Model } from 'mongoose';
 
@@ -38,7 +39,7 @@ export class BaseEntry<Profile extends BaseProfile> {
 	 */
 	public async fetch(): Promise<this> {
 		if (typeof this.cache !== 'undefined') return this;
-		this.cache = await this.endpoint.fetch(this.context.id);
+		this.cache = await this.endpoint.fetch(this.context.id as Snowflake);
 		return this;
 	}
 

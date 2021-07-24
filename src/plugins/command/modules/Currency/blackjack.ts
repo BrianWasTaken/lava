@@ -1,5 +1,6 @@
 import { Context, Colors } from 'lava/index';
 import { GambleCommand } from '../..';
+import { Message } from 'discord.js';
 
 export default class extends GambleCommand {
 	constructor() {
@@ -10,7 +11,7 @@ export default class extends GambleCommand {
 		});
 	}
 
-	async exec(ctx: Context, args: { amount: string }) {
+	async exec(ctx: Message, args: { amount: string }) {
 		const entry = await ctx.author.currency.fetch();
 		const bet = GambleCommand.parseBet(entry, args.amount);
 		if (typeof bet === 'string') return ctx.reply(bet).then(() => false);
@@ -143,7 +144,7 @@ export default class extends GambleCommand {
 			let state: string = '';
 			let desc = '';
 			if (status.constructor === Object) {
-				const newEntry = await ctx.currency.fetch(ctx.author.id); // ugh don't really know else how to do this thanks to reversal
+				const newEntry = await ctx.author.currency.fetch(); // ugh don't really know else how to do this thanks to reversal
 				if (bet > newEntry.props.pocket) {
 					await newEntry.removePocket(bet).updateStats(this.id, bet, false).save();
 					return ctx.reply(`What the hell man, you don't have the coins to cover this bet anymore??? I'm keeping your bet since you tried to SCAM ME.`).then(() => true);

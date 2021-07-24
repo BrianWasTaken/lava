@@ -1,4 +1,5 @@
-import { Item, ItemOptions, ItemAssets, ItemConfig, ItemUpgrade, Colors, Context, CurrencyEntry, ItemEffects, Inventory } from 'lava/index';
+import { Item, ItemOptions, ItemAssets, ItemConfig, ItemUpgrade, Colors, CurrencyEntry, ItemEffects, Inventory } from 'lava/index';
+import { Message } from 'discord.js';
 
 export type PowerItemAssets = Omit<ItemAssets, 'sellRate' | 'upgrade'>;
 
@@ -59,7 +60,7 @@ export abstract class PowerUpItem extends Item {
 		return this.getUpgrade(entry.props.items.get(this.id)).duration ?? 0;
 	}
 
-	public async use(ctx: Context, entry: CurrencyEntry) {
+	public async use(ctx: Message, entry: CurrencyEntry) {
 		const { parseTime, randomNumber } = ctx.client.util;
 		const duration = this.getDuration(entry);
 		const expire = Date.now() + duration;

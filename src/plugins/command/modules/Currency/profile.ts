@@ -1,4 +1,6 @@
 import { Command, Context, GuildMemberPlus, Currency, Colors } from 'lava/index';
+import { Message } from 'discord.js';
+
 const { MAX_LEVEL, XP_COST } = Currency;
 
 interface ProfileArgs {
@@ -60,7 +62,7 @@ export default class extends Command {
 		return { next, barable, bar: this.client.util.progressBar(barable) };
 	}
 
-	async exec(ctx: Context, { member, gamble, active }: ProfileArgs) {
+	async exec(ctx: Message, { member, gamble, active }: ProfileArgs) {
 		const { progressBar } = ctx.client.util;
 
 		const entry = await member.user.currency.fetch();

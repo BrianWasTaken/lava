@@ -80,7 +80,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context) {
+	async exec(ctx: Message) {
 		const { randomsInArray } = ctx.client.util;
 		const entry = await ctx.author.currency.fetch();
 		const searchables = randomsInArray(this.search, 3);

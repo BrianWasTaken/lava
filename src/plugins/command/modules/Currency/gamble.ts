@@ -1,6 +1,7 @@
-import { Context, UserPlus, Colors } from 'lava/index';
-import { EmbedFieldData } from 'discord.js';
+import { EmbedFieldData, User } from 'discord.js';
+import { Context, Colors } from 'lava/index';
 import { GambleCommand } from '../..';
+import { Message } from 'discord.js';
 
 export default class extends GambleCommand {
 	constructor() {
@@ -11,7 +12,7 @@ export default class extends GambleCommand {
 		});
 	}
 
-	async exec(ctx: Context, args: { amount: string }) {
+	async exec(ctx: Message, args: { amount: string }) {
 		const entry = await ctx.author.currency.fetch();
 		const bet = GambleCommand.parseBet(entry, args.amount);
 		if (typeof bet === 'string') return ctx.reply(bet).then(() => false);
@@ -84,7 +85,7 @@ export default class extends GambleCommand {
 		return { botD, userD: userD + add };
 	}
 
-	displayField({ username, client }: UserPlus, userD: number, botD: number): EmbedFieldData[] {
+	displayField({ username, client }: User, userD: number, botD: number): EmbedFieldData[] {
 		const fields = {
 			[username]: `Rolled a \`${userD}\``,
 			[client.user.username]: `Rolled a \`${botD}\``

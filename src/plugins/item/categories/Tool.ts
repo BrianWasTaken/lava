@@ -1,4 +1,5 @@
-import { Item, ItemOptions, ItemUpgrade, ItemConfig, ItemAssets, Inventory, Context, CurrencyEntry, ItemEffects } from 'lava/index';
+import { Item, ItemOptions, ItemUpgrade, ItemConfig, ItemAssets, Inventory, CurrencyEntry, ItemEffects } from 'lava/index';
+import { Message } from 'discord.js';
 
 export type ToolItemAssets = Omit<ItemAssets, 'sellRate' | 'upgrade'>;
 

@@ -1,4 +1,5 @@
 import { Command, Context, Colors } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -19,7 +20,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Context, args: { all: boolean; }) {
+	async exec(ctx: Message, args: { all: boolean; }) {
 		const { cache } = await ctx.author.currency.fetch();
 
 		await ctx.reply({ embeds: [{ color: Colors.RED, description: 'Are u sure you wanna reset rn?' }] });
@@ -33,7 +34,7 @@ export default class extends Command {
 			return false;
 		}
 
-		if (args.all && ctx.client.isOwner(ctx.author)) {
+		if (args.all && ctx.client.isOwner(ctx.author.id)) {
 			await ctx.client.db.currency.model.deleteMany({});
 		} else {
 			await cache.delete();

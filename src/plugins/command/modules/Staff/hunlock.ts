@@ -1,4 +1,5 @@
 import { SubCommand, Context } from 'lava/index';
+import { Message } from 'discord.js';
 
 export default class extends SubCommand {
 	constructor() {
@@ -19,7 +20,7 @@ export default class extends SubCommand {
 		});
 	}
 
-	async exec(ctx: Context, { tout }: { tout: number }) {
+	async exec(ctx: Message, { tout }: { tout: number }) {
 		await ctx.channel.send(`Unlocking in: ${tout} seconds`);
 		return false;
 	}

@@ -1,4 +1,5 @@
 import { Command, Context, GuildMemberPlus, Donation } from 'lava/index';
+import { Message } from 'discord.js';
 
 interface CommandArgs {
 	member: GuildMemberPlus;
@@ -25,13 +26,13 @@ export default class extends Command {
 				{
 					id: 'event',
 					type: 'dono',
-					default: (c: Context) => c.client.handlers.donation.modules.get('default')
+					default: (c: Message) => c.client.handlers.donation.modules.get('default')
 				}
 			]
 		});
 	}
 
-	async exec(ctx: Context, { member, amount, event }: CommandArgs) {
+	async exec(ctx: Message, { member, amount, event }: CommandArgs) {
 		const entry = await member.user.crib.fetch();
 		if (!member) {
 			return ctx.reply(`Member not found.`).then(() => false);

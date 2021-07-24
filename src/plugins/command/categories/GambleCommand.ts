@@ -3,6 +3,7 @@ import { CurrencyEntry } from 'lava/mongo';
 import { Currency } from 'lava/utility';
 import { Context } from 'lava/discord';
 import { Command } from 'lava/akairo';
+import { Message } from 'discord.js';
 
 export class GambleCommand extends Command {
 	public ['constructor']: typeof GambleCommand;
@@ -82,7 +83,7 @@ export class GambleCommand extends Command {
 	 * @param entry The user's currency entry
 	 * @param [cap] Wether to cap the multis or not.
 	 */
-	public static getMulti(ctx: Context, entry: CurrencyEntry, cap = true) {
+	public static getMulti(ctx: Message, entry: CurrencyEntry, cap = true) {
 		const multi = entry.calcMulti(ctx).unlocked.reduce((p, c) => c.value + p, 0);
 		return cap ? Math.min(Currency.MAX_MULTI, multi) : multi;
 	}

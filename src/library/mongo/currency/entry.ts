@@ -3,10 +3,10 @@
  * @author BrianWasTaken
 */
 
+import { Collection, Snowflake, TextChannel, Message } from 'discord.js';
 import { Inventory, Mission, GambleStat, TradeStat } from '.';
 import { UserEntry, BaseEntry, CurrencyEndpoint } from 'lava/mongo';
 import { Currency, ItemEffects, ItemEntities } from 'lava/utility';
-import { Collection, Snowflake, TextChannel } from 'discord.js';
 import { CollectibleItem, PowerUpItem } from 'lava/../plugins/item';
 import { Context, UserPlus } from 'lava/discord';
 
@@ -80,7 +80,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 	/**
 	 * Calc their multis.
 	 */
-	public calcMulti(ctx: Context) {
+	public calcMulti(ctx: Message) {
 		type IMultiplier = { name: string, value: number };
 		const unlocked: IMultiplier[] = [];
 		const all: IMultiplier[] = [];
@@ -271,7 +271,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 				this.cache.props.xp += randomNumber(1, 1 + additional);
 				const newLevel = Math.trunc(calcLevel(this.cache.props.xp));
 
-				if (newLevel > previousLevel) this.endpoint.emit('levelUp', this, user as UserPlus);
+				if (newLevel > previousLevel) this.endpoint.emit('levelUp', this, user);
 				return space ? this.calc().space() : this;
 			},
 			space: (os = 110) => {
