@@ -40,7 +40,7 @@ export abstract class Endpoint<Doc extends BaseProfile = never> extends EventEmi
 	/**
 	 * The cached crap to reduce lag.
 	 */
-	public cache: Collection<Snowflake, Doc>;
+	public cache = new Collection<Snowflake, Doc>();
 
 	/**
 	 * The constructor for this endpoint.
