@@ -29,15 +29,18 @@ export class CurrencyEndpoint extends Endpoint<CurrencyProfile> {
 	/** 
 	 * Fetch something from the db. 
 	 */
-	public async fetch(_id: Snowflake): Promise<CurrencyProfile> {
+	public async fetch(_id: Snowflake): Promise<CurrencyEntry> {
 		const user = this.client.users.cache.get(_id);
-		if (this.cache.has(_id)) return this.cache.get(_id);
+		if (this.cache.has(_id)) {
+			const cached = this.cache.get(_id);
+			return new CurrencyEntry(user, this, cached);
+		}
 
 		const doc = await this.model.findById(_id) ?? await this.model.create(_id);
 		const pushed = [this.updateItems(doc), this.updateGames(doc), this.updateTrade(doc)];
 		const data = pushed.some(s => s.length > 1) ? await doc.save() : doc;
 		this.cache.set(_id, data);
-		return data;
+		return new CurrencyEntry(user, this, cached);
 	}
 
 	/**

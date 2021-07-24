@@ -64,5 +64,5 @@ export abstract class Endpoint<Doc extends BaseProfile = never> extends EventEmi
 	/**
 	 * Fetch a document from the model of this endpoint based from the given id.
 	*/
-	public abstract fetch(_id: Snowflake): Promise<Doc>;
+	public abstract fetch(_id: Snowflake): Promise<UserEntry<Doc> | Doc>;
 }
