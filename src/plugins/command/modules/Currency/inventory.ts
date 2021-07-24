@@ -40,7 +40,7 @@ export default class extends Command {
 		const { member, page } = this.resolveArgs(ctx, args);
 		const isContext = ctx.author.id === member.user.id;
 
-		const entry = await ctx.currency.fetch(member.user.id);
+		const entry = await ctx.author.currency.fetch();
 		const inventory = ctx.client.util.paginateArray(this.mapItems(entry.props.items));
 
 		if (inventory.length < 1) {

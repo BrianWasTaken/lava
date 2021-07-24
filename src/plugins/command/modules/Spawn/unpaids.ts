@@ -17,7 +17,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, args: { member: GuildMemberPlus }) {
-		const entry = await ctx.spawn.fetch(args.member.user.id);
+		const entry = await args.member.user.spawn.fetch();
 		const balance = {
 			'Remaining Unpaids': entry.props.unpaids.toLocaleString(),
 			'Events Joined': entry.props.joined.toLocaleString(),

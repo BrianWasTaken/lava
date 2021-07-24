@@ -23,7 +23,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, { member, page }: { member: GuildMemberPlus, page: number; }) {
-		const entry = await ctx.crib.fetch(member.user.id);
+		const entry = await member.user.crib.fetch();
 		const pages = ctx.client.util.paginateArray(entry.donos.map(d => ({
 			name: `${d.module.name} Donations`,
 			value: [

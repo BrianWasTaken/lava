@@ -18,16 +18,15 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, args: { member: GuildMemberPlus }) {
-		const entry = await ctx.currency.fetch(args.member.user.id);
-		const { user } = args.member;
+		const entry = await args.member.user.currency.fetch();
 
 		return ctx.channel.send({
 			embeds: [{
-				title: `${user.username}'s balance`,
+				title: `${args.member.user.username}'s balance`,
 				color: ctx.client.util.randomColor(),
 				description: Object.entries({
 					'Wallet': entry.props.pocket.toLocaleString(),
-					'Bank': `${entry.props.vault.amount.toLocaleString()}${user.id === ctx.author.id
+					'Bank': `${entry.props.vault.amount.toLocaleString()}${args.member.user.id === ctx.author.id
 							? `/${entry.props.space.toLocaleString()}`
 							: ''
 						}`,

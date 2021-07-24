@@ -1,5 +1,6 @@
 import { Endpoint, LavaEntry, EndpointEvents } from 'lava/mongo';
 import { Command, Setting } from 'lava/akairo';
+import { Snowflake } from 'discord.js';
 import { UserPlus } from 'lava/discord';
 
 export interface LavaEndpointEvents extends EndpointEvents<LavaEntry> {
@@ -26,12 +27,10 @@ export class LavaEndpoint extends Endpoint<LavaProfile> {
 	/**
 	 * Fetch some idiot from the db.
 	 */
-	public fetch(_id: string): Promise<LavaEntry> {
-		return this.model.findOne({ _id }).then(async data => {
-			const doc = data ?? await (new this.model({ _id })).save();
-			const pushed = [this.updateCooldowns(doc), this.updateSettings(doc)];
-			return pushed.some(s => s.length > 1) ? doc.save() : doc;
-		}).then(doc => new LavaEntry(this, doc));
+	public fetch(_id: Snowflake): Promise<LavaProfile> {
+		const doc = await this.model.findById(_id) ?? await this.model.create(_id);
+		const pushed = [this.updateCooldowns(doc), this.updateSettings(doc)];
+		return pushed.some(s => s.length > 1) ? await doc.save() : doc;
 	}
 
 	/**

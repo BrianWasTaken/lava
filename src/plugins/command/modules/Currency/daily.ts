@@ -12,7 +12,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context) {
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		let { streak, time } = entry.data.daily;
 
 		if (Date.now() - time > 172800000) {

@@ -34,7 +34,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, { member }: { member: GuildMemberPlus }) {
-		const entry = await ctx.lava.fetch(ctx.author.id);
+		const entry = await ctx.author.lava.fetch();
 		const cooldowns = entry.cooldowns
 			.filter(cd => cd.isActive())
 			.map(cd => `${cd.id}: this.calc(cd.expiresAt - Date.now()).join(':')`);

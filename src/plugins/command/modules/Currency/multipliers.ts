@@ -18,7 +18,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, { page }: { page: number }) {
-		const multis = await ctx.currency.fetch(ctx.author.id).then(d => ({ ...d.calcMulti(ctx) }));
+		const multis = await ctx.author.currency.fetch().then(d => d.calcMulti(ctx));
 		const pages = ctx.client.util.paginateArray(
 			multis.unlocked.map(({ name, value }) => `${name} (\`${value < 1 ? `${value}` : `+${value}`}%\`)`
 		));

@@ -63,7 +63,7 @@ export default class extends Command {
 	async exec(ctx: Context, { member, gamble, active }: ProfileArgs) {
 		const { progressBar } = ctx.client.util;
 
-		const entry = await ctx.currency.fetch(member.user.id);
+		const entry = await member.user.currency.fetch();
 
 		if (gamble) {
 			const loses = entry.props.gambles.reduce((a, c) => a + c.loses, 0);

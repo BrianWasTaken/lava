@@ -17,12 +17,12 @@ export declare interface LavaEntry extends UserEntry<LavaProfile> {
 export class LavaEntry extends UserEntry<LavaProfile> {
 	/** Wether they are blacklisted from the bot or not */
 	get blocked() {
-		return this.data.punishments.blocked;
+		return this.cache.punishments.blocked;
 	}
 
 	/** Check if they're banned from the bot */
 	get banned() {
-		return this.data.punishments.banned;
+		return this.cache.punishments.banned;
 	}
 
 	/** User cooldowns mapped from command id to cooldown */
@@ -39,16 +39,16 @@ export class LavaEntry extends UserEntry<LavaProfile> {
 	private punish(duration?: number) {
 		return {
 			blacklist: (state = true) => {
-				if (this.data.punishments.banned) return this;
-				this.data.punishments.blocked = state;
-				this.data.punishments.expire = duration;
-				this.data.punishments.count++;
+				if (this.cache.punishments.banned) return this;
+				this.cache.punishments.blocked = state;
+				this.cache.punishments.expire = duration;
+				this.cache.punishments.count++;
 				return this;
 			},
 			ban: (state = true) => {
-				if (this.data.punishments.blocked) return this;
-				this.data.punishments.banned = state;
-				this.data.punishments.count++;
+				if (this.cache.punishments.blocked) return this;
+				this.cache.punishments.banned = state;
+				this.cache.punishments.count++;
 				return this;
 			}
 		}
@@ -58,16 +58,16 @@ export class LavaEntry extends UserEntry<LavaProfile> {
 	private command(id = 'help') {
 		return {
 			spam: (amt = 1) => {
-				this.data.commands.spams += amt;
+				this.cache.commands.spams += amt;
 				return this;
 			},
 			inc: () => {
-				this.data.commands.commands_ran++;
+				this.cache.commands.commands_ran++;
 				return this;
 			},
 			record: () => {
-				this.data.commands.last_ran = Date.now();
-				this.data.commands.last_cmd = id;
+				this.cache.commands.last_ran = Date.now();
+				this.cache.commands.last_cmd = id;
 				return this;
 			}
 		}
@@ -75,7 +75,7 @@ export class LavaEntry extends UserEntry<LavaProfile> {
 
 	/** Update user settings */
 	updateSetting(setting: string, state: boolean, cooldown = 0) {
-		const thisSetting = this.data.settings.find(s => s.id === setting);
+		const thisSetting = this.cache.settings.find(s => s.id === setting);
 		thisSetting.cooldown = cooldown;
 		thisSetting.enabled = state;
 		return this;
@@ -83,8 +83,8 @@ export class LavaEntry extends UserEntry<LavaProfile> {
 
 	/** Update user command cooldowns */
 	updateCooldown(command: string, expire: number) {
-		const thisCooldown = this.data.cooldowns.find(cd => cd.id === command);
-		const user = this.client.users.cache.get(this.data._id as Snowflake);
+		const thisCooldown = this.cache.cooldowns.find(cd => cd.id === command);
+		const user = this.client.users.cache.get(this.cache._id as Snowflake);
 		if (this.client.isOwner(user) || process.env.DEV_MODE === 'true') return this;
 		thisCooldown.expire = expire;
 		return this;
@@ -123,10 +123,10 @@ export class LavaEntry extends UserEntry<LavaProfile> {
 	/** Save dis shit */
 	save(addCommandRan = false, addSpam = false) {
 		if (addCommandRan) {
-			this.data.commands.commands_ran++;
+			this.cache.commands.commands_ran++;
 		}
 		if (addSpam) {
-			this.data.commands.spams++;
+			this.cache.commands.spams++;
 		}
 
 		return super.save();

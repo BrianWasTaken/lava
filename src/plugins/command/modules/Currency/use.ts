@@ -16,13 +16,13 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, { item }: { item: Item }) {
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		if (!item) {
 			return ctx.reply(`You need to use something!`).then(() => false);
 		}
 
 		const inv = entry.props.items.get(item.id);
-		if (!inv.isOwned()) {
+		if (!entry.hasInventoryItem(inv.id)) {
 			return ctx.reply("You don't own this item!").then(() => false);
 		}
 		if (inv.isActive()) {

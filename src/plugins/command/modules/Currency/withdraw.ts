@@ -24,7 +24,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, { amount }: { amount: number | string }) {
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		if (amount === 'invalid') {
 			return ctx.reply('U need to withdraw something lol').then(() => false);
 		}

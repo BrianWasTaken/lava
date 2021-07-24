@@ -2,6 +2,7 @@ import { LavaClient, AbstractHandler } from 'lava/akairo';
 import { Document, Model } from 'mongoose';
 import { AkairoHandler } from 'discord-akairo';
 import { EventEmitter } from 'events';
+import { Snowflake } from 'discord.js';
 import { UserEntry } from '.';
 import { UserPlus } from 'lava/discord';
 
@@ -59,5 +60,5 @@ export abstract class Endpoint<Doc extends BaseProfile = never> extends EventEmi
 	/**
 	 * Fetch a document from the model of this endpoint based from the given id.
 	*/
-	public abstract fetch(_id: string): Promise<UserEntry<Doc>>;
+	public abstract fetch(_id: Snowflake): Promise<Doc>;
 }

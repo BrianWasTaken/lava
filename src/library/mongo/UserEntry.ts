@@ -1,48 +1,48 @@
 import { Constructable, Collection } from 'discord.js';
+import { Document, Model } from 'mongoose';
 import { EventEmitter } from 'events';
 import { LavaClient } from 'lava/akairo';
 import { Structure } from 'lava/index';
-import { Document } from 'mongoose';
 import { Endpoint } from '.';
 
 /**
  * The main entry with sets of methods to apply changes on our data.
- * @abstract @extends {Base}
+ * @abstract
 */
 export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
-	/**
-	 * The endpoint who owns this entry.
-	 */
 	public endpoint: Endpoint<Data>;
-
-	/**
-	 * The client instantiated this entry.
-	*/
+	public context: Structure;
 	public client: LavaClient;
+	public cache: Data;
 
-	/**
-	 * The data for this entry.
-	*/
-	public data: Data;
-
-	/**
-	 * The constructor for this entry.
-	*/
-	public constructor(endpoint: Endpoint<Data>, data: Data) {
+	public constructor(context: Structure, endpoint: Endpoint<Data>) {
 		/** @type {Endpoint} */
 		this.endpoint = endpoint;
+		/** @type {Structure} */
+		this.context = context;
 		/** @type {LavaClient} */
 		this.client = endpoint.client;
 		/** @type {Data} */
-		this.data = data;
+		this.cache = null;
 	}
 
 	/**
-	 * Map all raw slot array from data to a certain structure.
+	 * Fetch this item from mongodb.
+	 */
+	public async fetch(): Promise<this> {
+		if (typeof this.cache !== 'undefined') return this;
+		this.cache = await this.endpoint.model.findById(this.context.id);
+		return this;
+	}
+
+	/**
+	 * Map arrays of module-like objects to certain structures.
+	 * @param key the key of data that should be an array
+	 * @param structure the structure to transform the object
 	 */
 	public map<K extends keyof Data, S>(key: K, structure: Constructable<S>) {
 		const collection = new Collection<string, S>();
-		const slots = this.data[key] as unknown;
+		const slots = this.cache[key] as unknown;
 
 		return (slots as DataSlot[]).reduce((coll, slot) => {
 			const instance = new structure(this.client, slot);
@@ -53,7 +53,9 @@ export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
 	/**
 	 * Save all changes of the data from this entry.
 	*/
-	public save(): Promise<this> {
-		return this.data.save().then(() => this);
+	public async save(): Promise<this> {
+		const { cache } = await this.fetch();
+		await cache.save();
+		return this;
 	}
 }

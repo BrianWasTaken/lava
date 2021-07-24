@@ -1,4 +1,5 @@
 import { CribEntry, Endpoint, EndpointEvents } from 'lava/mongo';
+import { Snowflake } from 'discord.js';
 import { UserPlus } from 'lava/discord';
 import { Donation } from 'lava/akairo';
 
@@ -24,12 +25,10 @@ export class CribEndpoint extends Endpoint<CribProfile> {
 	/**
 	 * Fetch smth form the db.
 	 */
-	public fetch(_id: string): Promise<CribEntry> {
-		return this.model.findOne({ _id }).then(async data => {
-			const doc = data ?? await (new this.model({ _id })).save();
-			const pushed = [this.updateDonos(doc)];
-			return pushed.some(s => s.length > 1) ? doc.save() : doc;
-		}).then(doc => new CribEntry(this, doc));
+	public async fetch(_id: Snowflake): Promise<CribProfile> {
+		const doc = await this.model.findById(_id) ?? await this.model.create(_id);
+		const pushed = [this.updateDonos(doc)];
+		return pushed.some(s => s.length > 1) ? await doc.save() : doc;
 	}
 
 	/**

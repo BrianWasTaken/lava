@@ -64,7 +64,7 @@ export abstract class PowerUpItem extends Item {
 		const duration = this.getDuration(entry);
 		const expire = Date.now() + duration;
 
-		await entry.activateItem(this.id, expire).save();
+		await entry.subItem(this.id).activateItem(this.id, expire).save();
 
 		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will begone in **${parseTime(duration / 1000)}**`,

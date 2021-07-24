@@ -1,5 +1,6 @@
 import { LavaClient } from 'lava/index';
 import { Structure } from 'lava/discord';
+import { Endpoint } from 'lava/mongo';
 import { Model } from 'mongoose';
 
 export class BaseEntry<Profile extends BaseProfile> {
@@ -8,9 +9,9 @@ export class BaseEntry<Profile extends BaseProfile> {
 	 */
 	public client: LavaClient;
 	/**
-	 * The model assigned for this entry.
+	 * The endpoint who owns this entry.
 	 */
-	public model: Model<Profile>;
+	public endpoint: Endpoint<Profile>;
 	/**
 	 * The discord.js structure for this entry.
 	 */
@@ -25,11 +26,11 @@ export class BaseEntry<Profile extends BaseProfile> {
 	 * @param context the main discord.js who owns this entry
 	 * @param model the source collection to manage this entry
 	 */
-	public constructor(context: Structure, model: Model<Profile>) {
+	public constructor(context: Structure, endpoint: Endpoint<Profile>, cache?: Profile) {
 		this.client = context.client;
+		this.endpoint = endpoint;
 		this.context = context;
-		this.model = model;
-		this.cache = null;
+		this.cache = cache ?? null;
 	}
 
 	/**
@@ -37,7 +38,7 @@ export class BaseEntry<Profile extends BaseProfile> {
 	 */
 	public async fetch(): Promise<this> {
 		if (typeof this.cache !== 'undefined') return this;
-		this.cache = await this.model.findById(this.context.id);
+		this.cache = await this.endpoint.fetch(this.context.id);
 		return this;
 	}
 

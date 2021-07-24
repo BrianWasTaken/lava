@@ -33,7 +33,7 @@ export default class PowerUp extends PowerUpItem {
 		const expire = Date.now() + duration;
 		const multi = randomNumber(1, 10);
 
-		await entry.setItemMulti(this.id, multi).activateItem(this.id, expire).save();
+		await entry.subItem(this.id).setItemMulti(this.id, multi).activateItem(this.id, expire).save();
 		
 		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will begone in ${parseTime(duration / 1000)}`,

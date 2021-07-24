@@ -62,7 +62,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context) {
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		const beg = ctx.client.util.randomInArray(this.beg);
 		const multi = entry.calcMulti(ctx).unlocked.reduce((p, c) => p + c.value, 0);
 
@@ -156,6 +156,30 @@ const beg = (client: LavaClient): BegData[] => [
 		coins: {
 			max: 30000,
 			min: 10000
+		}
+	},
+	{
+		odds: 0.3,
+		person: 'Mickey Mouse',
+		msgs: {
+			success: w => `Hey! It's fucking mickey, here's your **${w.toLocaleString()}** coins twerp`,
+			fail: 'Hi hello this is mickey and bye'
+		},
+		coins: {
+			max: 500000,
+			min: 100000
+		}
+	},
+	{
+		odds: 0.6,
+		person: 'Cardi E',
+		msgs: {
+			success: w => `I'm tired of having my booty in front of the camera, here's my **${w.toLocaleString()}** retirement fee.`,
+			fail: `Curb your kindness`
+		},
+		coins: {
+			max: 25000,
+			min: 3000
 		}
 	}
 ];

@@ -40,7 +40,7 @@ export default class extends Command {
 	async exec(ctx: Context, args: { query: number | Item }) {
 		const { paginateArray, parseTime } = ctx.client.util;
 		const { item: handler } = ctx.client.handlers;
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		const items = [...handler.modules.values()];
 
 		if (typeof args.query === 'number') {

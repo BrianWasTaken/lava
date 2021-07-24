@@ -24,7 +24,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, { event, page }: { event: Donation, page: number; }) {
-		const docs = await ctx.crib.model.find({}).exec().then(d => d.map(e => new CribEntry(ctx.crib, e)));
+		const docs = await ctx.crib.model.find({}).exec().then(d => d.map(e => new CribEntry(null, ctx.crib, e)));
 		const pages = ctx.client.util.paginateArray(docs.filter(d => {
 			return ctx.guild.members.cache.has(d.data._id as Snowflake);
 		}).filter(d => d.donos.get(event.id).amount > 0).sort((a, b) => {

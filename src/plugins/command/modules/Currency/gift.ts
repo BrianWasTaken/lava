@@ -46,8 +46,8 @@ export default class extends Command {
 			return ctx.reply(`You can't gift this item :thinking:`).then(() => false);
 		}
 
-		const entry = await ctx.currency.fetch(ctx.author.id);
-		const entry2 = await ctx.currency.fetch(member.user.id);
+		const entry = await ctx.author.currency.fetch();
+		const entry2 = await member.user.currency.fetch();
 		const inv = entry.props.items.get(item.id);
 		const inv2 = entry2.props.items.get(item.id);
 

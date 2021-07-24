@@ -24,7 +24,7 @@ export default class Tool extends ToolItem {
 		const duration = 1000 * 60 * 60;
 		const expire = Date.now() + duration;
 
-		await entry.activateItem(this.id, expire).save();
+		await entry.subItem(this.id).activateItem(this.id, expire).save();
 
 		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will stop beating in ${parseTime(duration / 1000)}`,

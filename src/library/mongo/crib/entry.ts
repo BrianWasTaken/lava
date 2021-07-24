@@ -15,7 +15,7 @@ export declare interface CribEntry extends UserEntry<CribProfile> {
 export class CribEntry extends UserEntry<CribProfile> {
 	/** Their booster shit */
 	get booster() {
-		return this.data.booster;
+		return this.cache.booster;
 	}
 
 	/** Their donos in memers crib */
@@ -25,7 +25,7 @@ export class CribEntry extends UserEntry<CribProfile> {
 
 	/** Manage user donos */
 	private donation(id: string, amount: number) {
-		const thisDono = this.data.donations.find(d => d.id === id);
+		const thisDono = this.cache.donations.find(d => d.id === id);
 
 		return {
 			add: (count: boolean, push = true) => {
@@ -45,16 +45,16 @@ export class CribEntry extends UserEntry<CribProfile> {
 	private boost() {
 		return {
 			activate: (expire: number) => {
-				this.data.booster.expires = expire;
+				this.cache.booster.expires = expire;
 				return this;
 			},
 			deactivate: () => {
-				this.data.booster.expires = 0;
-				this.data.booster.role = '';
+				this.cache.booster.expires = 0;
+				this.cache.booster.role = '';
 				return this;
 			},
 			setRole: (role: string) => {
-				this.data.booster.role = role;
+				this.cache.booster.role = role;
 				return this;
 			}
 		}

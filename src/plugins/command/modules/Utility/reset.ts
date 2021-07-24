@@ -20,7 +20,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, args: { all: boolean; }) {
-		const { data } = await ctx.currency.fetch(ctx.author.id);
+		const { cache } = await ctx.author.currency.fetch();
 
 		await ctx.reply({ embeds: [{ color: Colors.RED, description: 'Are u sure you wanna reset rn?' }] });
 		const prompt1 = await ctx.awaitMessage();
@@ -36,7 +36,7 @@ export default class extends Command {
 		if (args.all && ctx.client.isOwner(ctx.author)) {
 			await ctx.client.db.currency.model.deleteMany({});
 		} else {
-			await data.delete();
+			await cache.delete();
 		}
 
 		return ctx.reply({ embeds: [{ color: Colors.GREEN, description: 'Ok ur data has been deleted, enjoy the new life kid' }] }).then(() => false);

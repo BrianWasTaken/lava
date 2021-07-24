@@ -11,10 +11,10 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context) {
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		const comp = entry.props.items.get('computer');
 
-		if (!comp.isOwned()) {
+		if (!entry.hasInventoryItem(comp.id)) {
 			return ctx.reply(`You need **1 ${comp.module.emoji} ${comp.module.name}** to post memes.`).then(() => false);
 		}
 

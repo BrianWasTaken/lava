@@ -15,7 +15,7 @@ export class SpawnEntry extends UserEntry<SpawnProfile> {
 	 * Basic props.
 	*/
 	get props() {
-		return this.data;
+		return this.cache;
 	}
 
 	/**
@@ -24,11 +24,11 @@ export class SpawnEntry extends UserEntry<SpawnProfile> {
 	private balance(amount: number) {
 		return {
 			add: () => {
-				this.data.unpaids += amount;
+				this.cache.unpaids += amount;
 				return this;
 			},
 			remove: () => {
-				this.data.unpaids -= amount;
+				this.cache.unpaids -= amount;
 				return this;
 			}
 		}
@@ -40,11 +40,11 @@ export class SpawnEntry extends UserEntry<SpawnProfile> {
 	private joined(inc = 1) {
 		return {
 			increment: () => {
-				this.data.joined += inc;
+				this.cache.joined += inc;
 				return this;
 			},
 			decrement: () => {
-				this.data.joined -= inc;
+				this.cache.joined -= inc;
 				return this
 			}
 		}

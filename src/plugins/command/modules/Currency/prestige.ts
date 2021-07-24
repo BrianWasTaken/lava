@@ -25,7 +25,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context) {
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		const prestige = entry.props.prestige.level;
 		const { romanize } = ctx.client.util;
 		const { pocket, xp } = entry.props;
@@ -69,7 +69,7 @@ export default class extends Command {
 		const nice = await ask(`Do you wanna prestige to **${emojis[next.prestige - 1] ?? emojis[emojis.length - 1]} Prestige ${romanize(next.prestige)}** right now?`);
 		if (typeof nice === 'string') return ctx.reply(nice).then(() => false);
 
-		const items: [string, number][] = [['card', next.prestige * 100], ['bacon', 50], ['statue', 1]];
+		const items: [string, number][] = [['card', next.prestige * 1000], ['bacon', 50], ['statue', 1]];
 		const got = items.map(i => ({ item: entry.props.items.get(i[0]).upgrade, amount: i[1]}));
 		const owo = await entry.prestige(next.prestige)
 			.setItems(items.map(([id, amount]) => ({ id, amount })))

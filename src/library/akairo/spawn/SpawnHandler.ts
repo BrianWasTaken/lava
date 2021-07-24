@@ -47,7 +47,7 @@ export class SpawnHandler extends AbstractHandler<Spawn> {
 				const string = this.client.util.randomInArray(spawn.display.strings);
 				const filter: CollectorFilter<[Context]> = async m => {
 					// Check if they don't hit the cap
-					return (await m.spawn.fetch(m.author.id)).props.unpaids <= Spawner.UNPAIDS_CAP
+					return (await m.author.spawn.fetch()).props.unpaids <= Spawner.UNPAIDS_CAP
 						// Check if the spawn is spammable or spammablen't
 						&& (spawn.config.method === 'spam' ? true : !channelQueue.has(m.member.user.id))
 						// The string to type obviously

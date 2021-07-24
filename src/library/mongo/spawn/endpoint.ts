@@ -1,4 +1,5 @@
 import { Endpoint, SpawnEntry, EndpointEvents } from 'lava/mongo';
+import { Snowflake } from 'discord.js';
 import { UserPlus } from 'lava/discord';
 
 export interface SpawnEndpointEvents extends EndpointEvents<SpawnEntry> {
@@ -25,9 +26,8 @@ export class SpawnEndpoint extends Endpoint<SpawnProfile> {
 	/**
 	 * Fetch some bank robber from the db.
 	 */
-	public fetch(_id: string): Promise<SpawnEntry> {
-		return this.model.findOne({ _id }).then(async doc => {
-			return doc ?? await (new this.model({ _id })).save();
-		}).then(doc => new SpawnEntry(this, doc));
+	public fetch(_id: Snowflake): Promise<SpawnProfile> {
+		const doc = await this.model.findById(_id) ?? await this.model.create(_id);
+		return doc;
 	}
 }

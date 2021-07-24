@@ -32,7 +32,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, { member, amount, event }: CommandArgs) {
-		const entry = await ctx.crib.fetch(ctx.author.id);
+		const entry = await member.user.crib.fetch();
 		if (!member) {
 			return ctx.reply(`Member not found.`).then(() => false);
 		}

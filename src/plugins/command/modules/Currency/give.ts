@@ -28,7 +28,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, { member, amount }: { member: GuildMemberPlus, amount: number }) {
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		if (!member) {
 			return ctx.reply('Bruh who are you giving coins to?').then(() => false);
 		}
@@ -36,7 +36,7 @@ export default class extends Command {
 			return ctx.reply('You need to give something!').then(() => false);
 		}
 
-		const entry2 = await ctx.currency.fetch(member.user.id);
+		const entry2 = await member.user.currency.fetch();
 		if (ctx.author.id === member.user.id) {
 			return ctx.reply('Are you being dumb or just dumb?').then(() => false);
 		}

@@ -59,7 +59,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Context, args: BuyArgs) {
-		const entry = await ctx.currency.fetch(ctx.author.id);
+		const entry = await ctx.author.currency.fetch();
 		const check = this.check(entry, args);
 		if (check) return ctx.reply(check).then(() => false);
 
