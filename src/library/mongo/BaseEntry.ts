@@ -31,7 +31,7 @@ export class BaseEntry<Profile extends BaseProfile> {
 		this.client = context.client;
 		this.endpoint = endpoint;
 		this.context = context;
-		this.cache = cache ?? null;
+		this.cache = cache;
 	}
 
 	/**
