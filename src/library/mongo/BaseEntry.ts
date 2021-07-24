@@ -49,7 +49,7 @@ export class BaseEntry<Profile extends BaseProfile> {
 		const fetched = await this.endpoint.fetch(this.context.id as Snowflake);
 		this.endpoint.cache.set(this.context.id as Snowflake, fetched);
 		this.cache = fetched;
-		return await this.fetch();
+		return this;
 	}
 
 	/**
