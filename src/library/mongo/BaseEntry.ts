@@ -38,9 +38,6 @@ export class BaseEntry<Profile extends BaseProfile> {
 	 * Fetch the document from the db, or return the cached one.
 	 */
 	public async fetch(): Promise<this> {
-		const data = await this.endpoint.fetch(this.context.id as Snowflake);
-		return new this.constructor(this.context, this.endpoint, data);
-
 		const endpointCache = this.endpoint.cache.get(this.context.id as Snowflake);
 		if (endpointCache) {
 			this.cache = endpointCache;
@@ -49,6 +46,7 @@ export class BaseEntry<Profile extends BaseProfile> {
 
 		const fetched = await this.endpoint.fetch(this.context.id as Snowflake);
 		this.endpoint.cache.set(this.context.id as Snowflake, fetched);
+		this.cache = fetched;
 		return this;
 	}
 
