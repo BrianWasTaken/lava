@@ -56,8 +56,8 @@ export class BaseEntry<Profile extends BaseProfile> {
 	 * Save the changes modified by this entry.
 	 */
 	public async save(): Promise<this> {
-		const { cache } = await this.fetch();
-		await cache.save();
+		// const { cache } = await this.fetch();
+		// await cache.save();
 		return this;
 	}
 } 
