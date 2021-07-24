@@ -12,6 +12,7 @@ export default class extends Inhibitor {
 	}
 
 	async exec(ctx: Message, cmd: Command): Promise<boolean> {
+		return false;
 		const user = await ctx.author.lava.fetch();
 		return user.banned;
 	}
