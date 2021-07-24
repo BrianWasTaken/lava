@@ -1,4 +1,4 @@
-import { Constructable, Collection } from 'discord.js';
+import { Constructable, Collection, Snowflake } from 'discord.js';
 import { Document, Model } from 'mongoose';
 import { EventEmitter } from 'events';
 import { LavaClient } from 'lava/akairo';
