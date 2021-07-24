@@ -31,7 +31,7 @@ export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
 	 */
 	public async fetch(): Promise<this> {
 		if (this.cache) return this;
-		this.cache = await this.endpoint.model.findById(this.context.id);
+		this.cache = await this.endpoint.fetch(this.context.id);
 		return this;
 	}
 
