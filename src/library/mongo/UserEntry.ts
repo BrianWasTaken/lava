@@ -23,14 +23,14 @@ export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
 		/** @type {LavaClient} */
 		this.client = endpoint.client;
 		/** @type {Data} */
-		this.cache = cache ?? null;
+		this.cache = cache;
 	}
 
 	/**
 	 * Fetch this item from mongodb.
 	 */
 	public async fetch(): Promise<this> {
-		if (typeof this.cache !== 'undefined') return this;
+		if (this.cache) return this;
 		this.cache = await this.endpoint.model.findById(this.context.id);
 		return this;
 	}
