@@ -27,7 +27,7 @@ export class SpawnEndpoint extends Endpoint<SpawnProfile> {
 	 * Fetch some bank robber from the db.
 	 */
 	public async fetch(_id: Snowflake): Promise<SpawnProfile> {
-		const doc = await this.model.findById(_id) ?? await this.model.create(_id);
+		const doc = await this.model.findById({ _id }) ?? await this.model.create({ _id });
 		return doc;
 	}
 }
