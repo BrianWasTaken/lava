@@ -4,7 +4,7 @@ import { Snowflake } from 'discord.js';
 import { Endpoint } from 'lava/mongo';
 import { Model } from 'mongoose';
 
-export class BaseEntry<Profile extends BaseProfile> {
+class BaseEntry<Profile extends BaseProfile> {
 	/**
 	 * The client instance for this entry.
 	 */
@@ -37,9 +37,10 @@ export class BaseEntry<Profile extends BaseProfile> {
 	/**
 	 * Fetch the document from the db, or return the cached one.
 	 */
-	public async fetch(): Promise<this> {
-		this.cache = await this.endpoint.fetch(this.context.id as Snowflake);
-		return this;
+	public async fetch(): Promise<BaseEntry<Profile>> {
+		const cache = await this.endpoint.fetch(this.context.id as Snowflake);
+		return new ThisEntry(this.context, this.endpoint, cache);
+		
 		const endpointCache = this.endpoint.cache.get(this.context.id as Snowflake);
 		if (endpointCache) {
 			this.cache = endpointCache;
@@ -49,7 +50,7 @@ export class BaseEntry<Profile extends BaseProfile> {
 		const fetched = await this.endpoint.fetch(this.context.id as Snowflake);
 		this.endpoint.cache.set(this.context.id as Snowflake, fetched);
 		this.cache = fetched;
-		return this;
+		// return this;
 	}
 
 	/**
@@ -61,3 +62,7 @@ export class BaseEntry<Profile extends BaseProfile> {
 		return this;
 	}
 } 
+
+const ThisEntry = BaseEntry;
+
+export { BaseEntry };
