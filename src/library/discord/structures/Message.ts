@@ -19,9 +19,7 @@ export declare interface Context extends Message {
 	client: LavaClient;
 }
 
-export class Context extends Message implements Structure {
-	public client: LavaClient;
-	
+export class Context extends Message implements Structure {	
 	/**
 	 * Currency Endpoint shortcut.
 	 * * Inventory - Manage user inventories.

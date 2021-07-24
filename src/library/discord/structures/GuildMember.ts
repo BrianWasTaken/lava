@@ -13,7 +13,5 @@ export declare interface GuildMemberPlus extends GuildMember {
 	client: LavaClient;
 }
 
-export class GuildMemberPlus extends GuildMember implements Structure {
-	public client: LavaClient;
-}
+export class GuildMemberPlus extends GuildMember implements Structure {}
 Structures.extend('GuildMember', () => GuildMemberPlus);
