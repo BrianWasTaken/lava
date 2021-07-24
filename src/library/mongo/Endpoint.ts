@@ -1,8 +1,8 @@
 import { LavaClient, AbstractHandler } from 'lava/akairo';
+import { Collection, Snowflake } from 'discord.js';
 import { Document, Model } from 'mongoose';
 import { AkairoHandler } from 'discord-akairo';
 import { EventEmitter } from 'events';
-import { Snowflake } from 'discord.js';
 import { UserEntry } from '.';
 import { UserPlus } from 'lava/discord';
 
@@ -37,6 +37,10 @@ export abstract class Endpoint<Doc extends BaseProfile = never> extends EventEmi
 	 * @readonly
 	*/
 	public model: Model<Doc>;
+	/**
+	 * The cached crap to reduce lag.
+	 */
+	public cache: Collection<Snowflake, Doc>;
 
 	/**
 	 * The constructor for this endpoint.
