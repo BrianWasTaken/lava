@@ -5,9 +5,9 @@
 
 import { Collection, Snowflake, TextChannel, Message } from 'discord.js';
 import { Inventory, Mission, GambleStat, TradeStat } from '.';
-import { UserEntry, BaseEntry, CurrencyEndpoint } from 'lava/mongo';
 import { Currency, ItemEffects, ItemEntities } from 'lava/utility';
 import { CollectibleItem, PowerUpItem } from 'lava/../plugins/item';
+import { UserEntry, CurrencyEndpoint } from 'lava/mongo';
 import { Context, UserPlus } from 'lava/discord';
 
 export declare interface CurrencyEntry extends UserEntry<CurrencyProfile> {
