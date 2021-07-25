@@ -21,7 +21,7 @@ export default class Collectible extends CollectibleItem {
 				{ price: 5e5 },
 			],
 			entities: {
-				multipliers: [1, 1, 2, 3, 5, 10]
+				multipliers: [5, 5, 10, 10, 15, 15]
 			}
 		});
 	}
