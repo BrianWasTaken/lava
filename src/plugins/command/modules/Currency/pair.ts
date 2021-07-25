@@ -58,11 +58,11 @@ export default class extends GambleCommand {
 			}]}).then(() => true);
 		}
 
-		const { props } = await entry.addPocket(won).updateStats(this.id, won, true).save();
+		const { props } = await entry.addPocket(won.w).updateStats(this.id, won.w, true).save();
 		await ctx.client.util.sleep(2000);
 		return await msg.edit({ embeds: [{
 			...msg.embeds[0],
-			description: `:${pair.join(':    :')}:\n**LUCKY PAIR!** You won **${Math.round(won / bet)}x** of your bet: **${won.toLocaleString()}**\nNow you have **${props.pocket.toLocaleString()}**`
+			description: `:${pair.join(':    :')}:\n${won.ok === 2 ? '**LUCKY PAIR!**' : 'A single one, not bad.'} You won **${Math.round(won.w / bet)}x** of your bet: **${won.toLocaleString()}**\nNow you have **${props.pocket.toLocaleString()}**`
 		}]}).then(() => true);
 	}
 
@@ -70,10 +70,10 @@ export default class extends GambleCommand {
 		const emojis = Object.keys(this.pairs);
 
 		if (pair.every((e, i, arr) => arr[0] === e)) {
-			return Math.round(this.pairs[pair[0]] * bet);
+			return { ok: 2, w: Math.round(this.pairs[pair[0]] * bet) };
 		}
 		if (pair.some(e => emojis[0] === e)) {
-			return Math.round(bet * 2);
+			return { ok: 1, w: Math.round(bet * 2) };
 		}
 	} 
 }
