@@ -23,8 +23,9 @@ export default class extends GambleCommand {
 	}
 
 	getPair() {
-		const emojis = Object.keys(this.pairs);
-		return Array.from({ length: 2 }, () => this.client.util.randomInArray(emojis));
+		return Array.from({ length: 2 }, () => {
+			return this.client.util.randomInArray(Object.keys(this.pairs));
+		});
 	}
 
 	async exec(ctx: Message, args: { amount: string }) {
@@ -49,7 +50,7 @@ export default class extends GambleCommand {
 		const pair = this.getPair();
 		const won = this.calcPair(pair, bet);
 		if (!won) {
-			const { props } = await entry.removePocket(won).updateStats(this.id, bet, false).save();
+			const { props } = await entry.removePocket(bet).updateStats(this.id, bet, false).save();
 			await ctx.client.util.sleep(2000);
 			return await msg.edit({ embeds: [{ 
 				...msg.embeds[0], 
