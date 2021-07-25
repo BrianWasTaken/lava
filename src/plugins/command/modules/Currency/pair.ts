@@ -51,7 +51,7 @@ export default class extends GambleCommand {
 		const won = this.calcPair(pair, bet);
 		if (!won) {
 			const { props } = await entry.removePocket(bet).updateStats(this.id, bet, false).save();
-			await ctx.client.util.sleep(2000);
+			await ctx.client.util.sleep(1500);
 			return await msg.edit({ embeds: [{ 
 				...msg.embeds[0], 
 				description: `:${pair.join(':    :')}:\nYou didn't get an outstanding pair sad. You lost your bet.\nNow you have **${props.pocket.toLocaleString()}**`
@@ -59,7 +59,7 @@ export default class extends GambleCommand {
 		}
 
 		const { props } = await entry.addPocket(won.w).updateStats(this.id, won.w, true).save();
-		await ctx.client.util.sleep(2000);
+		await ctx.client.util.sleep(1500);
 		return await msg.edit({ embeds: [{
 			...msg.embeds[0],
 			description: `:${pair.join(':    :')}:\n${won.ok === 2 ? '**LUCKY PAIR!**' : 'A single one, not bad.'} You won **${Math.round(won.w / bet)}x** of your bet: **${won.w.toLocaleString()}**\nNow you have **${props.pocket.toLocaleString()}**`
