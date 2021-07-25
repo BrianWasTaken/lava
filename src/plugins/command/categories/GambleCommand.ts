@@ -17,7 +17,7 @@ export class GambleCommand extends Command {
 		super(id, { 
 			category: 'Currency',
 			clientPermissions: ['EMBED_LINKS'],
-			cooldown: 500,
+			cooldown: 3000,
 			args: [
 				{ 
 					id: 'amount', 
@@ -95,7 +95,7 @@ export class GambleCommand extends Command {
 	 * @param [extra] any extra winnings
 	 */
 	public static getWinnings(multi: number, bet: number, cap = true) {
-		const base = Math.ceil(bet * ((Math.random() * 0.8) + 0.1));
+		const base = Math.ceil(bet * ((Math.random() * 1.1) + 0.1));
 		const raw = base + Math.ceil(base * (multi / 100));
 		return cap ? Math.min(Currency.MAX_WIN, raw) : raw;
 	}

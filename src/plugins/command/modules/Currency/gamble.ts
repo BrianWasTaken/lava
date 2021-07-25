@@ -20,7 +20,7 @@ export default class extends GambleCommand {
 		const { userD, botD } = this.roll(false);
 		if (botD > userD || botD === userD) {
 			if (botD > userD) entry.updateStats(this.id, bet, false);
-			const props = await entry.removePocket(bet).save().then(d => d.props);
+			const props = await entry.removePocket(botD === userD ? 0 : bet).save().then(d => d.props);
 
 			return ctx.channel.send({
 				embeds: [{

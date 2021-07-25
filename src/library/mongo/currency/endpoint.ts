@@ -55,7 +55,7 @@ export class CurrencyEndpoint extends Endpoint<CurrencyProfile> {
 	 */
 	public updateGames(doc: CurrencyProfile) {
 		const updated: Command[] = [];
-		for (const mod of ['blackjack', 'gamble', 'slots'].map(c => this.client.handlers.command.modules.get(c))) {
+		for (const mod of ['blackjack', 'gamble', 'slots', 'pair'].map(c => this.client.handlers.command.modules.get(c))) {
 			if (!doc.gamble.find(g => g.id === mod.id)) {
 				doc.gamble.push({ id: mod.id, wins: 0, loses: 0, won: 0, lost: 0, streak: 0 });
 				updated.push(mod);

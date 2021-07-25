@@ -128,7 +128,7 @@ export class CommandHandler extends OldCommandHandler implements AbstractHandler
 	 * Run a command.
 	 */
 	public async runCommand(context: Message, command: Command, args: any) {
-		// await this.commandQueue.wait(context.author.id);
+		await this.commandQueue.wait(context.author.id);
 		if (command.typing) {
 			context.channel.startTyping();
 		}
@@ -147,7 +147,7 @@ export class CommandHandler extends OldCommandHandler implements AbstractHandler
 			} catch (error) {
 				this.emit(CommandHandlerEvents.ERROR, error, context, command);
 			} finally {
-				// this.commandQueue.next(context.author.id);
+				this.commandQueue.next(context.author.id);
 			}
 		} finally {
 			if (command.typing) {
