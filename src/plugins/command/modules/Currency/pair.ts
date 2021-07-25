@@ -62,7 +62,7 @@ export default class extends GambleCommand {
 		await ctx.client.util.sleep(1250);
 		return await msg.edit({ embeds: [{
 			...msg.embeds[0],
-			description: `:${pair.join(':    :')}:\n${won.ok === 2 ? '**LUCKY PAIR!**' : 'A single one, not bad.'} You won **${(won.w / bet).toFixed(1)}x** of your bet: **${won.w.toLocaleString()}**\nNow you have **${props.pocket.toLocaleString()}**`
+			description: `:${pair.join(':    :')}:\n${won.ok === 2 ? '**LUCKY PAIR!**' : 'A single one, not bad.'} You won **${Number((won.w / bet).toFixed(1))}x** of your bet: **${won.w.toLocaleString()}**\nNow you have **${props.pocket.toLocaleString()}**`
 		}]}).then(() => true);
 	}
 
