@@ -45,11 +45,11 @@ export class GambleCommand extends Command {
 			return 'You need to bet something, smh.';
 		if (Number(amount) < 1 || !Number.isInteger(Number(bet))) {
 			if (amount.toLowerCase().match(/k$/g)) {
-				const kay = amount.replace(/k$/g, '');
-				if (!Number.isInteger(Number(Number(kay) * 1000)) || isNaN(Number(kay) * 1000)) {
+				const kay = Number(amount.replace(/k$/g, ''));
+				if (!Number.isInteger(Number(kay * 1000)) || isNaN(kay * 1000)) {
 					return 'You actually have to bet an actual number, dummy.';
 				} else {
-					bet = Number(kay) * 1000;
+					bet = kay * 1000;
 				}
 			} else if (amount.toLowerCase() === 'all') {
 				bet = pocket;
@@ -73,7 +73,7 @@ export class GambleCommand extends Command {
 	public static checkBet(bet: number, entry: CurrencyEntry) {
 		const { MAX_BET, MIN_BET } = Currency;
 		const { pocket } = entry.props;
-		
+
 		if (pocket <= 0) 
 			return 'You have no coins in your pocket to gamble with lol.';
 		if (bet > pocket)
