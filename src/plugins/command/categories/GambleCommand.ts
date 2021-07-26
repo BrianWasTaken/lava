@@ -57,6 +57,8 @@ export class GambleCommand extends Command {
 				bet = Math.min(MAX_BET, pocket);
 			} else if (amount.toLowerCase() === 'half') {
 				bet = Math.round(pocket / 2);
+			} else if (amount.toLowerCase() === 'min') {
+				bet = MIN_BET;
 			} else {
 				return 'You have to bet actual coins, don\'t try and break me.';
 			}
