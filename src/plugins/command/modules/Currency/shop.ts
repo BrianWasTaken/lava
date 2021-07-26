@@ -45,7 +45,7 @@ export default class extends Command {
 		const items = [...handler.modules.values()];
 
 		if (typeof args.query === 'number') {
-			const shop = paginateArray(items.sort((a, b) => b.price - a.price).filter(i => i.shop).map(i => this.displayItem(i, entry.props.items)));
+			const shop = paginateArray(items.sort((a, b) => b.price - a.price).filter(i => i.shop && !i.retired).map(i => this.displayItem(i, entry.props.items)));
 			const left = parseTime((handler.sale.nextSale - Date.now()) / 1000);
 			if (args.query > shop.length) {
 				return ctx.reply(`Page \`${args.query}\` doesn't exist.`).then(() => false);

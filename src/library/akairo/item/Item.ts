@@ -8,6 +8,18 @@ import { MessageOptions, MessageEmbed, Message } from 'discord.js';
 import { Context, CurrencyEntry, Inventory } from 'lava/index'; 
 import { ItemHandler } from '.';
 
+declare global {
+	enum ItemCategory {
+		COLLECTIBLE = 'Collectible',
+		POWER_UP = 'Power-Up',
+		TOOL = 'Tool',
+		CUSTOM = 'Custom',
+		PINATA = 'Pinata',
+		BOX = 'Box',
+		EXCLUSIVE = 'Exclusive'
+	}
+}
+
 export interface ItemUpgrade extends ItemAssets {
 	/**
 	 * The level of this item.
@@ -25,6 +37,8 @@ export interface ItemAssets extends AbstractModuleOptions {
 	name: string;
 	/** The default price. */
 	price: number;
+	/** The category of this item. */
+	category: ItemCategory;
 	/** The sell rate from 0.01 to 1. */
 	sellRate?: number;
 	/** The upgrade price of this item. */
@@ -84,10 +98,14 @@ export interface ItemOptions {
 	upgrades: Partial<ItemUpgrade>[];
 }
 
-export abstract class Item extends AbstractModule {
+export declare interface Item extends AbstractModule {
 	/** The handler this item belongs to. */
-	public handler: ItemHandler;
+	handler: ItemHandler;
+	/** The category where this item belongs to. */
+	categoryID: ItemCategory;
+}
 
+export abstract class Item extends AbstractModule {
 	/** The default price. */
 	public price: number;
 	/** The sell rate from 0.01 to 1. */

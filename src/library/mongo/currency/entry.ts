@@ -9,6 +9,7 @@ import { Currency, ItemEffects, ItemEntities } from 'lava/utility';
 import { CollectibleItem, PowerUpItem } from 'lava/../plugins/item';
 import { UserEntry, CurrencyEndpoint } from 'lava/mongo';
 import { Context, UserPlus } from 'lava/discord';
+import { Item } from 'lava/akairo';
 
 export declare interface CurrencyEntry extends UserEntry<CurrencyProfile> {
 	/** The endpoint of this entry. */
@@ -32,9 +33,28 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 	/** Their item effects. */
 	public get effects() {
 		const reduce = (array: number[]) => array.reduce((p, c) => p + c, 0);
+		const filter = (item: Item, cat: ItemCategory) => item.categoryID === cat;
+		
+		// Ensure the effects object already has the properties from ItemEntities to default 0.
 		const effects: { [E in keyof ItemEntities]: number } = Object.create(null);
-		const entities: [string, number[]][] = Object.entries(this.entities.entities);
-		entities.forEach(([key, array]) => effects[key as keyof ItemEntities] = reduce(array));
+		Object.keys(this.entities.entities).forEach(en => effects[en as keyof ItemEntities] = 0);
+
+		const mappedMods = this.props.items.map(i => i.module);
+		const collectibles = mappedMods.filter(i => filter(i, ItemCategory.COLLECTIBLE)) as CollectibleItem[];
+		const powerups: [string, number[]][] = Object.entries(this.entities.entities);
+
+		// Grab and apply item perks from powerups and collectibles 
+		powerups.forEach(([key, array]) => effects[key as keyof ItemEntities] += reduce(array));
+		collectibles.filter(i => this.props.items.get(i.id).isOwned()).forEach(i => 
+			Object.keys(i.entities).forEach(en => {
+				const ent = en as keyof ItemEntities;
+				// get the upgrade values from the collectibles' entity, eg: [level 0, level 1, ...]
+				const upgradeValue = i.getUpgrade(this.props.items.get(i.id)).entities[ent];
+				// add the values up for that entity
+				effects[ent] += upgradeValue;
+			})
+		)
+	
 		return effects;
 	}
 
@@ -100,13 +120,13 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 		// Nitro Booster
 		unlock('Nitro Booster', 5, !!ctx.member.roles.premiumSubscriberRole?.id);
 		// Mastery 1 and up
-		unlock('Crib Mastery Rank', 5, ctx.member.roles.cache.has('794834783582421032'));
-		// Has 1 of every item
-		unlock('Item Collector', this.props.items.size, this.props.items.every(i => i.isOwned()));
+		unlock('Crib Mastery 1+', 5, ctx.member.roles.cache.has('794834783582421032'));
+		// Owns at least 20 different items. 
+		unlock('Item Collector', 5, this.props.items.filter(i => i.isOwned()).size >= 20);
 
-		// Item Effects
-		this.props.items.filter(i => i.module.category.id === 'Power-Up').forEach(i => {
-			return unlock(i.module.name, i.multiplier, i.isActive() && i.multiplier >= 1);
+		// Power-Ups multipliers
+		this.props.items.filter(i => i.multiplier > 0 && i.module.categoryID === ItemCategory.POWER_UP).forEach(i => {
+			return unlock(i.module.name, i.multiplier, i.isActive());
 		});
 
 		// Mastery 10
@@ -130,6 +150,8 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 		unlock('Chips Cult', 2, ctx.member.nickname?.toLowerCase().includes('chips'));
 		// Probber Cult
 		unlock('Probber Cult', 2, ctx.member.nickname?.toLowerCase().includes('probber'));
+		// Builder Cult
+		unlock('Builder Cult', 2, ctx.member.nickname?.toLowerCase().includes('builder'));
 		// Lava Channel
 		unlock('Lava Channel', 10, (ctx.channel as TextChannel).name.toLowerCase().includes('lava'));
 		// Maxed All Items

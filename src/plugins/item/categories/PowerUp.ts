@@ -35,7 +35,7 @@ export abstract class PowerUpItem extends Item {
 			assets: {
 				sellRate: 0.1,
 				upgrade: 2.5e6,
-				category: 'Power-Up',
+				category: ItemCategory.POWER_UP,
 				...assets
 			},
 			config: {

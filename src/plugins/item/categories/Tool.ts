@@ -35,7 +35,7 @@ export abstract class ToolItem extends Item {
 			assets: {
 				sellRate: 0.1,
 				upgrade: 25e4,
-				category: 'Tool',
+				category: ItemCategory.TOOL,
 				...assets
 			},
 			config: {

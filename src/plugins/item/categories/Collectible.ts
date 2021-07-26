@@ -1,4 +1,4 @@
-import { Context, Item, ItemOptions, ItemAssets, ItemUpgrade, ItemConfig, ItemEntities, CurrencyEntry } from 'lava/index';
+import { Context, Item, ItemOptions, ItemAssets, ItemUpgrade, ItemConfig, ItemEntities, Inventory, CurrencyEntry } from 'lava/index';
 import { MessageOptions, Message } from 'discord.js';
 
 export type CollectibleItemAssets = Omit<ItemAssets, 'sellRate' | 'upgrade'>;
@@ -29,19 +29,42 @@ export abstract class CollectibleItem extends Item {
 			assets: {
 				sellRate: 0,
 				upgrade: 25e6,
-				category: 'Collectible',
+				category: ItemCategory.COLLECTIBLE,
 				...assets
 			},
 			config: {
 				premium: false,
 				sellable: false,
-				sale: false,
 				...config
 			},
 			upgrades: options.upgrades.map(up => ({ sellRate: 0, ...up })) ?? [],
 		});
 
-		this.entities = options.entities ?? Object.create(null);
+		this.entities = {
+			multipliers: [],
+			keys: [],
+			shield: [],
+			xpBoost: [],
+			rob: [],
+			discount: [],
+			luck: [],
+			payouts: [],
+			slots: [],
+			...options.entities,
+		};
+	}
+
+	public getUpgrade(thisInv: Inventory) {
+		type ReducedItemEntities = { [E in keyof ItemEntities]: number };
+		const entities: ReducedItemEntities = Object.create(null);
+		const entKeys = Object.keys(this.entities);
+
+		entKeys.forEach(ent => {
+			const key = ent as keyof ItemEntities;
+			entities[key] = this.entities[key][thisInv.level];
+		});
+
+		return { ...super.getUpgrade(thisInv), entities };
 	}
 
 	/**
