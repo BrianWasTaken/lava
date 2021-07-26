@@ -64,7 +64,7 @@ export class GambleCommand extends Command {
 			}
 		}
 
-		return this.checkBet(Number(bet = amount), entry);
+		return this.checkBet(Number(amount) || bet, entry);
 	}
 
 	/**
