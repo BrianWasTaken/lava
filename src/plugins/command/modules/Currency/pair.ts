@@ -43,7 +43,10 @@ export default class extends GambleCommand {
 					iconURL: ctx.author.avatarURL({ dynamic: true })
 				},
 				color: ctx.client.util.randomColor(),
-				description: intro
+				description: intro,
+				footer: {
+					text: `${ctx.util.parsed.prefix} help ${ctx.util.parsed.command.aliases[0]} for how to play`
+				}
 			}]
 		});
 
@@ -51,7 +54,7 @@ export default class extends GambleCommand {
 		const won = this.calcPair(pair, bet);
 		if (!won) {
 			const { props } = await entry.removePocket(bet).updateStats(this.id, bet, false).save();
-			await ctx.client.util.sleep(1250);
+			await ctx.client.util.sleep(1500);
 			return await msg.edit({ embeds: [{ 
 				...msg.embeds[0], 
 				description: `:${pair.join(':    :')}:\nYou didn't get an outstanding pair sad. You lost your bet.\nNow you have **${props.pocket.toLocaleString()}**`
@@ -59,9 +62,10 @@ export default class extends GambleCommand {
 		}
 
 		const { props } = await entry.addPocket(won.w).updateStats(this.id, won.w, true).save();
-		await ctx.client.util.sleep(1250);
+		await ctx.client.util.sleep(1500);
 		return await msg.edit({ embeds: [{
 			...msg.embeds[0],
+			color: null,
 			description: `:${pair.join(':    :')}:\n${won.ok === 2 ? '**LUCKY PAIR!**' : 'A single one, not bad.'} You won **${Number((won.w / bet).toFixed(1))}x** of your bet: **${won.w.toLocaleString()}**\nNow you have **${props.pocket.toLocaleString()}**`
 		}]}).then(() => true);
 	}
