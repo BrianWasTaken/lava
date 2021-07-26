@@ -82,7 +82,7 @@ const beg = (client: LavaClient): BegData[] => [
 		odds: 0.2,
 		person: 'Rick Astley',
 		msgs: {
-			success: w => `Ok im done rickrolling, here's **${w.toLocaleString()}** coins`,
+			success: w => `Ok enough rickrolling, here's **${w.toLocaleString()}** coins`,
 			fail: client.util.randomInArray([
 				'Never gonna give you up',
 				'Never gonna let you down',
@@ -127,7 +127,7 @@ const beg = (client: LavaClient): BegData[] => [
 		person: 'Binran',
 		msgs: {
 			success: w => `Aww ur so poor, take my **${w.toLocaleString()}** coins`,
-			fail: `The phaser gram phaser test suggests you to fuck off <3`
+			fail: `The phaser gram phaser test suggests you to frick off <3`
 		},
 		coins: {
 			max: 10000,
@@ -159,15 +159,15 @@ const beg = (client: LavaClient): BegData[] => [
 		}
 	},
 	{
-		odds: 0.3,
+		odds: 0.6,
 		person: 'Mickey Mouse',
 		msgs: {
 			success: w => `Hey! It's fucking mickey, here's your **${w.toLocaleString()}** coins twerp`,
-			fail: 'Hi hello this is mickey and bye'
+			fail: 'Hi hello this is mickey and I\'m asking you to get off my clubhouse!'
 		},
 		coins: {
 			max: 500000,
-			min: 100000
+			min: 10000
 		}
 	},
 	{
@@ -178,7 +178,7 @@ const beg = (client: LavaClient): BegData[] => [
 			fail: `Curb your kindness`
 		},
 		coins: {
-			max: 25000,
+			max: 5000,
 			min: 3000
 		}
 	}

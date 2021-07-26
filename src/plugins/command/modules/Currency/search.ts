@@ -128,8 +128,8 @@ export default class extends Command {
 const search = (client: LavaClient): SearchData[] => [
 	{
 		place: 'dustbin',
-		maxCoins: 50000,
-		minCoins: 10000,
+		maxCoins: 500000,
+		minCoins: 100,
 		successMsg: w => `You smell but here's **${w.toLocaleString()}** coins ig`,
 		death: {
 			msg: 'You ate a rotten banana and went to the hospital but you were dead on arrival.',
@@ -138,8 +138,8 @@ const search = (client: LavaClient): SearchData[] => [
 	},
 	{
 		place: 'air',
-		maxCoins: 65000,
-		minCoins: 25000,
+		maxCoins: 650000,
+		minCoins: 500,
 		successMsg: w => `How the heck you got **${w.toLocaleString()}** coins from air?`,
 		death: {
 			msg: 'You caught the coronavirus.',
@@ -148,15 +148,15 @@ const search = (client: LavaClient): SearchData[] => [
 	},
 	{
 		place: 'memers crib',
-		maxCoins: 100000,
-		minCoins: 5000,
+		maxCoins: 600000,
+		minCoins: 500,
 		items: ['gem', 'trophy', 'pizza', 'wine', 'card'],
 		successMsg: w => `We wanna make u rich here so here's **${w.toLocaleString()}** bits, enjoy :)`,
 	},
 	{
 		place: 'mars',
-		maxCoins: 30000,
-		minCoins: 150,
+		maxCoins: 300000,
+		minCoins: 100,
 		items: ['bacon'],
 		successMsg: w => `You suffocated for **${w.toLocaleString()}** coins.`,
 		death: {
@@ -167,7 +167,7 @@ const search = (client: LavaClient): SearchData[] => [
 	{
 		place: 'discord',
 		maxCoins: 100000,
-		minCoins: 5000,
+		minCoins: 500,
 		items: ['coin', 'phone', 'computer'],
 		successMsg: w => `You typed \`lava gimme\` in the chats and got **${w.toLocaleString()}** coins`,
 		death: {
@@ -188,8 +188,8 @@ const search = (client: LavaClient): SearchData[] => [
 	},
 	{
 		place: 'tree',
-		maxCoins: 30000,
-		minCoins: 5000,
+		maxCoins: 300000,
+		minCoins: 500,
 		items: ['gem', 'donut'],
 		successMsg: w => `Wtf who left **${w.toLocaleString()}** coins up this tree?`,
 		death: {
@@ -200,7 +200,7 @@ const search = (client: LavaClient): SearchData[] => [
 	{
 		place: 'space',
 		maxCoins: 500000,
-		minCoins: 25000,
+		minCoins: 500,
 		items: ['medal', 'cheese', 'taco', 'totem'],
 		successMsg: w => `Wow you dodged the space debris, you got **${w.toLocaleString()}** ggs`,
 		death: {
