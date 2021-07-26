@@ -1,4 +1,4 @@
-import { Context, Currency, Colors } from 'lava/index';
+import { Context, Currency, Colors, CurrencyEntry } from 'lava/index';
 import { GambleCommand } from '../..';
 import { Message } from 'discord.js';
 
@@ -13,23 +13,24 @@ export default class extends GambleCommand {
 
 	get slots() {
 		return (multi: number) => ({
-			coin: [1, 2],
-			gem: [1, 2],
-			medal: [1, 2],
-			ring: [1, 2],
-			trophy: [2, 4],
-			crown: [2, 4],
-			trident: [2, 4],
-			fist: [2, 4],
-			fire: [10, multi]
+			coin: [1, 5],
+			gem: [1, 5],
+			medal: [1, 5],
+			ring: [1, 5],
+			trophy: [2, 10],
+			crown: [2, 10],
+			trident: [2, 10],
+			fist: [2, 10],
+			fire: [15, multi]
 		});
 	}
 
-	getSlots(emojis: string[], multi: number) {
+	getSlots(entry: CurrencyEntry, emojis: string[]) {
 		const { randomInArray, randomsInArray, randomNumber, deepFilter, shuffle } = this.client.util;
 		const first = randomInArray(emojis);
 		const odds = randomNumber(1, 100);
 
+		if (randomNumber(1, 100) >= 100 - entry.effects.slots) return Array(3).fill(first);
 		return Array.from({ length: 3 }, () => randomInArray(emojis));
 		
 		if (odds > 95) {
@@ -48,7 +49,7 @@ export default class extends GambleCommand {
 		if (typeof bet === 'string') return ctx.reply(bet).then(() => false);
 
 		const multi = GambleCommand.getMulti(ctx, entry);
-		const slots = this.getSlots(Object.keys(this.slots(multi)), multi);
+		const slots = this.getSlots(entry, Object.keys(this.slots(multi)));
 		const { winnings, length } = this.calcSlots(slots, bet, multi);
 
 		if ([1, 2].every(l => l !== length)) {

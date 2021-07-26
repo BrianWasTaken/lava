@@ -43,7 +43,7 @@ export class GambleCommand extends Command {
 			return 'You are too rich to play!';
 		if (!amount)
 			return 'You need to bet something, smh.';
-		if (Number(amount) < 1 || !Number.isInteger(Number(bet))) {
+		if (Number(amount) < 1 || !Number.isInteger(Number(amount))) {
 			if (amount.toLowerCase().match(/k$/g)) {
 				const kay = Number(amount.replace(/k$/g, ''));
 				if (!Number.isInteger(Number(kay * 1000)) || isNaN(kay * 1000)) {
