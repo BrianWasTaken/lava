@@ -34,22 +34,32 @@ export class GambleCommand extends Command {
 	 * @param amount the amount akairo parsed for us
 	 */
 	public static parseBet(entry: CurrencyEntry, amount: string) {
-		const { MIN_BET, MAX_BET } = Currency;
+		const { MIN_BET, MAX_BET, MAX_POCKET, MAX_SAFE_POCKET } = Currency;
 		const { isInteger } = entry.client.util;
 		const { pocket } = entry.props;
 		let bet: number;
 
-		if (!amount) return 'You need something to play!';
-
-		if (!isInteger(Number(amount))) {
-			const amt = amount.toLowerCase();
-			if (amt === 'all') bet = pocket;
-			if (amt === 'min') bet = MIN_BET;
-			if (amt === 'max') bet = Math.min(MAX_BET, pocket);
-			if (amt === 'half') bet = Math.trunc(Math.min(MAX_BET, pocket) / 2);
-			if (amt.match(/k/g)) bet = Number(amt.replace(/k$/g, '')) * 1000;
-		} else if (typeof amount !== 'undefined') {
-			bet = parseFloat(amount);
+		if (pocket > MAX_POCKET)
+			return 'You are too rich to play!';
+		if (!amount)
+			return 'You need to bet something, smh.';
+		if (Number(amount) < 1 || !Number.isInteger(Number(bet))) {
+			if (amount.toLowerCase().match(/k$/g)) {
+				const kay = amount.replace(/k$/g, '');
+				if (!Number.isInteger(Number(Number(kay) * 1000)) || isNaN(Number(kay) * 1000)) {
+					return 'You actually have to bet an actual number, dummy.';
+				} else {
+					bet = Number(kay) * 1000;
+				}
+			} else if (amount.toLowerCase() === 'all') {
+				bet = pocket;
+			} else if (amount.toLowerCase() === 'max') {
+				bet = Math.min(MAX_BET, pocket);
+			} else if (amount.toLowerCase() === 'half') {
+				bet = Math.round(pocket / 2);
+			} else {
+				return 'You have to bet actual coins, don\'t try and break me.';
+			}
 		}
 
 		return this.checkBet(bet, entry);
@@ -61,18 +71,17 @@ export class GambleCommand extends Command {
 	 * @param entry the user's entry from mongodb
 	 */
 	public static checkBet(bet: number, entry: CurrencyEntry) {
-		if (!bet || typeof bet === 'undefined') 
-			return 'You need something to play!';
-		if (entry.props.pocket <= 0) 
-			return 'You have no coins to gamble with.';
-		if (entry.props.pocket > Currency.MAX_POCKET)
-			return 'You are too rich to play!';
-		if (bet < Currency.MIN_BET)
-			return `You can't bet lower than **${Currency.MIN_BET.toLocaleString()}** :rage:`;
-		if (bet > Currency.MAX_BET) 
-			return `You can't bet higher than **${Currency.MAX_BET.toLocaleString()}** smh`;
-		if (bet > entry.props.pocket)
-			return `You only have **${entry.props.pocket.toLocaleString()}** coins lol`;
+		const { MAX_BET, MIN_BET } = Currency;
+		const { pocket } = entry.props;
+		
+		if (pocket <= 0) 
+			return 'You have no coins in your pocket to gamble with lol.';
+		if (bet > pocket)
+			return `You only have ${pocket.toLocaleString()} coins, don't try and lie to me hoe.`;
+		if (bet > MAX_BET)
+			return `You can't bet more than **${MAX_BET.toLocaleString()} coins** at once, sorry not sorry`;
+		if (bet < MIN_BET)
+			return `You can't bet less than **${MIN_BET.toLocaleString()} coins**, sorry not sorry`;
 
 		return bet;
 	}
