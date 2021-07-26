@@ -1,6 +1,6 @@
 import { Item, ItemOptions, ItemAssets, ItemConfig, ItemUpgrade, Context, CurrencyEntry, ItemEffects, Inventory } from 'lava/index';
 
-export type ExclusiveItemAssets = Omit<ItemAssets, 'sellRate' | 'upgrade'>;
+export type ExclusiveItemAssets = Omit<ItemAssets, 'category' | 'sellRate' | 'upgrade'>;
 
 export type ExclusiveItemConfig = Omit<ItemConfig, 'premium' | 'buyable' | 'giftable'>;
 

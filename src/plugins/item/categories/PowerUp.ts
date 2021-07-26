@@ -1,7 +1,7 @@
 import { Item, ItemOptions, ItemAssets, ItemConfig, ItemUpgrade, Colors, CurrencyEntry, ItemEffects, Inventory } from 'lava/index';
 import { Message } from 'discord.js';
 
-export type PowerItemAssets = Omit<ItemAssets, 'sellRate' | 'upgrade'>;
+export type PowerItemAssets = Omit<ItemAssets, 'category' | 'sellRate' | 'upgrade'>;
 
 export interface PowerItemConfig extends Omit<ItemConfig, 'premium'> {
 	/** The default duration of this power-up. */

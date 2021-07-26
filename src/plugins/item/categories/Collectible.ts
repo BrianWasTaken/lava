@@ -1,7 +1,7 @@
 import { Context, Item, ItemOptions, ItemAssets, ItemUpgrade, ItemConfig, ItemEntities, Inventory, CurrencyEntry } from 'lava/index';
 import { MessageOptions, Message } from 'discord.js';
 
-export type CollectibleItemAssets = Omit<ItemAssets, 'sellRate' | 'upgrade'>;
+export type CollectibleItemAssets = Omit<ItemAssets, 'category' | 'sellRate' | 'upgrade'>;
 
 export type CollectibleItemConfig = Omit<ItemConfig, 'premium' | 'sellable'>;
 

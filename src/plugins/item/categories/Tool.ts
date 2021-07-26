@@ -1,7 +1,7 @@
 import { Item, ItemOptions, ItemUpgrade, ItemConfig, ItemAssets, Inventory, CurrencyEntry, ItemEffects } from 'lava/index';
 import { Message } from 'discord.js';
 
-export type ToolItemAssets = Omit<ItemAssets, 'sellRate' | 'upgrade'>;
+export type ToolItemAssets = Omit<ItemAssets, 'category' | 'sellRate' | 'upgrade'>;
 
 export interface ToolItemConfig extends Omit<ItemConfig, 'premium'> {
 	/** The default duration of this tool. */
