@@ -36,7 +36,7 @@ export interface ItemAssets extends AbstractModuleOptions {
 	/** The default price. */
 	price: number;
 	/** The category of this item. */
-	category: ItemCategory;
+	category: ItemCategories;
 	/** The sell rate from 0.01 to 1. */
 	sellRate?: number;
 	/** The upgrade price of this item. */
@@ -100,7 +100,7 @@ export declare interface Item extends AbstractModule {
 	/** The handler this item belongs to. */
 	handler: ItemHandler;
 	/** The category where this item belongs to. */
-	categoryID: ItemCategory;
+	categoryID: ItemCategories;
 }
 
 export abstract class Item extends AbstractModule {

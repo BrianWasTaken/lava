@@ -22,7 +22,7 @@ export type SpawnQueue = CollectionPlus<CollectionPlus<GuildMemberPlus>>;
 export interface SpawnDisplay {
 	description: string;
 	strings: string[];
-	tier: SpawnTier;
+	tier: SpawnTiers;
 	title: string;
 }
 

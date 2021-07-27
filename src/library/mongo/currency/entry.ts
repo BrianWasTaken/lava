@@ -8,8 +8,8 @@ import { Inventory, Mission, GambleStat, TradeStat } from '.';
 import { Currency, ItemEffects, ItemEntities } from 'lava/utility';
 import { CollectibleItem, PowerUpItem } from 'lava/../plugins/item';
 import { UserEntry, CurrencyEndpoint } from 'lava/mongo';
+import { Item, ItemCategories } from 'lava/akairo';
 import { Context, UserPlus } from 'lava/discord';
-import { Item } from 'lava/akairo';
 
 export declare interface CurrencyEntry extends UserEntry<CurrencyProfile> {
 	/** The endpoint of this entry. */
@@ -33,14 +33,14 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 	/** Their item effects. */
 	public get effects() {
 		const reduce = (array: number[]) => array.reduce((p, c) => p + c, 0);
-		const filter = (item: Item, cat: ItemCategory) => item.categoryID === cat;
+		const filter = (item: Item, cat: ItemCategories) => item.categoryID === cat;
 		
 		// Ensure the effects object already has the properties from ItemEntities to default 0.
 		const effects: { [E in keyof ItemEntities]: number } = Object.create(null);
 		Object.keys(this.entities.entities).forEach(en => effects[en as keyof ItemEntities] = 0);
 
 		const mappedMods = this.props.items.map(i => i.module);
-		const collectibles = mappedMods.filter(i => filter(i, ItemCategory.COLLECTIBLE)) as CollectibleItem[];
+		const collectibles = mappedMods.filter(i => filter(i, ItemCategories.COLLECTIBLE)) as CollectibleItem[];
 		const powerups: [string, number[]][] = Object.entries(this.entities.entities);
 
 		// Grab and apply item perks from powerups and collectibles 
@@ -125,7 +125,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 		unlock('Item Collector', 5, this.props.items.filter(i => i.isOwned()).size >= 20);
 
 		// Power-Ups multipliers
-		this.props.items.filter(i => i.multiplier > 0 && i.module.categoryID === ItemCategory.POWER_UP).forEach(i => {
+		this.props.items.filter(i => i.multiplier > 0 && i.module.categoryID === ItemCategories.POWER_UP).forEach(i => {
 			return unlock(i.module.name, i.multiplier, i.isActive());
 		});
 
