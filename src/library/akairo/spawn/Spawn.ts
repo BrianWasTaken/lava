@@ -3,16 +3,21 @@ import { MessageOptions, EmojiResolvable, Collection } from 'discord.js';
 import { GuildMemberPlus } from 'lava/discord';
 import { SpawnHandler } from '.';
 
-/**
- * The tier of the event.
- */
-export type SpawnTier = 'COMMON' | 'UNCOMMON' | 'SUPER' | 'GODLY';
+declare global {
+	enum SpawnTier {
+		COMMON = 'Common',
+		UNCOMMON = 'Uncommon',
+		SUPER = 'Super',
+		GODLY = 'Godly'
+	}
+}
+
 /**
  * How the spawn should handle messages/reactions.
  */
 export type SpawnMethod = 'message' | 'spam' | 'react';
 /**
- * Collection of channel ids to collection of member IDs to spawn names.
+ * Collection of channel ids to spawn modules.
  */
 export type SpawnQueue = CollectionPlus<CollectionPlus<GuildMemberPlus>>;
 
@@ -30,7 +35,18 @@ export interface SpawnConfig {
 	maxEntries: number;
 	method: SpawnMethod;
 	odds: number;
-	rewards: [number, number];
+	rewards: SpawnReward;
+}
+
+export interface SpawnReward {
+	coins: [number, number];
+	items: SpawnItemReward[];
+}
+
+export interface SpawnItemReward {
+	amount: number;
+	odds: number;
+	id: string;
 }
 
 export interface SpawnOptions extends AbstractModuleOptions {
