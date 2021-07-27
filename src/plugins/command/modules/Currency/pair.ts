@@ -13,12 +13,12 @@ export default class extends GambleCommand {
 
 	get pairs() {
 		return <{ [emoji: string]: number }> {
+			zero: 20,
 			one: 15,
 			two: 12,
 			three: 9,
 			four: 6,
 			five: 3,
-			six: 2
 		};
 	}
 

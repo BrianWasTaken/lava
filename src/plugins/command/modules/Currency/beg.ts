@@ -174,7 +174,7 @@ const beg = (client: LavaClient): BegData[] => [
 		odds: 0.6,
 		person: 'Cardi E',
 		msgs: {
-			success: w => `I'm tired of having my booty in front of the camera, here's my **${w.toLocaleString()}** retirement fee.`,
+			success: w => `I'm tired of showing my booty in front of the camera, here's my **${w.toLocaleString()}** retirement fee.`,
 			fail: `Curb your kindness`
 		},
 		coins: {

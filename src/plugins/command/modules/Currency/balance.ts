@@ -34,7 +34,7 @@ export default class extends Command {
 						}`
 				})
 					.map(([label, val]) => `**${label}:** ${val}`)
-					.join('\n')
+					.join('\n'),
 			}]
 		}).then(() => false);
 	}
