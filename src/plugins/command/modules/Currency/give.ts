@@ -54,8 +54,10 @@ export default class extends Command {
 		if (!ctx.client.util.isInteger(amount) || amount < 1 || amount !== Math.trunc(amount)) {
 			return ctx.reply('It needs to be a whole number greater than 0 yeah?').then(() => false);
 		}
-		if (!dev && !isOwner && amount > entry.props.pocket) {
-			return ctx.reply(`You only have ${entry.props.pocket.toLocaleString()} coins dont try and lie to me how`).then(() => false);
+		if (amount > entry.props.pocket) {
+			if ((!isOwner && dev) || (!dev && isOwner)) {
+				return ctx.reply(`You only have ${entry.props.pocket.toLocaleString()} coins dont try and lie to me how`).then(() => false);
+			}
 		}
 
 		const tax = 0.05;

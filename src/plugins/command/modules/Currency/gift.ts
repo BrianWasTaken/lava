@@ -60,8 +60,10 @@ export default class extends Command {
 		const inv = entry.props.items.get(item.id);
 		const inv2 = entry2.props.items.get(item.id);
 
-		if (!dev && !isOwner && amount > inv.owned) {
-			return ctx.reply(`You only have ${inv.owned.toLocaleString()} of this don't try and lie to me.`).then(() => false);
+		if (amount > inv.owned) {
+			if ((!isOwner && dev) || (!dev && isOwner)) {
+				return ctx.reply(`You only have ${inv.owned.toLocaleString()} of this don't try and lie to me.`).then(() => false);
+			}
 		}
 		if (MAX_INVENTORY <= inv2.owned) {
 			return ctx.reply(`Hey! They already have over ${MAX_INVENTORY.toLocaleString()} of this item. That's the cap.`).then(() => false);
