@@ -1,4 +1,4 @@
-import { Item, ItemOptions, ItemAssets, ItemConfig, ItemUpgrade, Colors, CurrencyEntry, ItemEffects, Inventory } from 'lava/index';
+import { Item, ItemOptions, ItemCategories, ItemAssets, ItemConfig, ItemUpgrade, Colors, CurrencyEntry, ItemEffects, Inventory } from 'lava/index';
 import { Message } from 'discord.js';
 
 export type PowerItemAssets = Omit<ItemAssets, 'category' | 'sellRate' | 'upgrade'>;
@@ -35,7 +35,7 @@ export abstract class PowerUpItem extends Item {
 			assets: {
 				sellRate: 0.1,
 				upgrade: 2.5e6,
-				category: ItemCategory.POWER_UP,
+				category: ItemCategories.POWER_UP,
 				...assets
 			},
 			config: {

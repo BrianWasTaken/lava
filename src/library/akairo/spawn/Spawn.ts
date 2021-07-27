@@ -3,13 +3,11 @@ import { MessageOptions, EmojiResolvable, Collection } from 'discord.js';
 import { GuildMemberPlus } from 'lava/discord';
 import { SpawnHandler } from '.';
 
-declare global {
-	enum SpawnTier {
-		COMMON = 'Common',
-		UNCOMMON = 'Uncommon',
-		SUPER = 'Super',
-		GODLY = 'Godly'
-	}
+export enum SpawnTiers {
+	COMMON = 'Common',
+	UNCOMMON = 'Uncommon',
+	SUPER = 'Super',
+	GODLY = 'Godly'
 }
 
 /**

@@ -1,4 +1,4 @@
-import { Spawn } from 'lava/index';
+import { Spawn, SpawnTiers } from 'lava/index';
 
 export default class extends Spawn {
 	constructor() {
@@ -7,7 +7,7 @@ export default class extends Spawn {
 				description: 'The babies are in need of milk!',
 				title: 'Memers Crib',
 				strings: ['bruh'],
-				tier: SpawnTier.GODLY
+				tier: SpawnTiers.GODLY
 			}, 
 			config: {
 				enabled: true,

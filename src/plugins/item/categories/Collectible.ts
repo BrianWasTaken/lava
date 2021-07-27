@@ -1,4 +1,4 @@
-import { Context, Item, ItemOptions, ItemAssets, ItemUpgrade, ItemConfig, ItemEntities, Inventory, CurrencyEntry } from 'lava/index';
+import { Context, Item, ItemCategories, ItemOptions, ItemAssets, ItemUpgrade, ItemConfig, ItemEntities, Inventory, CurrencyEntry } from 'lava/index';
 import { MessageOptions, Message } from 'discord.js';
 
 export type CollectibleItemAssets = Omit<ItemAssets, 'category' | 'sellRate' | 'upgrade'>;
@@ -29,7 +29,7 @@ export abstract class CollectibleItem extends Item {
 			assets: {
 				sellRate: 0,
 				upgrade: 25e6,
-				category: ItemCategory.COLLECTIBLE,
+				category: ItemCategories.COLLECTIBLE,
 				...assets
 			},
 			config: {

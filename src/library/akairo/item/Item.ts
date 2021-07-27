@@ -8,16 +8,14 @@ import { MessageOptions, MessageEmbed, Message } from 'discord.js';
 import { Context, CurrencyEntry, Inventory } from 'lava/index'; 
 import { ItemHandler } from '.';
 
-declare global {
-	enum ItemCategory {
-		COLLECTIBLE = 'Collectible',
-		POWER_UP = 'Power-Up',
-		TOOL = 'Tool',
-		CUSTOM = 'Custom',
-		PINATA = 'Pinata',
-		BOX = 'Box',
-		EXCLUSIVE = 'Exclusive'
-	}
+export enum ItemCategories {
+	COLLECTIBLE = 'Collectible',
+	POWER_UP = 'Power-Up',
+	TOOL = 'Tool',
+	CUSTOM = 'Custom',
+	PINATA = 'Pinata',
+	BOX = 'Box',
+	EXCLUSIVE = 'Exclusive'
 }
 
 export interface ItemUpgrade extends ItemAssets {

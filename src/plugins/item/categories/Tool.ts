@@ -1,4 +1,4 @@
-import { Item, ItemOptions, ItemUpgrade, ItemConfig, ItemAssets, Inventory, CurrencyEntry, ItemEffects } from 'lava/index';
+import { Item, ItemOptions, ItemCategories, ItemUpgrade, ItemConfig, ItemAssets, Inventory, CurrencyEntry, ItemEffects } from 'lava/index';
 import { Message } from 'discord.js';
 
 export type ToolItemAssets = Omit<ItemAssets, 'category' | 'sellRate' | 'upgrade'>;
@@ -35,7 +35,7 @@ export abstract class ToolItem extends Item {
 			assets: {
 				sellRate: 0.1,
 				upgrade: 25e4,
-				category: ItemCategory.TOOL,
+				category: ItemCategories.TOOL,
 				...assets
 			},
 			config: {
