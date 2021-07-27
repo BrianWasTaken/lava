@@ -54,12 +54,13 @@ export default class extends Command {
 			return ctx.reply(`You can't gift this item :thinking:`).then(() => false);
 		}
 
+		const isOwner = ctx.client.isOwner(ctx.author.id);
 		const entry = await ctx.author.currency.fetch();
 		const entry2 = await member.user.currency.fetch();
 		const inv = entry.props.items.get(item.id);
 		const inv2 = entry2.props.items.get(item.id);
 
-		if (amount > inv.owned) {
+		if (!dev && !isOwner && amount > inv.owned) {
 			return ctx.reply(`You only have ${inv.owned.toLocaleString()} of this don't try and lie to me.`).then(() => false);
 		}
 		if (MAX_INVENTORY <= inv2.owned) {
@@ -67,10 +68,8 @@ export default class extends Command {
 		}
 
 		const returnNew = (e: CurrencyEntry) => e.props.items.get(item.id).owned;
+		const count = await entry.subItem(item.id, dev && isOwner ? 0 : amount).save().then(returnNew);
 		const count2 = await entry2.addItem(item.id, amount).save().then(returnNew);
-		const count = await entry.subItem(
-			item.id, dev && ctx.client.isOwner(ctx.author.id) ? 0 : amount
-		).save().then(returnNew);
 
 		const es = (id: string) => amount > 1 ? `${id}s` : id;
 		return ctx.reply(`You gave ${member.nickname ?? member.user.username} **${amount.toLocaleString()}** ${es(item.id)}! They now have **${count2.toLocaleString()}** ${es(item.id)} while you have **${count.toLocaleString()}** ${es(item.id)} left.`).then(() => true);

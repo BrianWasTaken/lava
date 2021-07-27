@@ -43,6 +43,7 @@ export default class extends Command {
 			return ctx.reply('You need to give something!').then(() => false);
 		}
 
+		const isOwner = ctx.client.isOwner(ctx.author.id);
 		const entry2 = await member.user.currency.fetch();
 		if (ctx.author.id === member.user.id) {
 			return ctx.reply('Are you being dumb or just dumb?').then(() => false);
@@ -53,7 +54,7 @@ export default class extends Command {
 		if (!ctx.client.util.isInteger(amount) || amount < 1 || amount !== Math.trunc(amount)) {
 			return ctx.reply('It needs to be a whole number greater than 0 yeah?').then(() => false);
 		}
-		if (amount > entry.props.pocket) {
+		if (!dev && !isOwner && amount > entry.props.pocket) {
 			return ctx.reply(`You only have ${entry.props.pocket.toLocaleString()} coins dont try and lie to me how`).then(() => false);
 		}
 
