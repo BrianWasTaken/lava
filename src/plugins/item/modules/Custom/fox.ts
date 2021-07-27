@@ -18,7 +18,8 @@ export default class Custom extends Item {
 				usable: false,
 				sellable: false,
 				shop: false,
-			}
+			},
+			upgrades: []
 		});
 	}
 }
