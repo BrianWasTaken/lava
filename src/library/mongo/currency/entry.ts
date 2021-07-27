@@ -138,7 +138,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 		// Collectible Items
 		const collectibles = this.props.items.map(i => i.module).filter(i => i.category.id === 'Collectible') as CollectibleItem[];
 		if (collectibles.length >= 1) {
-			collectibles.filter(c => c.entities.multipliers).forEach(c => {
+			collectibles.filter(c => c.entities.multipliers.length > 0).forEach(c => {
 				const inv = this.props.items.get(c.id);
 				return unlock(c.name, c.entities.multipliers[inv.level] ?? 0, inv.isOwned());
 			});
