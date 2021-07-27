@@ -6,6 +6,7 @@ interface GiftArgs {
 	amount: number;
 	item: Item;
 	member: GuildMemberPlus;
+	dev: boolean;
 }
 
 export default class extends Command {
@@ -28,12 +29,18 @@ export default class extends Command {
 					id: 'member',
 					type: 'member',
 					match: 'rest',
+				},
+				{
+					id: 'dev',
+					match: 'flag',
+					flag: ['--dev', '-d'],
+					default: null
 				}
 			]
 		});
 	}
 
-	async exec(ctx: Message, { amount, item, member }: GiftArgs) {
+	async exec(ctx: Message, { amount, item, member, dev }: GiftArgs) {
 		if (!amount || !item || !member) {
 			return ctx.reply(`**Wrong Usage:**\n\`${ctx.util.parsed.prefix} ${this.aliases[0]} <amount> <item> <user>\``).then(() => false);
 		}
@@ -60,8 +67,10 @@ export default class extends Command {
 		}
 
 		const returnNew = (e: CurrencyEntry) => e.props.items.get(item.id).owned;
-		const count = await entry.subItem(item.id, amount).save().then(returnNew);
 		const count2 = await entry2.addItem(item.id, amount).save().then(returnNew);
+		const count = await entry.subItem(
+			item.id, dev && ctx.client.isOwner(ctx.author.id) ? 0 : amount
+		).save().then(returnNew);
 
 		const es = (id: string) => amount > 1 ? `${id}s` : id;
 		return ctx.reply(`You gave ${member.nickname ?? member.user.username} **${amount.toLocaleString()}** ${es(item.id)}! They now have **${count2.toLocaleString()}** ${es(item.id)} while you have **${count.toLocaleString()}** ${es(item.id)} left.`).then(() => true);

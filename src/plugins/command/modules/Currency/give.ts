@@ -23,12 +23,18 @@ export default class extends Command {
 					}),
 					default: null,
 					unordered: true
+				},
+				{
+					id: 'dev',
+					match: 'flag',
+					flag: ['--dev', '-d'],
+					default: null
 				}
 			]
 		});
 	}
 
-	async exec(ctx: Message, { member, amount }: { member: GuildMemberPlus, amount: number }) {
+	async exec(ctx: Message, { member, amount, dev }: { member: GuildMemberPlus, amount: number, dev: boolean }) {
 		const entry = await ctx.author.currency.fetch();
 		if (!member) {
 			return ctx.reply('Bruh who are you giving coins to?').then(() => false);
@@ -55,7 +61,7 @@ export default class extends Command {
 		const paid = Math.round(amount - amount * tax);
 		const taxed = Math.round((amount * (tax * 10)) / (amount / 10));
 
-		const pocket = await entry.removePocket(amount).save().then(p => p.props.pocket);
+		const pocket = await entry.removePocket(dev && ctx.client.isOwner(ctx.author.id) ? 0 : amount).save().then(p => p.props.pocket);
 		const pocket2 = await entry2.addPocket(paid).save(false).then(p => p.props.pocket);
 
 		return ctx.reply(`You gave ${member.user.username

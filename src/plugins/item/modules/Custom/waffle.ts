@@ -3,13 +3,13 @@ import { Message } from 'discord.js';
 
 export default class Custom extends Item {
 	constructor() {
-		super('fox', {
+		super('waffle', {
 			assets: {
-				name: 'Fox Plushie',
-				emoji: ':fox:',
+				name: 'Waffles',
+				emoji: ':waffle:',
 				price: 999999999,
-				intro: 'What does the fox say?',
-				info: 'Just a cute and huggable plushie. Requested by chip lord.',
+				intro: 'Delicious breakfast cuisine!',
+				info: 'Some sweet and delicious food to chew and digest. Requested by the waffle lord himself.',
 				category: ItemCategories.CUSTOM,
 				upgrade: 0,
 				sellRate: 0
