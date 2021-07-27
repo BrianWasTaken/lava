@@ -103,7 +103,7 @@ export class GambleCommand extends Command {
 	 * Get the winnings of multiplier-based gamble commands.
 	 * @param multi the user multipliers
 	 * @param bet the user gamble amount
-	 * @param [extra] any extra winnings
+	 * @param [cap] wether to cap their winnings
 	 */
 	public static getWinnings(multi: number, bet: number, cap = true) {
 		const base = Math.ceil(bet * (Math.random() + 0.3));
