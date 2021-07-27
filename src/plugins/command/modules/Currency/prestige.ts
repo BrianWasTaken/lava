@@ -32,7 +32,7 @@ export default class extends Command {
 		const { romanize } = ctx.client.util;
 		const { pocket, xp } = entry.props;
 
-		const getPrestigeLevel = () => Math.min(PRESTIGE_LEVEL_REQ_CAP, prestige);
+		const getPrestigeLevel = () => Math.min(PRESTIGE_LEVEL_REQ_CAP - 1, prestige);
 		const next = {
 			prestige: getPrestigeLevel() + 1,
 			pocket: (getPrestigeLevel() + 1) * PRESTIGE_POCKET_REQ,
