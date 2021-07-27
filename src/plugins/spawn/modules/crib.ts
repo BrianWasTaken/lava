@@ -7,16 +7,21 @@ export default class extends Spawn {
 				description: 'The babies are in need of milk!',
 				title: 'Memers Crib',
 				strings: ['bruh'],
-				tier: 'COMMON'
+				tier: SpawnTier.GODLY
 			}, 
 			config: {
 				enabled: true,
 				method: 'message',
 				cooldown: 60e3, // do "nextPossibleRun" instead of timeout.
-				rewards: [1, 10],
 				duration: 10e3,
 				odds: 5,
-				maxEntries: 3
+				maxEntries: 3,
+				rewards: {
+					coins: [1000, 10000],
+					items: [
+						{ id: 'card', odds: 0.3, amount: 1 }
+					]
+				}
 			}
 		});
 	}
