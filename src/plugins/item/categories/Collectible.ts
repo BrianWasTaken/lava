@@ -61,7 +61,7 @@ export abstract class CollectibleItem extends Item {
 
 		entKeys.forEach(ent => {
 			const key = ent as keyof ItemEntities;
-			entities[key] = this.entities[key][thisInv.level];
+			entities[key] = this.entities[key][thisInv.level] ?? 0;
 		});
 
 		return { ...super.getUpgrade(thisInv), entities };
