@@ -40,6 +40,7 @@ export default class extends Command {
 			await cache.delete();
 		}
 
+		await ctx.author.currency.fetch(); // to remove that shitty error
 		return ctx.reply({ embeds: [{ color: Colors.GREEN, description: 'Ok ur data has been deleted, enjoy the new life kid' }] }).then(() => false);
 	}
 }
