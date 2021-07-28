@@ -1,7 +1,7 @@
 import { Command, Context, Currency } from 'lava/index';
 import { Message } from 'discord.js';
 
-const { PRESTIGE_POCKET_REQ, PRESTIGE_LEVEL_REQ, XP_COST, PRESTIGE_LEVEL_REQ_CAP } = Currency;
+const { MAX_PRESTIGE, PRESTIGE_POCKET_REQ, PRESTIGE_LEVEL_REQ, XP_COST, PRESTIGE_LEVEL_REQ_CAP } = Currency;
 
 const emojis = [
 	'<:prestigeI:733606604326436897>',
@@ -34,7 +34,7 @@ export default class extends Command {
 
 		const getPrestigeLevel = () => Math.min(PRESTIGE_LEVEL_REQ_CAP - 1, prestige);
 		const next = {
-			prestige: getPrestigeLevel() + 1,
+			prestige: Math.min(MAX_PRESTIGE, prestige + 1),
 			pocket: (getPrestigeLevel() + 1) * PRESTIGE_POCKET_REQ,
 			level: (getPrestigeLevel() + 1) * PRESTIGE_LEVEL_REQ,
 		};

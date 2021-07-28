@@ -61,7 +61,7 @@ export default class extends Command {
 		const inv2 = entry2.props.items.get(item.id);
 
 		if (amount > inv.owned) {
-			if ((!isOwner && dev) || (!dev && isOwner)) {
+			if ((!isOwner && (dev || !dev)) || isOwner && !dev) {
 				return ctx.reply(`You only have ${inv.owned.toLocaleString()} of this don't try and lie to me.`).then(() => false);
 			}
 		}

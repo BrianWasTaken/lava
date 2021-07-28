@@ -55,7 +55,7 @@ export default class extends Command {
 			return ctx.reply('It needs to be a whole number greater than 0 yeah?').then(() => false);
 		}
 		if (amount > entry.props.pocket) {
-			if ((!isOwner && dev) || (!dev && isOwner)) {
+			if ((!isOwner && (dev || !dev)) || isOwner && !dev) {
 				return ctx.reply(`You only have ${entry.props.pocket.toLocaleString()} coins dont try and lie to me how`).then(() => false);
 			}
 		}
