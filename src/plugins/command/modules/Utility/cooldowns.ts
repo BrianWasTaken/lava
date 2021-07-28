@@ -37,7 +37,7 @@ export default class extends Command {
 		const entry = await ctx.author.lava.fetch();
 		const cooldowns = entry.cooldowns
 			.filter(cd => cd.isActive())
-			.map(cd => `${cd.id}: this.calc(cd.expiresAt - Date.now()).join(':')`);
+			.map(this.display);
 
 		return ctx.channel.send({ embeds: [{
 			author: { name: `${member.user.username}'s cooldowns` },
