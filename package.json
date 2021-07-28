@@ -28,7 +28,7 @@
 		"chalk": "^4.1.0",
 		"discord-akairo": "^8.1.0",
 		"discord-api-types": "^0.18.1",
-		"discord.js": "^13.0.0-dev.5141ea4f0694a60375d8bc0801b1225928bb3bd1",
+		"discord.js": "^13.0.0-dev.5e433b5.1627473836",
 		"dotenv": "^8.6.0",
 		"module-alias": "^2.2.2",
 		"moment": "^2.29.1",
