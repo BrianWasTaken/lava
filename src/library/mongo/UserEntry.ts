@@ -22,7 +22,7 @@ export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
 		this.context = context;
 		/** @type {LavaClient} */
 		this.client = endpoint.client;
-		/** @type {Data} */
+		/** @type {Data} @depracated */
 		this.cache = cache;
 	}
 
@@ -30,8 +30,9 @@ export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
 	 * Fetch this item from mongodb.
 	 */
 	public async fetch(): Promise<this> {
-		if (this.cache) return this;
+		if (this.endpoint.cache.has(this.context.id as Snowflake)) return this;
 		this.cache = await this.endpoint.fetch(this.context.id as Snowflake);
+		this.endpoint.cache.set(this.context.id as Snowflake, this.cache);
 		return this;
 	}
 

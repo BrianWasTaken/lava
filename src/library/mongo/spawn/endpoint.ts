@@ -27,6 +27,7 @@ export class SpawnEndpoint extends Endpoint<SpawnProfile> {
 	 */
 	public async fetch(_id: Snowflake): Promise<SpawnProfile> {
 		const doc = await this.model.findById({ _id }) ?? await this.model.create({ _id });
+		if (!this.cache.has(_id)) this.cache.set(_id, doc);
 		return doc;
 	}
 }

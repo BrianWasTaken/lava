@@ -31,7 +31,9 @@ export class CurrencyEndpoint extends Endpoint<CurrencyProfile> {
 	public async fetch(_id: Snowflake): Promise<CurrencyProfile> {
 		const doc = await this.model.findById({ _id }) ?? await this.model.create({ _id });
 		const pushed = [this.updateItems(doc), this.updateGames(doc), this.updateTrade(doc)];
-		return pushed.some(s => s.length > 1) ? await doc.save() : doc;
+		const saved = pushed.some(s => s.length > 1) ? await doc.save() : doc;
+		if (!this.cache.has(_id)) this.cache.set(_id, saved);
+		return saved;
 	}
 
 	/**
