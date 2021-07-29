@@ -10,7 +10,7 @@ declare module 'discord.js' {
 }
 
 Reflect.defineProperty(Message.prototype, 'awaitMessage', {
-	get: function (this: Message, userID = this.author.id, time = 30000) {
+	value: function (this: Message, userID = this.author.id, time = 30000) {
 		return this.channel.awaitMessages({ 
 			time, 
 			max: 1, 

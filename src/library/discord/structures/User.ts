@@ -14,25 +14,25 @@ declare module 'discord.js' {
 }
 
 Reflect.defineProperty(User.prototype, 'currency', {
-	get: function (this: User) {
+	value: function (this: User) {
 		return new CurrencyEntry(this, this.client.db.currency);
 	}
 });
 
 Reflect.defineProperty(User.prototype, 'spawn', {
-	get: function (this: User) {
+	value: function (this: User) {
 		return new SpawnEntry(this, this.client.db.spawn);
 	}
 });
 
 Reflect.defineProperty(User.prototype, 'crib', {
-	get: function (this: User) {
+	value: function (this: User) {
 		return new CribEntry(this, this.client.db.crib);
 	}
 });
 
 Reflect.defineProperty(User.prototype, 'lava', {
-	get: function (this: User) {
+	value: function (this: User) {
 		return new LavaEntry(this, this.client.db.lava);
 	}
 });
