@@ -12,6 +12,12 @@ import MongoDB from 'mongoose';
 
 import '../discord/structures';
 
+declare module 'discord-akairo' {
+	interface AkairoClient {
+		setTimeout(fn: (...args: any[]), timeout: number): NodeJS.Timeout;
+	}
+}
+
 export class LavaClient extends AkairoClient {
 	/**
 	 * Our fancy logger.
@@ -84,5 +90,9 @@ export class LavaClient extends AkairoClient {
 			 */
 			spawn: plugin('spawn') as SpawnHandler
 		};
+	}
+
+	setTimeout(fn: (...args: any[]), timeout: number) {
+		return setTimeout(fn, timeout);
 	}
 }
