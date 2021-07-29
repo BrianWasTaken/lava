@@ -26,7 +26,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"chalk": "^4.1.0",
-		"discord-akairo": "github:discord-akairo/discord-akairo",
+		"discord-akairo": "github:discord-akairo/discord-akairo#1c021f846b8a72398177dff6b7ae4b44608c4878",
 		"discord-api-types": "^0.18.1",
 		"discord.js": "^13.0.0-dev.5e433b5.1627473836",
 		"dotenv": "^8.6.0",
