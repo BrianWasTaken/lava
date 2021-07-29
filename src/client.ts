@@ -1,12 +1,11 @@
+import { Intents, Options, LimitedCollection } from 'discord.js';
 import { LavaClient } from 'lava/index';
-import { Intents } from 'discord.js';
 
 export default new LavaClient({ 
 	ownerID: ['605419747361947649'],
-	intents: Intents.ALL,
+	intents: Object.values(Intents.FLAGS).reduce((p, c) => p | c, 0),
 	shards: 'auto',
 	messageCacheLifetime: 20,
-	messageCacheMaxSize: 100,
 	messageSweepInterval: 30,
 	allowedMentions: {
 		repliedUser: true,
@@ -17,5 +16,8 @@ export default new LavaClient({
 			type: 'WATCHING', 
 			name: 'things load...' 
 		}]
-	} 
+	},
+	makeCache: Options.cacheWithLimits({
+		MessageManager: 100,
+	})
 });

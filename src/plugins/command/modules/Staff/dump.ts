@@ -1,4 +1,4 @@
-import { SubCommand, Context } from 'lava/index';
+import { SubCommand} from 'lava/index';
 import { Role, Message } from 'discord.js';
 
 export default class extends SubCommand {

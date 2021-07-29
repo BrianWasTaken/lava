@@ -1,4 +1,4 @@
-import { Listener, Context, Command } from 'lava/index';
+import { Listener, Command } from 'lava/index';
 import { Message } from 'discord.js';
 
 export default class extends Listener {

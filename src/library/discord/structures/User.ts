@@ -1,5 +1,5 @@
 import { CurrencyEntry, CribEntry, LavaEntry, SpawnEntry } from 'lava/mongo';
-import { User, Structures, Snowflake, Guild } from 'discord.js';
+import { User, Guild } from 'discord.js';
 import { LavaClient } from 'lava/akairo';
 import { Structure } from '.';
 
@@ -13,15 +13,28 @@ declare module 'discord.js' {
 	}
 }
 
-export declare interface UserPlus extends User {
-	client: LavaClient;
-}
+Reflect.defineProperty(User.prototype, 'currency', {
+	get: function (this: User) {
+		return new CurrencyEntry(this, this.client.db.currency);
+	}
+});
 
-export class UserPlus extends User implements Structure {
-	public currency = new CurrencyEntry(this, this.client.db.currency);
-	public spawn = new SpawnEntry(this, this.client.db.spawn);
-	public crib = new CribEntry(this, this.client.db.crib);
-	public lava = new LavaEntry(this, this.client.db.lava);
-}
+Reflect.defineProperty(User.prototype, 'spawn', {
+	get: function (this: User) {
+		return new SpawnEntry(this, this.client.db.spawn);
+	}
+});
 
-Structures.extend('User', () => UserPlus);
+Reflect.defineProperty(User.prototype, 'crib', {
+	get: function (this: User) {
+		return new CribEntry(this, this.client.db.crib);
+	}
+});
+
+Reflect.defineProperty(User.prototype, 'lava', {
+	get: function (this: User) {
+		return new LavaEntry(this, this.client.db.lava);
+	}
+});
+
+export { User };

@@ -1,4 +1,4 @@
-import { Command, Context, Currency } from 'lava/index';
+import { Command, Currency } from 'lava/index';
 import { Message } from 'discord.js';
 
 const { MAX_PRESTIGE, PRESTIGE_POCKET_REQ, PRESTIGE_LEVEL_REQ, XP_COST, PRESTIGE_LEVEL_REQ_CAP } = Currency;

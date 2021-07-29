@@ -1,4 +1,4 @@
-import { Command, Context, Donation, CribEntry, Colors } from 'lava/index';
+import { Command, Donation, CribEntry, Colors } from 'lava/index';
 import { Snowflake, Message } from 'discord.js';
 
 export default class extends Command {
@@ -24,7 +24,7 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Message, { event, page }: { event: Donation, page: number; }) {
-		const docs = await ctx.crib.model.find({}).exec().then(d => d.map(e => new CribEntry(null, ctx.crib, e)));
+		const docs = await ctx.client.db.crib.model.find({}).exec().then(d => d.map(e => new CribEntry(null, ctx.client.db.crib, e)));
 		const pages = ctx.client.util.paginateArray(docs.filter(d => {
 			return ctx.guild.members.cache.has(d.cache._id);
 		}).filter(d => d.donos.get(event.id).amount > 0).sort((a, b) => {

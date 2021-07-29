@@ -7,7 +7,6 @@ import { Collection, Snowflake, Message, MessageOptions, MessageEmbedOptions, Me
 import { Command as OldCommand, CommandOptions, CommandDescription, Category } from 'discord-akairo';
 import { AbstractModule, LavaClient } from 'lava/akairo';
 import { CommandHandler, SubCommand } from '.';
-import { Context } from 'lava/discord';
 
 export declare interface Command extends OldCommand {
 	/**
@@ -74,7 +73,7 @@ export class Command extends OldCommand implements AbstractModule {
 	/**
 	 * Make use of currency events.
 	 */
-	public async event(ctx: Context) {
+	public async event(ctx: Message) {
 		if (this.category.id !== 'Currency') return;
 		if (this.handler.events.get(ctx.channel.id)) return;
 

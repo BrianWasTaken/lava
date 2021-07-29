@@ -9,7 +9,6 @@ import { Currency, ItemEffects, ItemEntities } from 'lava/utility';
 import { CollectibleItem, PowerUpItem } from 'lava/../plugins/item';
 import { UserEntry, CurrencyEndpoint } from 'lava/mongo';
 import { Item, ItemCategories } from 'lava/akairo';
-import { Context, UserPlus } from 'lava/discord';
 
 export declare interface CurrencyEntry extends UserEntry<CurrencyProfile> {
 	/** The endpoint of this entry. */

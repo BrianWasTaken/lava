@@ -1,11 +1,11 @@
-import { Command, Context, Item, Currency, GuildMemberPlus, CurrencyEntry } from 'lava/index';
-import { Message } from 'discord.js';
+import { Command, Item, Currency, CurrencyEntry } from 'lava/index';
+import { Message, GuildMember } from 'discord.js';
 const { MAX_INVENTORY } = Currency;
 
 interface GiftArgs {
 	amount: number;
 	item: Item;
-	member: GuildMemberPlus;
+	member: GuildMember;
 	dev: boolean;
 }
 

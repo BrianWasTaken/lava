@@ -1,4 +1,4 @@
-import { Command, Context, Item, ItemMessages, Currency, CurrencyEntry, Colors } from 'lava/index';
+import { Command, Item, ItemMessages, Currency, CurrencyEntry, Colors } from 'lava/index';
 import { Message } from 'discord.js';
 
 interface BuyArgs { 

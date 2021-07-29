@@ -1,8 +1,8 @@
-import { Command, Context, GuildMemberPlus, Donation } from 'lava/index';
-import { Message } from 'discord.js';
+import { Message, GuildMember } from 'discord.js';
+import { Command, Donation } from 'lava/index';
 
 interface CommandArgs {
-	member: GuildMemberPlus;
+	member: GuildMember;
 	amount: number;
 	event?: Donation;
 }

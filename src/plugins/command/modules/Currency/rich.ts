@@ -1,5 +1,5 @@
 import { Snowflake, GuildMember, Collection, Message } from 'discord.js';
-import { Command, Context, CurrencyEntry, Colors } from 'lava/index';
+import { Command, CurrencyEntry, Colors } from 'lava/index';
 
 const emojis = [
 	'<:prestigeI:733606604326436897>',

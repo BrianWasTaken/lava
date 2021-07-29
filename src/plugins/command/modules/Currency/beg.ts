@@ -1,4 +1,4 @@
-import { Context, Command, LavaClient, Colors } from 'lava/index';
+import { Command, LavaClient, Colors } from 'lava/index';
 import { MessageEmbedOptions, Message } from 'discord.js';
 
 type PersonPredicate = (ctx: Message) => string;

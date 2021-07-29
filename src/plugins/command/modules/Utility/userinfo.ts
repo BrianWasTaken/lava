@@ -1,5 +1,5 @@
-import { Command, Context, GuildMemberPlus } from 'lava/index';
-import { Message } from 'discord.js';
+import { Message, GuildMember } from 'discord.js';
+import { Command } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -11,13 +11,13 @@ export default class extends Command {
 				{
 					id: 'member',
 					type: 'member',
-					default: (c: Context) => c.member
+					default: (c: Message) => c.member
 				}
 			]
 		});
 	}
 
-	async exec(ctx: Message, { member }: { member: GuildMemberPlus }) {
+	async exec(ctx: Message, { member }: { member: GuildMember }) {
 		const { user, joinedAt, nickname } = member;
 		const { createdAt } = user;
 		const data = await member.user.lava.fetch();

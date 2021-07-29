@@ -1,20 +1,19 @@
 import { CribEntry, Endpoint, EndpointEvents } from 'lava/mongo';
-import { Snowflake } from 'discord.js';
-import { UserPlus } from 'lava/discord';
+import { Snowflake, User } from 'discord.js';
 import { Donation } from 'lava/akairo';
 
 export interface CribEndpointEvents extends EndpointEvents<CribEntry> {
 	/** Emitted when a dono is added.  */
-	donoAdd: [entry: CribEntry, user: UserPlus, args: { author: UserPlus; amount: number; }];
+	donoAdd: [entry: CribEntry, user: User, args: { author: User; amount: number; }];
 	/** Emitted when a dono is removed. */
-	donoRemove: [entry: CribEntry, user: UserPlus, args: { author: UserPlus; amount: number }];
+	donoRemove: [entry: CribEntry, user: User, args: { author: User; amount: number }];
 }
 
 export interface CribEndpoint extends Endpoint<CribProfile> {
 	/** 
 	 * Listen for crib events. 
 	 */
-	on: <K extends keyof CribEndpointEvents>(event: K, listener: (...args: CribEndpointEvents[K]) => Awaited<void>) => this;
+	on: <K extends keyof CribEndpointEvents>(event: K, listener: (...args: CribEndpointEvents[K]) => PromiseUnion<void>) => this;
 	/**
 	 * Emit crib events.
 	 */

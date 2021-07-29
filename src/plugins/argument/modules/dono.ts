@@ -1,4 +1,4 @@
-import { Argument, Context, Donation } from 'lava/index';
+import { Argument, Donation } from 'lava/index';
 import { Message } from 'discord.js';
 
 export default class extends Argument {

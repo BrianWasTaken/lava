@@ -1,5 +1,5 @@
 import { Snowflake, Message } from 'discord.js';
-import { Command, Context } from 'lava/index';
+import { Command} from 'lava/index';
 
 export default class extends Command {
 	constructor() {

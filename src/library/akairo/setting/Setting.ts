@@ -1,6 +1,5 @@
 import { AbstractModule, AbstractModuleOptions } from 'lava/akairo';
 import { SettingHandler } from '.';
-import { Context } from 'lava/index';
 
 export interface SettingOptions extends AbstractModuleOptions {
 	/**

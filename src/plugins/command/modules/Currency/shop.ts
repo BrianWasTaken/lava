@@ -1,4 +1,4 @@
-import { Command, Context, ItemSale, Item, Inventory, Colors } from 'lava/index';
+import { Command, ItemSale, Item, Inventory, Colors } from 'lava/index';
 import { Argument } from 'discord-akairo';
 import { Message } from 'discord.js';
 

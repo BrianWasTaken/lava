@@ -1,5 +1,5 @@
-import { Command, Context, GuildMemberPlus, Currency } from 'lava/index';
-import { MessageEmbedOptions, Message } from 'discord.js';
+import { MessageEmbedOptions, Message, GuildMember } from 'discord.js';
+import { Command, Currency } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -17,7 +17,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Message, args: { member: GuildMemberPlus }) {
+	async exec(ctx: Message, args: { member: GuildMember }) {
 		const entry = await args.member.user.currency.fetch();
 
 		return ctx.channel.send({

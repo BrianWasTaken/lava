@@ -1,4 +1,4 @@
-import { Context, Colors } from 'lava/index';
+import { Colors } from 'lava/index';
 import { GambleCommand } from '../..';
 import { Message } from 'discord.js';
 

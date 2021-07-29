@@ -1,4 +1,4 @@
-import { Context, Currency, Colors, CurrencyEntry } from 'lava/index';
+import { Currency, Colors, CurrencyEntry } from 'lava/index';
 import { GambleCommand } from '../..';
 import { Message } from 'discord.js';
 

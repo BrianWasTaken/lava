@@ -1,5 +1,5 @@
-import { SubCommand, GuildMemberPlus, Context } from 'lava/index';
-import { Message } from 'discord.js';
+import { Message, GuildMember } from 'discord.js';
+import { SubCommand } from 'lava/index';
 
 export default class extends SubCommand {
 	constructor() {
@@ -20,7 +20,7 @@ export default class extends SubCommand {
 		});
 	}
 
-	async exec(ctx: Message, { some1 }: { some1: GuildMemberPlus }) {
+	async exec(ctx: Message, { some1 }: { some1: GuildMember }) {
 		await ctx.channel.send(`${some1.user.tag} - heist channel access`);
 		return false;
 	}

@@ -1,5 +1,5 @@
 import { Collection, TextChannel, Snowflake } from 'discord.js';
-import { Listener, Context } from 'lava/index';
+import { Listener} from 'lava/index';
 import { Message } from 'discord.js';
 
 const donorQuestions = {

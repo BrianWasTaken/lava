@@ -25,6 +25,11 @@ export declare global {
 	type CollectionPlus<V> = Collection<string, V>;
 
 	/**
+	 * discord.js' type for user ids.
+	 */
+	type Snowflake = `${bigint}`;
+
+	/**
 	 * Custom console interface.
 	*/
 	interface Console {

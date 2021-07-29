@@ -1,4 +1,4 @@
-import { Context, CurrencyEntry, ItemEffects, Colors } from 'lava/index';
+import { CurrencyEntry, ItemEffects, Colors } from 'lava/index';
 import { PowerUpItem } from '../..';
 import { Message } from 'discord.js';
 

@@ -1,4 +1,4 @@
-import { Listener, Context, Command } from 'lava/index';
+import { Listener, Command } from 'lava/index';
 import { Constants } from 'discord-akairo';
 import { Message } from 'discord.js';
 

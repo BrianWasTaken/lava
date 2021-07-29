@@ -1,5 +1,5 @@
-import { Command, Context, GuildMemberPlus, Colors } from 'lava/index';
-import { Message } from 'discord.js';
+import { Message, GuildMember } from 'discord.js';
+import { Command, Colors } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -23,7 +23,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Message, { member, page }: { member: GuildMemberPlus, page: number; }) {
+	async exec(ctx: Message, { member, page }: { member: GuildMember, page: number; }) {
 		const entry = await member.user.crib.fetch();
 		const pages = ctx.client.util.paginateArray(entry.donos.map(d => ({
 			name: `${d.module.name} Donations`,

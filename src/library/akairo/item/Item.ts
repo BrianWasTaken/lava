@@ -5,7 +5,7 @@
 
 import { AbstractModuleOptions, AbstractModule } from 'lava/akairo';
 import { MessageOptions, MessageEmbed, Message } from 'discord.js';
-import { Context, CurrencyEntry, Inventory } from 'lava/index'; 
+import { CurrencyEntry, Inventory } from 'lava/index'; 
 import { ItemHandler } from '.';
 
 export enum ItemCategories {

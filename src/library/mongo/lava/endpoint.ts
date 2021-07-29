@@ -1,22 +1,21 @@
 import { Endpoint, LavaEntry, EndpointEvents } from 'lava/mongo';
 import { Command, Setting } from 'lava/akairo';
-import { Snowflake } from 'discord.js';
-import { UserPlus } from 'lava/discord';
+import { User } from 'discord.js';
 
 export interface LavaEndpointEvents extends EndpointEvents<LavaEntry> {
 	/** Emitted on profile creation. */
-	create: [entry: LavaEntry, user: UserPlus];
+	create: [entry: LavaEntry, user: User];
 	/** Emitted when someone got banned temporarily.  */
-	botBlock: [entry: LavaEntry, user: UserPlus, args: { duration: number; reason: string; }];
+	botBlock: [entry: LavaEntry, user: User, args: { duration: number; reason: string; }];
 	/** Emitted when someone got bot banned. */
-	botBan: [entry: LavaEntry, user: UserPlus, args: { duration: number; reason: string; }];
+	botBan: [entry: LavaEntry, user: User, args: { duration: number; reason: string; }];
 }
 
 export interface LavaEndpoint extends Endpoint<LavaProfile> {
 	/** 
 	 * Listen for crib events. 
 	 */
-	on: <K extends keyof LavaEndpointEvents>(event: K, listener: (...args: LavaEndpointEvents[K]) => Awaited<void>) => this;
+	on: <K extends keyof LavaEndpointEvents>(event: K, listener: (...args: LavaEndpointEvents[K]) => PromiseUnion<void>) => this;
 	/**
 	 * Emit crib events.
 	 */

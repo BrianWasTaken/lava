@@ -1,9 +1,9 @@
-import { Command, Context, GuildMemberPlus, Inventory, Colors } from 'lava/index';
+import { Command, Inventory, Colors } from 'lava/index';
+import { Message, GuildMember } from 'discord.js';
 import { Argument } from 'discord-akairo';
-import { Message } from 'discord.js';
 
 interface InventoryArgs {
-	member: GuildMemberPlus | number;
+	member: GuildMember | number;
 	page: number;
 }
 
@@ -31,7 +31,7 @@ export default class extends Command {
 
 	resolveArgs(ctx: Message, args: InventoryArgs) {
 		const isMemberNumber = typeof args.member === 'number';
-		return <{ member: GuildMemberPlus, page: number }>{
+		return <{ member: GuildMember, page: number }>{
 			member: isMemberNumber ? ctx.member : (args.member ?? ctx.member),
 			page: isMemberNumber ? args.member : (args.page ?? 1)
 		}

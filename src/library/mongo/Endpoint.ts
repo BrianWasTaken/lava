@@ -1,23 +1,22 @@
 import { LavaClient, AbstractHandler } from 'lava/akairo';
-import { Collection, Snowflake } from 'discord.js';
+import { Collection, User } from 'discord.js';
 import { Document, Model } from 'mongoose';
 import { AkairoHandler } from 'discord-akairo';
 import { EventEmitter } from 'events';
 import { UserEntry } from '.';
-import { UserPlus } from 'lava/discord';
 
 export interface EndpointEvents<Entry> {
 	/** Emitted on profile creation. */
-	create: [entry: Entry, user: UserPlus];
+	create: [entry: Entry, user: User];
 	/** Emitted on data deletion. */
-	delete: [entry: Entry, user: UserPlus];
+	delete: [entry: Entry, user: User];
 }
 
 export interface Endpoint<Doc extends BaseProfile = never> extends EventEmitter {
 	/** 
 	 * Listen for currency events. 
 	 */
-	on<K extends keyof EndpointEvents<UserEntry<Doc>>>(event: K, listener: (...args: EndpointEvents<UserEntry<Doc>>[K]) => Awaited<void>): this;
+	on<K extends keyof EndpointEvents<UserEntry<Doc>>>(event: K, listener: (...args: EndpointEvents<UserEntry<Doc>>[K]) => PromiseUnion<void>): this;
 	/**
 	 * Emit currency events.
 	 */

@@ -16,7 +16,7 @@ declare module 'discord-akairo' {
 declare module 'discord-akairo' {
 	import { 
 		LavaClient, AbstractHandler, CommandQueue, 
-		Context, AbstractModule, AbstractModuleOptions,
+		AbstractModule, AbstractModuleOptions,
 	} from 'lava/index';
 	import { 
 		Message, MessageOptions 
@@ -25,7 +25,7 @@ declare module 'discord-akairo' {
 	/**
 	 * Argument Type Caster.
 	 */
-	type ArgumentTypeCaster	= (message: Context, args: string) => PromiseUnion<any>;
+	type ArgumentTypeCaster	= (message: Message, args: string) => PromiseUnion<any>;
 	
 	/**
 	 * The command class.
@@ -215,7 +215,7 @@ declare module 'discord-akairo' {
  * Inhibitor.
  */
 declare module 'discord-akairo' {
-	import { LavaClient, AbstractModuleOptions, Context } from 'lava/index';
+	import { LavaClient, AbstractModuleOptions} from 'lava/index';
 	import { Message } from 'discord.js';
 
 	interface Inhibitor extends AkairoModule {

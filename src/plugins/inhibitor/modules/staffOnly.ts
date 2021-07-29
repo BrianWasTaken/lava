@@ -12,7 +12,7 @@ export default class extends Inhibitor {
 	}
 
 	exec(ctx: Message, cmd: Command): boolean {
-		if (ctx.channel.type !== 'dm') {
+		if (ctx.channel.type !== 'DM') {
 			return !ctx.member.roles.cache.has('692941106475958363') && cmd.staffOnly;
 		}
 

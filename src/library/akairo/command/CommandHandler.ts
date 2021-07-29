@@ -5,7 +5,7 @@
 
 import { AbstractHandler, AbstractHandlerOptions, AbstractModuleOptions, LavaClient, InhibitorHandler, ListenerHandler } from 'lava/akairo';
 import { CommandHandler as OldCommandHandler, CommandHandlerOptions, Category, Constants } from 'discord-akairo';
-import { Context, CommandQueue, Cooldown } from 'lava/index';
+import { CommandQueue, Cooldown } from 'lava/index';
 import { Collection, Snowflake, Message } from 'discord.js';
 import { Command } from '.';
 
@@ -129,30 +129,20 @@ export class CommandHandler extends OldCommandHandler implements AbstractHandler
 	 */
 	public async runCommand(context: Message, command: Command, args: any) {
 		await this.commandQueue.wait(context.author.id);
-		if (command.typing) {
-			context.channel.startTyping();
-		}
-
+		this.emit(CommandHandlerEvents.COMMAND_STARTED, context, command, args);
 		try {
-			this.emit(CommandHandlerEvents.COMMAND_STARTED, context, command, args);
-			try {
-				const returned = await command.exec(context, args);
-				const lava = await context.author.lava.fetch();
-				if (returned) lava.addCooldown(command);
-				await lava.updateCommand(command.id)
-					.addUsage(command.id)
-					.save();
+			const returned = await command.exec(context, args);
+			const lava = await context.author.lava.fetch();
+			if (returned) lava.addCooldown(command);
+			await lava.updateCommand(command.id)
+				.addUsage(command.id)
+				.save();
 
-				this.emit(CommandHandlerEvents.COMMAND_FINISHED, context, command, args);
-			} catch (error) {
-				this.emit(CommandHandlerEvents.ERROR, error, context, command);
-			} finally {
-				this.commandQueue.next(context.author.id);
-			}
+			this.emit(CommandHandlerEvents.COMMAND_FINISHED, context, command, args);
+		} catch (error) {
+			this.emit(CommandHandlerEvents.ERROR, error, context, command);
 		} finally {
-			if (command.typing) {
-				context.channel.stopTyping();
-			}
+			this.commandQueue.next(context.author.id);
 		}
 	}
 }

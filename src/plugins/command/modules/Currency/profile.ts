@@ -1,10 +1,10 @@
-import { Command, Context, GuildMemberPlus, Currency, Colors } from 'lava/index';
-import { Message } from 'discord.js';
+import { Command, Currency, Colors } from 'lava/index';
+import { Message, GuildMember } from 'discord.js';
 
 const { MAX_LEVEL, XP_COST } = Currency;
 
 interface ProfileArgs {
-	member: GuildMemberPlus;
+	member: GuildMember;
 	gamble: boolean;
 	active: boolean;
 }
@@ -32,7 +32,7 @@ export default class extends Command {
 				{
 					id: 'member',
 					type: 'member',
-					default: (c: Context) => c.member
+					default: (c: Message) => c.member
 				},
 				{
 					id: 'gamble',

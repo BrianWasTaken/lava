@@ -1,4 +1,4 @@
-import { Command, Context, Item } from 'lava/index';
+import { Command, Item } from 'lava/index';
 import { Message } from 'discord.js';
 
 export default class extends Command {

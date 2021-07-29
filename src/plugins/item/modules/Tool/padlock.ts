@@ -1,4 +1,4 @@
-import { Context, CurrencyEntry, Colors } from 'lava/index';
+import { CurrencyEntry, Colors } from 'lava/index';
 import { ToolItem } from '../..';
 import { Message } from 'discord.js';
 

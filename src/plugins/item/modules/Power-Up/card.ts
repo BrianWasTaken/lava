@@ -1,4 +1,4 @@
-import { Context, CurrencyEntry } from 'lava/index';
+import { CurrencyEntry } from 'lava/index';
 import { PowerUpItem } from '../..';
 import { Message } from 'discord.js';
 

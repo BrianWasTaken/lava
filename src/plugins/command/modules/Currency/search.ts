@@ -1,4 +1,4 @@
-import { Command, Context, LavaClient, CurrencyEntry, Inventory, Colors } from 'lava/index';
+import { Command, LavaClient, CurrencyEntry, Inventory, Colors } from 'lava/index';
 import { CollectorFilter, Message } from 'discord.js';
 
 interface SearchData {

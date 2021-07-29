@@ -1,5 +1,5 @@
-import { Command, Context, GuildMemberPlus, Cooldown, Colors } from 'lava/index';
-import { MessageOptions, Message } from 'discord.js';
+import { MessageOptions, GuildMember, Message } from 'discord.js';
+import { Command, Cooldown, Colors } from 'lava/index';
 
 export default class extends Command {
 	public constructor() {
@@ -33,8 +33,8 @@ export default class extends Command {
 		return ret.map(r => r < 10 ? `0${r}` : `${r}`);
 	}
 
-	async exec(ctx: Message, { member }: { member: GuildMemberPlus }) {
-		const entry = await ctx.author.lava.fetch();
+	async exec(ctx: Message, { member }: { member: GuildMember }) {
+		const entry = await member.user.lava.fetch();
 		const cooldowns = entry.cooldowns
 			.filter(cd => cd.isActive())
 			.map(this.display);

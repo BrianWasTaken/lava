@@ -1,6 +1,6 @@
-import { GuildMember, Structures } from 'discord.js';
-import { UserPlus, Structure } from '.';
+import { GuildMember } from 'discord.js';
 import { LavaClient } from 'lava/akairo';
+import { Structure } from '.';
 
 declare module 'discord.js' {
 	interface GuildMember {
@@ -9,9 +9,4 @@ declare module 'discord.js' {
 	}
 }
 
-export declare interface GuildMemberPlus extends GuildMember {
-	client: LavaClient;
-}
-
-export class GuildMemberPlus extends GuildMember implements Structure {}
-Structures.extend('GuildMember', () => GuildMemberPlus);
+export { GuildMember };

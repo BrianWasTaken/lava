@@ -1,6 +1,5 @@
 import { AbstractModuleOptions, AbstractModule, Command, CommandHandler } from '..';
-import { MessageOptions, EmojiResolvable, Collection } from 'discord.js';
-import { GuildMemberPlus } from 'lava/discord';
+import { MessageOptions, EmojiResolvable, Collection, GuildMember } from 'discord.js';
 import { SpawnHandler } from '.';
 
 export enum SpawnTiers {
@@ -17,7 +16,7 @@ export type SpawnMethod = 'message' | 'spam' | 'react';
 /**
  * Collection of channel ids to spawn modules.
  */
-export type SpawnQueue = CollectionPlus<CollectionPlus<GuildMemberPlus>>;
+export type SpawnQueue = CollectionPlus<CollectionPlus<GuildMember>>;
 
 export interface SpawnDisplay {
 	description: string;

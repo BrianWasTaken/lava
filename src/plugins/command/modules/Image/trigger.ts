@@ -1,5 +1,5 @@
-import { Command, Context, GuildMemberPlus } from 'lava/index';
-import { MessageOptions, Message } from 'discord.js';
+import { MessageOptions, Message, GuildMember } from 'discord.js';
+import { Command } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -18,7 +18,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Message, { member }: { member: GuildMemberPlus }) {
+	async exec(ctx: Message, { member }: { member: GuildMember }) {
 		const params = new URLSearchParams();
 		params.set('avatar1', member.user.avatarURL({ format: 'png' }));
 		

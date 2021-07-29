@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "ESNext",
+		"module": "commonJS",
+		"target": "esnext",
 		"outDir": "dist",
 		"strict": true,
 		"incremental": true,
@@ -14,7 +14,7 @@
 		"sourceMap": false,
 		"baseUrl": ".",
 		"paths": {
-			"lava/*": ["src/library/*"]
+			"lava/*": ["src/library/*"],
 		},
 		"typeRoots": [
 			"./node_modules/@types",

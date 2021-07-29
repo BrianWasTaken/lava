@@ -1,6 +1,6 @@
-import { Command, Context, GuildMemberPlus, Currency } from 'lava/index';
 import { Argument, ArgumentTypeCaster } from 'discord-akairo';
-import { Message } from 'discord.js';
+import { Message, GuildMember } from 'discord.js';
+import { Command, Currency } from 'lava/index';
 
 export default class extends Command {
 	constructor() {
@@ -34,7 +34,7 @@ export default class extends Command {
 		});
 	}
 
-	async exec(ctx: Message, { member, amount, dev }: { member: GuildMemberPlus, amount: number, dev: boolean }) {
+	async exec(ctx: Message, { member, amount, dev }: { member: GuildMember, amount: number, dev: boolean }) {
 		const entry = await ctx.author.currency.fetch();
 		if (!member) {
 			return ctx.reply('Bruh who are you giving coins to?').then(() => false);

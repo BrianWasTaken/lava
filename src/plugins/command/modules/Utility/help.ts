@@ -1,6 +1,6 @@
 import { Collection, Message } from 'discord.js';
 import { Argument, Category } from 'discord-akairo';
-import { Command, Context } from 'lava/index';
+import { Command} from 'lava/index';
 
 export default class extends Command {
 	constructor() {
