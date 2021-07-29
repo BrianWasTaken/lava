@@ -14,7 +14,7 @@ import '../discord/structures';
 
 declare module 'discord-akairo' {
 	interface AkairoClient {
-		setTimeout(fn: (...args: any[]), timeout: number): NodeJS.Timeout;
+		setTimeout(fn: (...args: any[]) => any, timeout: number): NodeJS.Timeout;
 	}
 }
 
@@ -92,7 +92,7 @@ export class LavaClient extends AkairoClient {
 		};
 	}
 
-	setTimeout(fn: (...args: any[]), timeout: number) {
+	setTimeout(fn: (...args: any[]) => any, timeout: number) {
 		return setTimeout(fn, timeout);
 	}
 }
