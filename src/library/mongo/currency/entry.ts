@@ -156,7 +156,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 		// Maxed All Items
 		unlock('Maxed All Items', 10, this.props.items.every(i => i.isMaxLevel()));
 		// 100M Space
-		unlock('Billion Storage', 10, this.props.space >= 100e6);
+		unlock('Million Storage', 10, this.props.space >= 100e6);
 		// Prestige 10s
 		unlock(`Prestige ${this.props.prestige.level}`, 10, this.props.prestige.level % 10 === 0 && this.props.prestige.level > 0);
 

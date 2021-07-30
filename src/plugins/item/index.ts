@@ -16,3 +16,4 @@ export default new Plugin(
 export * from './categories/Collectible';
 export * from './categories/PowerUp';
 export * from './categories/Tool';
+export * from './categories/Box';

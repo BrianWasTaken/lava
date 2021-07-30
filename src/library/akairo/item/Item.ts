@@ -300,7 +300,7 @@ export abstract class Item extends AbstractModule {
 	/**
 	 * Design the shop info embed.
 	 */
-	public getEmbed<Embed extends MessageEmbed>(embed: Embed): Embed {
+	public getEmbed(embed: MessageEmbed): MessageEmbed {
 		return embed;
 	}
 

@@ -14,10 +14,6 @@ export default class extends Inhibitor {
 	async exec(ctx: Message, cmd: Command): Promise<boolean> {
 		const user = await ctx.author.lava.fetch();
 		const expire = user.cache.punishments.expire;
-		if (expire > Date.now()) {
-			return user.banned || user.blocked;
-		}
-		
-		return false;
+		return expire > Date.now();
 	}
 }
