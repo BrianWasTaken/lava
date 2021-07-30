@@ -16,11 +16,11 @@ export default class Box extends BoxItem {
 			contents: {
 				coins: [1, 1000],
 				items: [
-					{ id: 'bacon', amount: [1, 3] },
-					{ id: 'taco', amount: [1, 3] },
-					{ id: 'beer', amount: [1, 3] },
-					{ id: 'wine', amount: [1, 3] },
-					{ id: 'computer', amount: [1, 3] },
+					{ item: 'bacon', amount: [1, 3] },
+					{ item: 'taco', amount: [1, 3] },
+					{ item: 'beer', amount: [1, 3] },
+					{ item: 'wine', amount: [1, 3] },
+					{ item: 'computer', amount: [1, 3] },
 				]
 			}
 		});
