@@ -69,7 +69,7 @@ export class BoxItem extends Item {
 		const msg = await ctx.reply(`**${this.emoji} | Opening your ${this.name}...**`);
 		const cois = Array.from({ length: uses }, () => randomNumber.apply(null, coins)).reduce((p, c) => p + c, 0);
 		const ites: { item: Inventory, amount: number }[] = [];
-		Array.from({ length: uses }, () => randomsInArray(items.map(i => i.item.id), randomNumber(1, Math.max(1, items.length)))
+		Array.from({ length: uses }, () => randomsInArray(items.map(i => i.item.id), randomNumber(1, Math.max(1, Math.min(3, items.length))))
 			.forEach(id => ites.push({ 
 				amount: randomNumber.apply(null, items.find(i => i.item.id === id).amount), 
 				item: entry.props.items.get(id), 
@@ -82,7 +82,7 @@ export class BoxItem extends Item {
 
 		return await msg.edit({ 
 			content: [
-				`**${this.emoji}   |   ${ctx.author.username}'s ${this.name}`,
+				`**${this.emoji}   |   ${ctx.author.username}'s ${this.name}\n`,
 				`**:coin:**   |   ${cois.toLocaleString()} coins**`,
 				...ites.map(i => `**${i.item.module.emoji}   |   ${i.amount} ${i.item.upgrade.name}**`)
 			].join('\n') 
