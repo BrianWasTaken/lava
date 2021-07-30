@@ -41,10 +41,11 @@ export default class extends Command {
 	}
 
 	async exec(ctx: Message, { amount, item, member, dev }: GiftArgs) {
+		const isOwner = ctx.client.isOwner(ctx.author.id);
 		if (!amount || !item || !member) {
 			return ctx.reply(`**Wrong Usage:**\n\`${ctx.util.parsed.prefix} ${this.aliases[0]} <amount> <item> <user>\``).then(() => false);
 		}
-		if (member.user.id === ctx.author.id) {
+		if (member.user.id === ctx.author.id && !isOwner) {
 			return ctx.reply(`Lol imagine gifting urself items dummy`).then(() => false);
 		}
 		if (amount < 1 || !ctx.client.util.isInteger(amount) || amount !== Math.trunc(amount)) {
@@ -54,7 +55,6 @@ export default class extends Command {
 			return ctx.reply(`You can't gift this item :thinking:`).then(() => false);
 		}
 
-		const isOwner = ctx.client.isOwner(ctx.author.id);
 		const entry = await ctx.author.currency.fetch();
 		const entry2 = await member.user.currency.fetch();
 		const inv = entry.props.items.get(item.id);

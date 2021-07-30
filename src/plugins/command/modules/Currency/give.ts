@@ -45,7 +45,7 @@ export default class extends Command {
 
 		const isOwner = ctx.client.isOwner(ctx.author.id);
 		const entry2 = await member.user.currency.fetch();
-		if (ctx.author.id === member.user.id) {
+		if (ctx.author.id === member.user.id && !isOwner) {
 			return ctx.reply('Are you being dumb or just dumb?').then(() => false);
 		}
 		if (entry2.props.pocket > Currency.MAX_SAFE_POCKET) {
