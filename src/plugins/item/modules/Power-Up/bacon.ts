@@ -38,7 +38,7 @@ export default class PowerUp extends PowerUpItem {
 		
 		return ctx.reply({ embeds: [{
 			description: `Your ${this.id} will begone in ${parseTime(duration / 1000)}`,
-			color: Colors.FUCHSIA, title: `You activated your ${this.name}!`,
+			color: Colors.FUCHSIA, title: `You activated your ${this.name}! You got a ${multi}% multiplier boost.`,
 		}]});
 	}
 }

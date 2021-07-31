@@ -21,7 +21,7 @@ export default class Collectible extends CollectibleItem {
 				{ price: 500e3 },
 			],
 			entities: {
-				payouts: [5, 10, 25, 50, 75, 100]
+				payouts: [0.05, 0.07, 0.10, 0.15, 0.20, 0.50]
 			}
 		});
 	}

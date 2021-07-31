@@ -24,6 +24,6 @@ export default class PowerUp extends PowerUpItem {
 	}
 
 	effect(effects: ItemEffects, entry: CurrencyEntry) {
-		return effects.payouts(10);
+		return effects.payouts(0.2);
 	}
 }

@@ -21,7 +21,7 @@ export default class Collectible extends CollectibleItem {
 				{ price: 25e6 }
 			],
 			entities: {
-				xpBoost: [10, 20, 30, 40, 50, 100]
+				xpBoost: [1, 2, 3, 4, 5, 10]
 			}
 		});
 	}

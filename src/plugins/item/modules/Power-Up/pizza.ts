@@ -10,7 +10,7 @@ export default class PowerUp extends PowerUpItem {
 				emoji: ':pizza:',
 				price: 125000,
 				intro: 'Yummy experience orbs...',
-				info: 'Eat a pizza for xp to grind!',
+				info: 'Eat a pizza for xp boosts to grind!',
 			},
 			config: {
 				duration: 1000 * 60 * 5,
@@ -25,7 +25,7 @@ export default class PowerUp extends PowerUpItem {
 	}
 
 	effect(effects: ItemEffects, entry: CurrencyEntry) {
-		return effects.xpBoost(20);
+		return effects.xpBoost(10);
 	}
 
 	async use(ctx: Message, entry: CurrencyEntry) {
