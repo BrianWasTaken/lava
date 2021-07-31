@@ -44,7 +44,7 @@ export default class extends GambleCommand {
 		}
 
 		const multi = GambleCommand.getMulti(ctx, entry);
-		const winnings = GambleCommand.getWinnings(multi, bet);
+		const winnings = GambleCommand.getWinnings(multi, bet, true, entry.effects.payouts);
 		const { props } = await entry.addPocket(winnings).updateStats(this.id, winnings, true).save();
 
 		return ctx.channel.send({
