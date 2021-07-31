@@ -71,7 +71,7 @@ export default class extends Command {
 		const won = Math.round(coins + (coins * (multi / 100)));
 		await entry.addPocket(won).save();
 		return ({
-			itemGot: (randomNumber(1, 100) < 30) && item ? entry.props.items.get(item) : null,
+			itemGot: (randomNumber(1, 100) < 20) && item ? entry.props.items.get(item) : null,
 			coinsRaw: coins,
 			coinsWon: won,
 			killed: Death.safe,
@@ -211,5 +211,5 @@ const search = (client: LavaClient): SearchData[] => [
 				'You didn\'t dodged the debris, sucks to suck.'
 			])
 		}
-	},
-]
+	}
+];

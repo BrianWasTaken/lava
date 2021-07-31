@@ -45,7 +45,7 @@ export default class extends Command {
 			return ctx.reply(`U only have **${vault.amount.toLocaleString()}** coins in your vault tf u on?`).then(() => false);
 		}
 
-		const { props } = await entry.withdraw(withd, true).save();
+		const { props } = await entry.withdraw(withd, true).save(false);
 		return ctx.reply(`**${withd.toLocaleString()}** coins withdrawn. You now have **${props.vault.amount.toLocaleString()}** coins in your vault.`).then(() => false);
 	}
 }

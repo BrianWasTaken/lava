@@ -50,7 +50,7 @@ export default class extends Command {
 		}
 
 		const deposit = dep >= space - vault.amount ? space - vault.amount : dep;
-		const { props } = await entry.deposit(deposit, true).save();
+		const { props } = await entry.deposit(deposit, true).save(false);
 		return ctx.reply(`**${deposit.toLocaleString()}** coins deposited. You now have **${props.vault.amount.toLocaleString()}** coins in your vault.`).then(() => false);
 	}
 }

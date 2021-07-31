@@ -153,7 +153,7 @@ export default class extends GambleCommand {
 				// Win
 				if (status.result) {
 					const multi = newEntry.calcMulti(ctx).unlocked.reduce((p, c) => p + c.value, 0);
-					winnings = GambleCommand.getWinnings(multi, bet);
+					winnings = GambleCommand.getWinnings(multi, bet, true, newEntry.effects.payouts);
 					const pocket = await newEntry.addPocket(winnings).updateStats(this.id, winnings, true).save().then(d => d.props.pocket);
 					finalMsg += `\nYou won **${winnings.toLocaleString()}**. You now have ${pocket.toLocaleString()}.`;
 					state = 'winning';

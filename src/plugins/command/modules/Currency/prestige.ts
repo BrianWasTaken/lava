@@ -32,6 +32,10 @@ export default class extends Command {
 		const { romanize } = ctx.client.util;
 		const { pocket, xp } = entry.props;
 
+		if (prestige === MAX_PRESTIGE) {
+			return ctx.reply('You already reached the end of the road!').then(() => false);
+		}
+
 		const getPrestigeLevel = () => Math.min(PRESTIGE_LEVEL_REQ_CAP - 1, prestige);
 		const next = {
 			prestige: Math.min(MAX_PRESTIGE, prestige + 1),

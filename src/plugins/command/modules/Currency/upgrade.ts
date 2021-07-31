@@ -34,7 +34,7 @@ export default class extends Command {
 			return ctx.reply(`Your **${inv.upgrade.emoji} ${inv.upgrade.name}** is already at max level!`).then(() => false);
 		}
 
-		await ctx.channel.send({ embeds: [{ color: Colors.ORANGE, description: `Are you sure you wanna upgrade your **${item.emoji} ${item.name}** to **Level ${inv.level + 1}** for **${upgrade.toLocaleString()} ${e}** right now?` }] });
+		await ctx.reply({ embeds: [{ color: Colors.ORANGE, description: `Are you sure you wanna upgrade your **${item.emoji} ${item.name}** to **Level ${inv.level + 1}** for **${upgrade.toLocaleString()} ${e}** right now?` }] });
 		const choice = await ctx.awaitMessage();
 		if (!choice || !choice.content) {
 			return ctx.reply({ embeds: [{ color: 'RED', description: 'Imagine not answering to me lmfaooo' }] }).then(() => false);

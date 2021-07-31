@@ -11,12 +11,17 @@ export default class extends Command {
 				{
 					id: 'item',
 					type: 'item'
+				},
+				{
+					id: 'uses',
+					type: 'number',
+					default: 1
 				}
 			]
 		});
 	}
 
-	async exec(ctx: Message, { item }: { item: Item }) {
+	async exec(ctx: Message, { item, uses }: { item: Item, uses: number }) {
 		const entry = await ctx.author.currency.fetch();
 		if (!item) {
 			return ctx.reply(`You need to use something!`).then(() => false);
@@ -33,7 +38,7 @@ export default class extends Command {
 			return ctx.reply("You can't use this item :thinking:").then(() => false);
 		}
 
-		const used = await item.use(ctx, entry);
+		const used = await item.use(ctx, entry, uses);
 		if (!used) {
 			return ctx.reply(`HMMMMM You can use it but you didn't actually used it, wait for the real show okie?`).then(() => false);
 		}
