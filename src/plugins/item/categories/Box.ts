@@ -67,13 +67,14 @@ export class BoxItem extends Item {
 		}
 
 		const msg = await ctx.reply(`**__${this.emoji} | Opening your ${this.name}...__**`);
-		const cois = Array.from({ length: uses }, () => randomNumber.apply(null, coins)).reduce((p, c) => p + c, 0);
+		const cois = Array.from({ length: uses }, () => randomNumber(...coins)).reduce((p, c) => p + c, 0);
 		const ites: { item: Inventory, amount: number }[] = [];
 		Array.from({ length: uses }, () => randomsInArray(items.map(i => i.item.id), randomNumber(1, Math.max(1, Math.min(3, items.length))))
-			.forEach(id => ites.push({ 
-				amount: randomNumber.apply(null, items.find(i => i.item.id === id).amount), 
-				item: entry.props.items.get(id), 
-			}))
+			.forEach(id => {
+				const exists = ites.find(i => i.item.id === id);
+				const amount = randomNumber(...items.find(i => i.item.id === id).amount);
+				return exists ? (exists.amount += amount) : ites.push({ amount, item: entry.props.items.get(id) });
+			})
 		);
 
 		ites.forEach(iw => entry.addItem(iw.item.id, iw.amount));
@@ -83,8 +84,8 @@ export class BoxItem extends Item {
 		return await msg.edit({ 
 			content: [
 				`**__${this.emoji} | ${ctx.author.username}'s ${this.name}__**\n`,
-				`**:coin: |** \`${cois.toLocaleString()}\` coins`,
-				...ites.map(i => `**${i.item.upgrade.emoji} |** \`${i.amount}\` ${i.item.upgrade.name}`)
+				`**:coin: | ${cois.toLocaleString()}** coins`,
+				...ites.map(i => `**${i.item.upgrade.emoji} | ${i.amount}** ${i.item.upgrade.name}`)
 			].join('\n') 
 		});
 	}

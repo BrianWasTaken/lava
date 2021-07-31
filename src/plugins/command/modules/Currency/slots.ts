@@ -102,8 +102,7 @@ export default class extends GambleCommand {
 
 		if ([1, 2].some(l => length === l)) {
 			const index = length === 1 ? 1 : 0;
-			const mult = multi[index] as number;
-			const winnings = bet * mult;
+			const winnings = bet * multi[index];
 			// let winnings = Math.round(bet + (bet * mult));
 			// winnings = winnings + Math.round(winnings * (multis / 10000));
 			// winnings = Math.min(Currency.MAX_WIN, winnings + Math.ceil(winnings * (multis / 100)));

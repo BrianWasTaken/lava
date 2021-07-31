@@ -37,8 +37,8 @@ export default class PowerUp extends PowerUpItem {
 		await entry.subItem(this.id).setItemMulti(this.id, multi).activateItem(this.id, expire).save();
 		
 		return ctx.reply({ embeds: [{
-			description: `Your ${this.id} will begone in ${parseTime(duration / 1000)}`,
-			color: Colors.FUCHSIA, title: `You activated your ${this.name}! You got a ${multi}% multiplier boost.`,
+			description: `You got a ${multi}% multiplier boost so your ${this.id} will begone in ${parseTime(duration / 1000)}`,
+			color: Colors.FUCHSIA, title: `You activated your ${this.name}!`,
 		}]});
 	}
 }
