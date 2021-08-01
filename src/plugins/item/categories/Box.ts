@@ -73,7 +73,9 @@ export class BoxItem extends Item {
 			.forEach(id => {
 				const exists = ites.find(i => i.item.id === id);
 				const amount = randomNumber(...items.find(i => i.item.id === id).amount);
-				return exists ? (exists.amount += amount) : ites.push({ amount, item: entry.props.items.get(id) });
+				return exists 
+					? (ites.find(i => i.item.id === id).amount += amount) 
+					: ites.push({ amount, item: entry.props.items.get(id) });
 			})
 		);
 
@@ -84,9 +86,9 @@ export class BoxItem extends Item {
 		return await msg.edit({ 
 			content: [
 				`**__${this.emoji} | ${ctx.author.username}'s ${this.name}__**\n`,
-				`**:coin: | ${cois.toLocaleString()}** coins`,
-				...ites.map(i => `**${i.item.upgrade.emoji} | ${i.amount}** ${i.item.upgrade.name}`)
-			].join('\n') 
+				`**:coin: ${cois.toLocaleString()}** coins`,
+				...ites.map(i => `**${i.item.upgrade.emoji} ${i.amount}** ${i.item.upgrade.name}`)
+			].join('\n'),
 		});
 	}
 

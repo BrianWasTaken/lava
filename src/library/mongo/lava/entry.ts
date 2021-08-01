@@ -41,7 +41,7 @@ export class LavaEntry extends UserEntry<LavaProfile> {
 			blacklist: (state = true) => {
 				if (this.cache.punishments.banned) return this;
 				this.cache.punishments.blocked = state;
-				this.cache.punishments.expire = duration;
+				this.cache.punishments.expire = Date.now() + duration;
 				this.cache.punishments.count++;
 				return this;
 			},
