@@ -52,23 +52,23 @@ export default class extends Command {
 			time: 10000, filter: int => int.user.id === ctx.author.id
 		});
 
-		await choice.defer();
+		// await choice.defer();
 		await Promise.all((msg.components.flatMap(row => {
 			return row.components.filter(comp => comp.type === 'BUTTON')
 		})).map(btn => btn.setDisabled(true)));
 
 		if (!choice?.customId) {
-			return await msg.edit('breh, u should press one of those buttons, you\'re timed out.').then(() => false);
+			return await choice.edit('breh, u should press one of those buttons, you\'re timed out.').then(() => false);
 		}
 		if (choice.customId === 'cancel') {
-			return await msg.edit('ok weirdo').then(() => false);
+			return await choice.edit('ok weirdo').then(() => false);
 		}
 		const lava = await some1.user.lava.fetch();
 		if (lava.cache.punishments.expire > Date.now()) {
-			return await msg.edit('they\'re already blacklisted lol').then(() => false);
+			return await choice.edit('they\'re already blacklisted lol').then(() => false);
 		}
 
 		await lava.blacklist(1000 * 60).save();
-		return await msg.edit(`done.`).then(() => false);
+		return await choice.edit(`done.`).then(() => false);
 	}
 }
