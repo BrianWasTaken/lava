@@ -52,11 +52,9 @@ export default class extends Command {
 			time: 10000, filter: int => int.user.id === ctx.author.id
 		});
 
-		await Promise.all(
-			(msg.components.flatMap(row => 
-				row.components.filter(comp => comp.type === 'BUTTON')
-			)).map(btn => btn.setDisabled(true))
-		);
+		await Promise.all((msg.components.flatMap(row => {
+			return row.components.filter(comp => comp.type === 'BUTTON')
+		})).map(btn => btn.setDisabled(true)));
 
 		if (!choice?.customId) {
 			return await ctx.reply('breh, u should press one of those buttons, you\'re timed out.').then(() => false);
