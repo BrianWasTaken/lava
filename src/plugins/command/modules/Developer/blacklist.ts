@@ -57,17 +57,17 @@ export default class extends Command {
 		})).map(btn => btn.setDisabled(true)));
 
 		if (!choice?.customId) {
-			return await ctx.reply('breh, u should press one of those buttons, you\'re timed out.').then(() => false);
+			return await msg.edit('breh, u should press one of those buttons, you\'re timed out.').then(() => false);
 		}
 		if (choice.customId === 'cancel') {
-			return await ctx.reply('ok weirdo').then(() => false);
+			return await msg.edit('ok weirdo').then(() => false);
 		}
 		const lava = await some1.user.lava.fetch();
 		if (lava.cache.punishments.expire > Date.now()) {
-			return await ctx.reply('they\'re already blacklisted lol').then(() => false);
+			return await msg.edit('they\'re already blacklisted lol').then(() => false);
 		}
 
 		await lava.blacklist(1000 * 60).save();
-		return await ctx.reply(`done.`).then(() => false);
+		return await msg.edit(`done.`).then(() => false);
 	}
 }
