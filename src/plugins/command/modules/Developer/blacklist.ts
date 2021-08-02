@@ -52,6 +52,7 @@ export default class extends Command {
 			time: 10000, filter: int => int.user.id === ctx.author.id
 		});
 
+		await choice.defer();
 		await Promise.all((msg.components.flatMap(row => {
 			return row.components.filter(comp => comp.type === 'BUTTON')
 		})).map(btn => btn.setDisabled(true)));
@@ -59,7 +60,6 @@ export default class extends Command {
 		if (!choice?.customId) {
 			return await msg.edit('breh, u should press one of those buttons, you\'re timed out.').then(() => false);
 		}
-		await choice.deferUpdate();
 		if (choice.customId === 'cancel') {
 			return await msg.edit('ok weirdo').then(() => false);
 		}
