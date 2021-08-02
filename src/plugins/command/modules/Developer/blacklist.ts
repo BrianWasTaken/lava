@@ -59,6 +59,7 @@ export default class extends Command {
 		if (!choice?.customId) {
 			return await msg.edit('breh, u should press one of those buttons, you\'re timed out.').then(() => false);
 		}
+		await choice.deferUpdate();
 		if (choice.customId === 'cancel') {
 			return await msg.edit('ok weirdo').then(() => false);
 		}
