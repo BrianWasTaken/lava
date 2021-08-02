@@ -45,7 +45,7 @@ export default class extends Command {
 			})
 		];
 		const msg = await ctx.channel.send({
-			components: [{ components: [...buttons] }],
+			components: [new MessageActionRow().addComponents(...buttons)],
 			content: `are you sure?`,
 		});
 		const choice = await msg.awaitMessageComponent<ButtonInteraction>({
