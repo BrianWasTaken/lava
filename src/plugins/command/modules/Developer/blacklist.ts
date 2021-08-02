@@ -61,11 +61,12 @@ export default class extends Command {
 			return await choice.update({ content: 'breh, u should press one of those buttons, you\'re timed out.' }).then(() => false);
 		}
 		if (choice.customId === 'cancel') {
+			const disabled = msg.components.flatMap(row => 
+				row.components.filter(c => c.type === 'BUTTON')
+			).map(btn => btn.setDisabled(true));
 			return await choice.update({ 
 				content: 'ok weirdo', 
-				components: msg.components.flatMap(row => {
-					return row.components.filter(comp => comp.type === 'BUTTON')
-				}).map(btn => btn.setDisabled(true))
+				components: [new MessageActionRow().addComponents(...disabled)]
 			}).then(() => false);
 		}
 		const lava = await some1.user.lava.fetch();
