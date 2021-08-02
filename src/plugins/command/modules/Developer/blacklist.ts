@@ -41,7 +41,7 @@ export default class extends Command {
 			new MessageButton({
 				style: 'DANGER',
 				label: 'Cancel',
-				customId: 'cancel'
+				customId: 'cancel',
 			})
 		];
 		const msg = await ctx.channel.send({
@@ -52,29 +52,24 @@ export default class extends Command {
 			time: 10000, filter: int => int.user.id === ctx.author.id
 		});
 
-		// await choice.defer();
-		await Promise.all((msg.components.flatMap(row => {
-			return row.components.filter(comp => comp.type === 'BUTTON')
-		})).map(btn => btn.setDisabled(true)));
+		const components = [new MessageActionRow({ 
+			components: [...msg.components.flatMap(row => {
+				return row.components.filter(comp => comp.type === 'BUTTON')
+			}).map(btn => btn.setDisabled(true))]
+		})];
 
 		if (!choice?.customId) {
-			return await choice.update({ content: 'breh, u should press one of those buttons, you\'re timed out.' }).then(() => false);
+			return await choice.update({ components, content: 'breh, u should press one of those buttons, you\'re timed out.' }).then(() => false);
 		}
 		if (choice.customId === 'cancel') {
-			const disabled = msg.components.flatMap(row => 
-				row.components.filter(c => c.type === 'BUTTON')
-			).map(btn => btn.setDisabled(true));
-			return await choice.update({ 
-				content: 'ok weirdo', 
-				components: [new MessageActionRow().addComponents(...disabled)]
-			}).then(() => false);
+			return await choice.update({ components, content: 'ok weirdo', }).then(() => false);
 		}
 		const lava = await some1.user.lava.fetch();
 		if (lava.cache.punishments.expire > Date.now()) {
-			return await choice.update({ content: 'they\'re already blacklisted lol' }).then(() => false);
+			return await choice.update({ components, content: 'they\'re already blacklisted lol' }).then(() => false);
 		}
 
 		await lava.blacklist(1000 * 60).save();
-		return await choice.update({ content: `done.` }).then(() => false);
+		return await choice.update({ components, content: `done.` }).then(() => false);
 	}
 }
