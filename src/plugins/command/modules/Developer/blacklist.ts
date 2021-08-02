@@ -58,17 +58,17 @@ export default class extends Command {
 		})).map(btn => btn.setDisabled(true)));
 
 		if (!choice?.customId) {
-			return await choice.uppdate({ content: 'breh, u should press one of those buttons, you\'re timed out.' }).then(() => false);
+			return await choice.update({ content: 'breh, u should press one of those buttons, you\'re timed out.' }).then(() => false);
 		}
 		if (choice.customId === 'cancel') {
-			return await choice.uppdate({ content: 'ok weirdo' }).then(() => false);
+			return await choice.update({ content: 'ok weirdo' }).then(() => false);
 		}
 		const lava = await some1.user.lava.fetch();
 		if (lava.cache.punishments.expire > Date.now()) {
-			return await choice.uppdate({ content: 'they\'re already blacklisted lol' }).then(() => false);
+			return await choice.update({ content: 'they\'re already blacklisted lol' }).then(() => false);
 		}
 
 		await lava.blacklist(1000 * 60).save();
-		return await choice.uppdate({ content: `done.` }).then(() => false);
+		return await choice.update({ content: `done.` }).then(() => false);
 	}
 }
