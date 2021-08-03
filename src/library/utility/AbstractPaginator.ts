@@ -53,7 +53,7 @@ export interface PaginatorOptions {
 	pages: PaginatorPage[];
 }
 
-export class AbstractPaginator {
+export class Paginator {
 	public collector: InteractionCollector<ButtonInteraction>;
 	public controls: PaginatorControl[];
 	public message: Message;
@@ -82,14 +82,9 @@ export class AbstractPaginator {
 		this.user = options.user;
 
 		const collector = this.message.createMessageComponentCollector<ButtonInteraction>({
+			filter: interaction => interaction.user.id === this.user.id,
 			time: this.timeout,
 			max: Infinity,
-			filter: interaction => {
-				// const controlIds = Object.values(PaginatorControlId);
-				// return controlIds.some(id => id === interaction.customId) 
-				// 	&& 
-				return interaction.user.id === this.user.id;
-			},
 		});
 
 		collector.on('collect', (int: ButtonInteraction) => this._handleIncoming(int));

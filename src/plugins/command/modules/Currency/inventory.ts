@@ -1,5 +1,5 @@
-import { Command, Inventory, Colors } from 'lava/index';
-import { Message, GuildMember } from 'discord.js';
+import { Paginator, PaginatorControl, PaginatorControlId, Command, Inventory, Colors } from 'lava/index';
+import { Message, GuildMember, MessageButton, MessageActionRow } from 'discord.js';
 import { Argument } from 'discord-akairo';
 
 interface InventoryArgs {
@@ -51,7 +51,18 @@ export default class extends Command {
 			return ctx.reply(`Page \`${page}\` doesn't exist.`).then(() => false);
 		}
 
-		return ctx.channel.send({
+		const controls: PaginatorControl[] = [
+			{ customId: PaginatorControlId.FIRST, label: 'First', style: 'PRIMARY' },
+			{ customId: PaginatorControlId.PREVIOUS, label: 'Previous', style: 'PRIMARY' },
+			{ customId: PaginatorControlId.STOP, label: 'Stop', style: 'DANGER' },
+			{ customId: PaginatorControlId.NEXT, label: 'Next', style: 'PRIMARY' },
+			{ customId: PaginatorControlId.LAST, label: 'Last', style: 'PRIMARY' },
+		];
+
+		const msg = await ctx.channel.send({
+			components: [new MessageActionRow({
+				components: [...controls.map(c => new MessageButton(c))]
+			})],
 			embeds: [{
 				color: Colors.BLURPLE,
 				author: {
@@ -68,7 +79,34 @@ export default class extends Command {
 					text: `Owned Items — Page ${page} of ${inventory.length}`
 				}
 			}]
-		}).then(() => false);
+		});
+
+		const paginator = new Paginator({
+			controls,
+			time: 60000,
+			user: ctx.author,
+			focus: page - 1,
+			message: msg,
+			pages: inventory.map((currPage, index, array) => ({
+				embeds: [{
+					author: {
+						name: `${member.user.username}'s inventory`,
+						icon_url: member.user.avatarURL({ dynamic: true })
+					},
+					fields: [
+						{
+							name: 'Owned Items',
+							value: currPage.join('\n\n')
+						}
+					],
+					footer: {
+						text: `Owned Items — Page ${page + 1} of ${array.length}`
+					}
+				}]
+			}))
+		})
+
+		return false;
 	}
 
 	mapItems(items: CollectionPlus<Inventory>) {

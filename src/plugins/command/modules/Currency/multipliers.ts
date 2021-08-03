@@ -1,4 +1,4 @@
-import { AbstractPaginator, PaginatorControlId, PaginatorControl, Command, Currency, Colors } from 'lava/index';
+import { Paginator, PaginatorControlId, PaginatorControl, Command, Currency, Colors } from 'lava/index';
 import { Message, MessageButton, MessageActionRow } from 'discord.js';
 
 export default class extends Command {
@@ -29,11 +29,9 @@ export default class extends Command {
 		}
 
 		const controls: PaginatorControl[] = [
-			{ customId: PaginatorControlId.FIRST, label: 'First', style: 'PRIMARY' },
+			{ customId: PaginatorControlId.NEXT, label: 'Next', style: 'PRIMARY' },
 			{ customId: PaginatorControlId.PREVIOUS, label: 'Previous', style: 'PRIMARY' },
 			{ customId: PaginatorControlId.STOP, label: 'Stop', style: 'DANGER' },
-			{ customId: PaginatorControlId.NEXT, label: 'Next', style: 'PRIMARY' },
-			{ customId: PaginatorControlId.LAST, label: 'Last', style: 'PRIMARY' },
 		];
 
 		const msg = await ctx.channel.send({ 
@@ -50,11 +48,12 @@ export default class extends Command {
 			}]
 		});
 
-		const paginator = new AbstractPaginator({
+		const paginator = new Paginator({
 			controls,
 			user: ctx.author,
 			message: msg,
-			time: 10000,
+			time: 30000,
+			focus: page - 1,
 			pages: pages.map((currPage, index, arr) => ({
 				embeds: [{
 					author: {
