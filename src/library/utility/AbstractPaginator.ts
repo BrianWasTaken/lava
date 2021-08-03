@@ -75,7 +75,7 @@ export class AbstractPaginator {
 		this.timeout = options.time;
 		this.pages = options.pages;
 
-		this.collector = this.message.createMessageComponentCollector<ButtonInteraction>({
+		const collector = this.message.createMessageComponentCollector<ButtonInteraction>({
 			time: this.timeout,
 			maxComponents: Infinity,
 			filter: interaction => {
@@ -86,17 +86,18 @@ export class AbstractPaginator {
 			},
 		});
 
-		this.collector.on('collect', this._handleIncoming.bind(this));
-		this.collector.on('end', this._handleEnd.bind(this));
+		collector.on('collect', this._handleIncoming.bind(this));
+		collector.on('end', this._handleEnd.bind(this));
+		this.collector = collector;
 	}
 
-	private async _disableAll(int: ButtonInteraction, props = this.pages[this.current]) {
-		const buttons = (int.message as Message).components.flatMap(row => row.components.filter(c => c.type === 'BUTTON')).map(c => c.setDisabled(true));
-		await int.update({ ...props, components: [new MessageActionRow({ components: [...buttons] })] });
+	private async _disableAll(props = this.pages[this.current]) {
+		const buttons = this.message.components.flatMap(row => row.components.filter(c => c.type === 'BUTTON')).map(c => c.setDisabled(true));
+		await this.message.edit({ ...props, components: [new MessageActionRow({ components: [...buttons] })] });
 	}
 
 	private async _handleEnd(collected: Collection<Snowflake, ButtonInteraction>, reason: string) {
-		await this._disableAll(collected.first());
+		await this._disableAll();
 	}
 
 	private async _handleIncoming(int: ButtonInteraction) {
@@ -110,8 +111,8 @@ export class AbstractPaginator {
 				break;
 
 			case PaginatorControlId.STOP:
-				await this._disableAll(int);
 				this.collector.stop('force');
+				await this._disableAll();
 				break;
 
 			case PaginatorControlId.NEXT:
@@ -124,6 +125,7 @@ export class AbstractPaginator {
 
 			default:
 				throw new TypeError('Invalid Button ID');
+				break;
 		}
 	}
 }
