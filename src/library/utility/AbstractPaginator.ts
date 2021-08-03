@@ -114,18 +114,17 @@ export class AbstractPaginator {
 				break;
 
 			case PaginatorControlId.PREVIOUS:
-				this.current -= 1;
-				await this.message.edit(this.pages[this.current] ?? this.pages[0]);
+				this.current = this.current - 1 < 0 ? 0 : this.current - 1;
+				await this.message.edit(this.pages[this.current]);
 				break;
 
 			case PaginatorControlId.STOP:
 				this.collector.stop('force');
-				await this._disableAll();
 				break;
 
 			case PaginatorControlId.NEXT:
-				this.current += 1;
-				await this.message.edit(this.pages[this.current] ?? this.pages[this.pages.length - 1]);
+				this.current = this.current + 1 > this.pages.length - 1 ? this.pages.length - 1 : this.current + 1;
+				await this.message.edit(this.pages[this.current]);
 				break;
 
 			case PaginatorControlId.LAST:
