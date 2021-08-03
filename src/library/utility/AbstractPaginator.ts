@@ -90,7 +90,8 @@ export class AbstractPaginator {
 	}
 
 	private async _disableAll(int: ButtonInteraction, props = this.pages[this.current]) {
-		const buttons = this.message.components.flatMap(row => row.components.filter(c => c.type === 'BUTTON')).map(c => c.setDisabled(true));
+		if (!int) return;
+		const buttons = int.message.components.flatMap(row => row.components.filter(c => c.type === 'BUTTON')).map(c => c.setDisabled(true));
 		await int.update({ ...props, components: [new MessageActionRow({ components: [...buttons] })] });
 	}
 
