@@ -109,11 +109,12 @@ export class AbstractPaginator {
 	private async _handleIncoming(int: ButtonInteraction) {
 		switch(int.customId) {
 			case PaginatorControlId.FIRST:
-				await int.update(this.pages[0]);
+				this.current = 0;
+				await int.update(this.pages[this.current]);
 				break;
 
 			case PaginatorControlId.PREVIOUS:
-				this.current--;
+				this.current -= 1;
 				await int.update(this.pages[this.current] ?? this.pages[0]);
 				break;
 
@@ -123,12 +124,13 @@ export class AbstractPaginator {
 				break;
 
 			case PaginatorControlId.NEXT:
-				this.current++;
+				this.current += 1;
 				await int.update(this.pages[this.current] ?? this.pages[this.pages.length - 1]);
 				break;
 
 			case PaginatorControlId.LAST:
-				await int.update(this.pages[this.pages.length - 1]);
+				this.current = this.pages.length - 1;
+				await int.update(this.pages[this.current]);
 				break;
 
 			default:

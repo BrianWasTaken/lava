@@ -51,6 +51,7 @@ export default class extends Command {
 		});
 
 		const paginator = new AbstractPaginator({
+			controls,
 			user: ctx.author,
 			message: msg,
 			time: 10000,
@@ -70,7 +71,6 @@ export default class extends Command {
 					}
 				}]
 			})),
-			controls
 		});
 
 		return false;
