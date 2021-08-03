@@ -1,7 +1,7 @@
-import { Message, Collection, MessageOptions, MessageActionRow, InteractionCollector, ButtonInteraction } from 'discord.js';
+import { Message, Collection, MessageOptions, MessageButtonOptions, MessageActionRow, InteractionCollector, ButtonInteraction } from 'discord.js';
 import { LavaClient } from 'lava/akairo';
 
-type PaginatorPage = Omit<MessageOptions, 'components'>;
+export type PaginatorPage = Omit<MessageOptions, 'components'>;
 
 /**
  * Controls:
@@ -11,7 +11,7 @@ type PaginatorPage = Omit<MessageOptions, 'components'>;
  * 'next' - next page
  * 'last' - last page 
  */
-enum PaginatorControlId {
+export enum PaginatorControlId {
 	FIRST = 'first',
 	PREVIOUS = 'prev',
 	STOP = 'stop',
@@ -19,18 +19,14 @@ enum PaginatorControlId {
 	LAST = 'last'
 }
 
-interface PaginatorControl {
-	/**
-	 * The label of the button.
-	 */
-	label: string;
+export interface PaginatorControl extends MessageButtonOptions {
 	/**
 	 * The id of this paginator.
 	 */
-	id: PaginatorControlId;
+	customId: PaginatorControlId;
 }
 
-interface PaginatorOptions {
+export interface PaginatorOptions {
 	/**
 	 * The timeout for collecting interactions.
 	 */
@@ -53,7 +49,7 @@ interface PaginatorOptions {
 	pages: PaginatorPage[];
 }
 
-class AbstractPaginator {
+export class AbstractPaginator {
 	public collector: InteractionCollector<ButtonInteraction>;
 	public controls: PaginatorControl[];
 	public message: Message;
@@ -81,6 +77,8 @@ class AbstractPaginator {
 
 		this.collector = this.message.createMessageComponentCollector<ButtonInteraction>({
 			time: this.timeout,
+			idle: this.timeout,
+			maxComponents: Infinity,
 			filter: interaction => {
 				const controlIds = Object.values(PaginatorControlId);
 				return controlIds.some(id => id === interaction.customId) 
@@ -92,17 +90,16 @@ class AbstractPaginator {
 		this.collector.on('end', this._handleEnd.bind(this));
 	}
 
-	private async _disableAll() {
+	private async _disableAll(props = this.pages[this.current]) {
 		const buttons = this.message.components.flatMap(row => row.components.filter(c => c.type === 'BUTTON')).map(c => c.setDisabled(true));
-		await this.message.edit({ ...this.pages[this.current], components: [new MessageActionRow({ components: [...buttons] })] });
+		await this.message.edit({ ...props, components: [new MessageActionRow({ components: [...buttons] })] });
 	}
 
-	public async _handleEnd(collected: Collection<Snowflake, ButtonInteraction>, reason: string) {
-		await this.message.edit(this.pages[0]);
+	private async _handleEnd(collected: Collection<Snowflake, ButtonInteraction>, reason: string) {
 		await this._disableAll();
 	}
 
-	public async _handleIncoming(int: ButtonInteraction) {
+	private async _handleIncoming(int: ButtonInteraction) {
 		switch(int.customId) {
 			case PaginatorControlId.FIRST:
 				await this.message.edit(this.pages[this.current = 0]);
@@ -114,7 +111,7 @@ class AbstractPaginator {
 
 			case PaginatorControlId.STOP:
 				await this._disableAll();
-				this.collector.stop('user');
+				this.collector.stop('force');
 				break;
 
 			case PaginatorControlId.NEXT:
@@ -130,5 +127,3 @@ class AbstractPaginator {
 		}
 	}
 }
-
-export { AbstractPaginator };

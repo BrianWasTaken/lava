@@ -1,4 +1,4 @@
-import { Command, Currency, Colors } from 'lava/index';
+import { AbstractPaginator, PaginatorControlId, Command, Currency, Colors } from 'lava/index';
 import { Message } from 'discord.js';
 
 export default class extends Command {
@@ -28,13 +28,43 @@ export default class extends Command {
 			return ctx.reply(`Page \`${page}\` doesn't exist.`).then(() => false);
 		}
 
-		return ctx.channel.send({ embeds: [{
+		const msg = await ctx.channel.send({ embeds: [{
 			author: { name: `${ctx.author.username}'s Multipliers`, iconURL: ctx.author.avatarURL({ dynamic: true }) },
 			footer: { text: `${multis.unlocked.length}/${multis.all.length} Active — Page ${page} of ${pages.length}` },
 			color: Colors.BLURPLE, fields: [{
 				name: `Total Multi: ${multis.unlocked.reduce((p, c) => p + c.value, 0)}% (max of ${Currency.MAX_MULTI}%)`,
 				value: pages[page - 1].join('\n')
 			}],
-		}]}).then(() => false);
+		}]});
+
+		const paginator = new AbstractPaginator({
+			message: msg,
+			time: 10000,
+			pages: pages.map((currPage, index, arr) => ({
+				embeds: [{
+					author: {
+						name: `${ctx.author.username}'s Multipliers`,
+						iconURL: ctx.author.avatarURL({ dynamic: true })
+					},
+					color: Colors.BLURPLE,
+					fields: [{
+						name: `Total Multi: ${multis.unlocked.reduce((p, c) => p + c.value, 0)}% (max of ${Currency.MAX_MULTI}%)`,
+						value: currPage.join('\n')
+					}],
+					footer: {
+						text: `${multis.unlocked.length}/${multis.all.length} Active — Page ${index + 1} of ${arr.length}`
+					}
+				}]
+			})),
+			controls: [
+				{ customId: PaginatorControlId.FIRST, label: '«', style: 'PRIMARY' },
+				{ customId: PaginatorControlId.PREVIOUS, label: '◄', style: 'PRIMARY' },
+				{ customId: PaginatorControlId.STOP, label: '●', style: 'DANGER' },
+				{ customId: PaginatorControlId.FIRST, label: '►', style: 'PRIMARY' },
+				{ customId: PaginatorControlId.FIRST, label: '»', style: 'PRIMARY' },
+			]
+		});
+
+		return false;
 	}
 }
