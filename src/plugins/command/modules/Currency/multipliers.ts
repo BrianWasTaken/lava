@@ -29,9 +29,9 @@ export default class extends Command {
 		}
 
 		const controls: PaginatorControl[] = [
-			{ customId: PaginatorControlId.NEXT, label: 'Next', style: 'PRIMARY' },
 			{ customId: PaginatorControlId.PREVIOUS, label: 'Previous', style: 'PRIMARY' },
 			{ customId: PaginatorControlId.STOP, label: 'Stop', style: 'DANGER' },
+			{ customId: PaginatorControlId.NEXT, label: 'Next', style: 'PRIMARY' },
 		];
 
 		const msg = await ctx.channel.send({ 

@@ -1,5 +1,5 @@
+import { CollectorFilter, Message, ButtonInteraction, MessageActionRow, MessageButton } from 'discord.js';
 import { Command, LavaClient, CurrencyEntry, Inventory, Colors } from 'lava/index';
-import { CollectorFilter, Message } from 'discord.js';
 
 interface SearchData {
 	place: string;
@@ -71,7 +71,7 @@ export default class extends Command {
 		const won = Math.round(coins + (coins * (multi / 100)));
 		await entry.addPocket(won).save();
 		return ({
-			itemGot: (randomNumber(1, 100) < 20) && item ? entry.props.items.get(item) : null,
+			itemGot: (randomNumber(1, 100) < 10) && item ? entry.props.items.get(item) : null,
 			coinsRaw: coins,
 			coinsWon: won,
 			killed: Death.safe,
@@ -86,14 +86,42 @@ export default class extends Command {
 		const searchables = randomsInArray(this.search, 3);
 		const places = searchables.map(s => s.place);
 
-		await ctx.reply(`**Where do you want to search?**\nPick one from the list below.\n\`${places.join('`, `')}\``);
-		const choice = await ctx.awaitMessage();
+		const msg = await ctx.reply({
+			components: [new MessageActionRow().addComponents(
+				...places.map(label => new MessageButton({
+					label, style: 'PRIMARY', 
+					customId: label,
+				}))
+			)],
+			content: [
+				`**Where do you want to search?**`,
+				'*Pick one from the list below.*'
+			].join('\n')
+		});
+		const choice = await msg.awaitMessageComponent<ButtonInteraction>({
+			time: 15000, filter: int => int.user.id === ctx.author.id
+		});
 
-		if (!choice || !choice.content || !places.some(p => choice.content.toLowerCase() === p)) {
-			return ctx.reply('Imagine not picking the right place, idiot.').then(() => true);
+		let components = [new MessageActionRow({ 
+			components: [...msg.components.flatMap(row => {
+				return row.components.filter(comp => comp.type === 'BUTTON')
+			}).map(btn => btn.setDisabled(true))]
+		})];
+
+		if (!choice) {
+			return choice.update({ components, content: 'Imagine not picking the right place, idiot.' }).then(() => true);
 		}
 
-		const searched = searchables.find(s => choice.content.toLowerCase() === s.place);
+		components = [new MessageActionRow({ 
+			components: [...msg.components.flatMap(row => {
+				return row.components.filter(comp => comp.type === 'BUTTON') as MessageButton[];
+			}).map(btn => {
+				if (btn.customId === choice.customId) btn.setStyle('SUCCESS');
+				return btn.setDisabled(true);
+			})]
+		})];
+
+		const searched = searchables.find(s => choice.customId === s.place);
 		const getHeader = () => `${ctx.author.username} searched the ${searched.place.toUpperCase()}`;
 		const multi = entry.calcMulti(ctx).unlocked.reduce((p, c) => p + c.value, 0);
 		const pocket = entry.props.pocket;
@@ -108,7 +136,7 @@ export default class extends Command {
 				? `You lost **${pocket.toLocaleString()} coins** ${item ? `and **${lost.toLocaleString()} ${item.upgrade.emoji} ${item.upgrade.name}** RIP LOL!` : 'RIP!'}`
 				: `Your **${saver.item.upgrade.emoji} ${saver.item.upgrade.name}** saved you from death!`;
 			
-			return ctx.reply({ embeds: [{
+			return choice.update({ components, embeds: [{
 				author: { name: getHeader(), iconURL: ctx.author.avatarURL({ dynamic: true }) },
 				description: `${searched.death.msg}\n${sampleText}`,
 				footer: { text: 'Lol u died' },
@@ -116,7 +144,7 @@ export default class extends Command {
 			}]}).then(() => true);
 		}
 
-		return ctx.reply({ embeds: [{
+		return choice.update({ components, embeds: [{
 			description: `${searched.successMsg(nice.coinsWon)}${nice.itemGot ? `\nand **1 ${nice.itemGot.module.emoji} ${nice.itemGot.module.name}** wow you're very lucky!` : ''}`,
 			footer: { text: `Multiplier Bonus: +${multi}% (${nice.coinsRaw.toLocaleString()} coins)` },
 			author: { name: getHeader(), iconURL: ctx.author.avatarURL({ dynamic: true }) },

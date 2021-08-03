@@ -58,7 +58,7 @@ export default class extends Command {
 			}).map(btn => btn.setDisabled(true))]
 		})];
 
-		if (!choice?.customId) {
+		if (!choice) {
 			return await choice.update({ components, content: 'breh, u should press one of those buttons, you\'re timed out.' }).then(() => false);
 		}
 		if (choice.customId === 'cancel') {

@@ -89,6 +89,7 @@ export default class extends Command {
 			message: msg,
 			pages: inventory.map((currPage, index, array) => ({
 				embeds: [{
+					color: Colors.BLURPLE,
 					author: {
 						name: `${member.user.username}'s inventory`,
 						icon_url: member.user.avatarURL({ dynamic: true })
