@@ -1,4 +1,4 @@
-import { AbstractPaginator, PaginatorControlId, Command, Currency, Colors } from 'lava/index';
+import { AbstractPaginator, PaginatorControlId, PaginatorControl, Command, Currency, Colors } from 'lava/index';
 import { Message, MessageButton, MessageActionRow } from 'discord.js';
 
 export default class extends Command {
@@ -28,7 +28,7 @@ export default class extends Command {
 			return ctx.reply(`Page \`${page}\` doesn't exist.`).then(() => false);
 		}
 
-		const controls = [
+		const controls: PaginatorControl[] = [
 			{ customId: PaginatorControlId.FIRST, label: 'First', style: 'PRIMARY' },
 			{ customId: PaginatorControlId.PREVIOUS, label: 'Previous', style: 'PRIMARY' },
 			{ customId: PaginatorControlId.STOP, label: 'Stop', style: 'DANGER' },
