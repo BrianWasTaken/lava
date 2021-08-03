@@ -61,7 +61,7 @@ export default class extends Command {
 		const color = await prompt(firstColor);
 		if (!color) return false;
 		await rcr.edit({ color: color as number }).catch(() => {});
-		await msg.edit({ components: disabledStates, embeds: [{ title: 'Color changed, enjoy!' }] });
+		await msg.edit({ components: disabledStates, embeds: [{ color: color as number, title: 'Color changed, enjoy!' }] });
 		return true;
 	}
 }
