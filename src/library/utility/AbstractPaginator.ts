@@ -77,7 +77,7 @@ export class AbstractPaginator {
 
 		const collector = this.message.createMessageComponentCollector<ButtonInteraction>({
 			time: this.timeout,
-			maxComponents: Infinity,
+			componentType: 'BUTTON',
 			filter: interaction => {
 				// const controlIds = Object.values(PaginatorControlId);
 				// return controlIds.some(id => id === interaction.customId) 
