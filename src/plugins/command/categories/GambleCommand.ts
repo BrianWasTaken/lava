@@ -5,8 +5,6 @@ import { Command } from 'lava/akairo';
 import { Message } from 'discord.js';
 
 export class GambleCommand extends Command {
-	public ['constructor']: typeof GambleCommand;
-
 	/**
 	 * Construct a gambling command.
 	 * @param id the id of this command
