@@ -77,7 +77,7 @@ export class AbstractPaginator {
 
 		(async () => {
 			await this.message.edit({ components: [new MessageActionRow({
-				components: [options.controls.map(c => new MessageButton(c))]
+				components: [...options.controls.map(c => new MessageButton(c))]
 			})] })
 		})();
 
