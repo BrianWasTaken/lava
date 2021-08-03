@@ -101,6 +101,8 @@ export class AbstractPaginator {
 	}
 
 	private async _handleIncoming(int: ButtonInteraction) {
+		await int.channel.send(`${int.user.username} pressed ${int.id}`);
+
 		switch(int.customId) {
 			case PaginatorControlId.FIRST:
 				await int.update(this.pages[this.current = 0]);
