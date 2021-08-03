@@ -51,6 +51,7 @@ export default class extends Command {
 		});
 
 		const paginator = new AbstractPaginator({
+			user: ctx.author,
 			message: msg,
 			time: 10000,
 			pages: pages.map((currPage, index, arr) => ({
@@ -59,7 +60,7 @@ export default class extends Command {
 						name: `${ctx.author.username}'s Multipliers`,
 						iconURL: ctx.author.avatarURL({ dynamic: true })
 					},
-					color: Colors.BLURPLE,
+					color: Colors.BLUE,
 					fields: [{
 						name: `Total Multi: ${multis.unlocked.reduce((p, c) => p + c.value, 0)}% (max of ${Currency.MAX_MULTI}%)`,
 						value: currPage.join('\n')

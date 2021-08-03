@@ -1,4 +1,4 @@
-import { Message, Collection, MessageOptions, MessageButton, MessageButtonOptions, MessageActionRow, InteractionCollector, ButtonInteraction } from 'discord.js';
+import { User, Message, Collection, MessageOptions, MessageButton, MessageButtonOptions, MessageActionRow, InteractionCollector, ButtonInteraction } from 'discord.js';
 import { LavaClient } from 'lava/akairo';
 
 export type PaginatorPage = Omit<MessageOptions, 'components'>;
@@ -40,9 +40,13 @@ export interface PaginatorOptions {
 	 */
 	focus?: number;
 	/**
-	 * The sent message.
+	 * The sent message by the bot.
 	 */
 	message: Message;
+	/**
+	 * The user for filter purposes.
+	 */
+	user: User;
 	/**
 	 * The pages to paginate.
 	 */
@@ -56,6 +60,7 @@ export class AbstractPaginator {
 	public current: number;
 	public timeout: number;
 	public pages: PaginatorPage[];
+	public user: User;
 
 	/**
 	 * @param message the message sent to the channel/user
@@ -74,6 +79,7 @@ export class AbstractPaginator {
 		this.message = options.message;
 		this.timeout = options.time;
 		this.pages = options.pages;
+		this.user = options.user;
 
 		const collector = this.message.createMessageComponentCollector<ButtonInteraction>({
 			time: this.timeout,
@@ -82,7 +88,7 @@ export class AbstractPaginator {
 				// const controlIds = Object.values(PaginatorControlId);
 				// return controlIds.some(id => id === interaction.customId) 
 				// 	&& 
-				return true ?? interaction.user.id === this.message.author.id;
+				return interaction.user.id === this.user.id;
 			},
 		});
 
