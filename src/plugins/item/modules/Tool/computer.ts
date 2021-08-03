@@ -40,7 +40,7 @@ export default class Tool extends ToolItem {
 			time: 15000, filter: int => int.user.id === ctx.author.id
 		}).catch(() => {});
 
-		const components = [new MessageActionRow({ 
+		let components = [new MessageActionRow({ 
 			components: [...msg.components.flatMap(row => {
 				return row.components.filter(comp => comp.type === 'BUTTON')
 			}).map(btn => btn.setDisabled(true))]
@@ -49,6 +49,16 @@ export default class Tool extends ToolItem {
 		if (!choice) {
 			return msg.edit({ components, content: 'You should click/tap a button smh.' });
 		}
+
+		components = [new MessageActionRow({ 
+			components: [...msg.components.flatMap(row => {
+				return row.components.filter(comp => comp.type === 'BUTTON') as MessageButton[]
+			}).map(btn => 
+				btn.customId === choice.customId 
+					? btn.setStyle('SUCCESS')
+					: btn.setDisabled(true)
+			)]
+		})];
 
 		const karma = ctx.client.util.randomNumber(-1e3, 1e4);
 		const won = ctx.client.util.randomNumber(1, 10) * karma;
