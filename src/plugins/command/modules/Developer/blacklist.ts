@@ -50,7 +50,7 @@ export default class extends Command {
 		});
 		const choice = await msg.awaitMessageComponent<ButtonInteraction>({
 			time: 10000, filter: int => int.user.id === ctx.author.id
-		});
+		}).catch(() => {});
 
 		const components = [new MessageActionRow({ 
 			components: [...msg.components.flatMap(row => {
@@ -59,7 +59,7 @@ export default class extends Command {
 		})];
 
 		if (!choice) {
-			return await choice.update({ components, content: 'breh, u should press one of those buttons, you\'re timed out.' }).then(() => false);
+			return await msg.edit({ components, content: 'breh, u should press one of those buttons, you\'re timed out.' }).then(() => false);
 		}
 		if (choice.customId === 'cancel') {
 			return await choice.update({ components, content: 'ok weirdo', }).then(() => false);

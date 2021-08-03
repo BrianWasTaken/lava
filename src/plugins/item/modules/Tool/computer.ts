@@ -1,6 +1,6 @@
+import { Message, MessageButton, MessageActionRow, ButtonInteraction } from 'discord.js';
 import { CurrencyEntry } from 'lava/index';
 import { ToolItem } from '../..';
-import { Message } from 'discord.js';
 
 export default class Tool extends ToolItem {
 	constructor() {
@@ -19,39 +19,45 @@ export default class Tool extends ToolItem {
 		});
 	}
 
-	get options() {
-		return <{ [type: string]: string }> {
-			f: 'Funny',
-			u: 'Unoriginal',
-			c: 'Copyrighted',
-			k: 'Karen'
-		};
+	get types() {
+		return ['Funny', 'Unoriginal', 'Copyrighted', 'Karen'];
 	}
 
 	async use(ctx: Message, entry: CurrencyEntry) {
-		const [k, v] = [Object.keys(this.options), Object.values(this.options)];
-		const options = Array(k.length).fill(null).map((_, i) => `**\`${k[i]}\` ■ ${v[i]} Meme**`);
-		const choice = await ctx.channel.send({
-			content: `**__${ctx.author} What type of meme?__**\n${options.join('\n')}`, 
-			allowedMentions: { users: [ctx.author.id] } 
-		}).then(() => ctx.awaitMessage());
+		const msg = await ctx.reply({
+			components: [new MessageActionRow().addComponents(
+				...this.types.map(label => new MessageButton({
+					customId: label.toLowerCase(),
+					label, style: 'PRIMARY', 
+				}))
+			)],
+			content: [
+				`**What type of meme do you wanna post?**`,
+				'*Choose a meme below.*'
+			].join('\n')
+		});
+		const choice = await msg.awaitMessageComponent<ButtonInteraction>({
+			time: 15000, filter: int => int.user.id === ctx.author.id
+		}).catch(() => {});
+
+		const components = [new MessageActionRow({ 
+			components: [...msg.components.flatMap(row => {
+				return row.components.filter(comp => comp.type === 'BUTTON')
+			}).map(btn => btn.setDisabled(true))]
+		})];
 
 		if (!choice) {
-			return ctx.reply(`imagine ignoring me smh`);
-		}
-		if (!this.options[choice.content.toLowerCase()]) {
-			return ctx.reply(`bruh that's not even a meme`);
+			return msg.edit({ components, content: 'You should click/tap a button smh.' });
 		}
 
-		const karma = ctx.client.util.randomNumber(-5e3, 1e4);
-		const won = karma * ctx.client.util.randomNumber(1, 10);
-
-		if (karma < 1) {
+		const karma = ctx.client.util.randomNumber(-1e3, 1e4);
+		const won = ctx.client.util.randomNumber(1, 10) * karma;
+		if (karma < 0) {
 			await entry.subItem(this.id).save(false);
-			return ctx.reply(`Your meme got **${karma.toLocaleString()}** karmas so you broke your **${this.emoji} ${this.name}** lmao sucks to be you`);
+			return choice.update({ components, content: `**You broke your ${this.id} LMAO!**\n\nBecause you got **${karma.toLocaleString()} karmas** yikes that's bad` });
 		}
 
 		await entry.addPocket(won).save();
-		return ctx.reply(`You got **__${won.toLocaleString()} coins__** (${karma.toLocaleString()} karmas) from posting a ${this.options[choice.content.toLowerCase()].toLowerCase()} meme on reddit.`);
+		return choice.update({ components, content: `**Congratulations! Your meme got at least one upvote.**\n\nYou got **${won.toLocaleString()} coins** from posting a ${choice.customId} meme on reddit!` });
 	}
 }

@@ -95,12 +95,12 @@ export default class extends Command {
 			)],
 			content: [
 				`**Where do you want to search?**`,
-				'*Pick one from the list below.*'
+				'*Choose a place below.*'
 			].join('\n')
 		});
 		const choice = await msg.awaitMessageComponent<ButtonInteraction>({
 			time: 15000, filter: int => int.user.id === ctx.author.id
-		});
+		}).catch(() => {});
 
 		let components = [new MessageActionRow({ 
 			components: [...msg.components.flatMap(row => {
@@ -109,7 +109,7 @@ export default class extends Command {
 		})];
 
 		if (!choice) {
-			return choice.update({ components, content: 'Imagine not picking the right place, idiot.' }).then(() => true);
+			return msg.edit({ components, content: 'Imagine not picking the right place, idiot.' }).then(() => true);
 		}
 
 		components = [new MessageActionRow({ 
