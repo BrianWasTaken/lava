@@ -79,9 +79,10 @@ export class AbstractPaginator {
 			time: this.timeout,
 			maxComponents: Infinity,
 			filter: interaction => {
-				const controlIds = Object.values(PaginatorControlId);
-				return controlIds.some(id => id === interaction.customId) 
-					&& interaction.user.id === this.message.author.id;
+				// const controlIds = Object.values(PaginatorControlId);
+				// return controlIds.some(id => id === interaction.customId) 
+				// 	&& 
+				return interaction.user.id === this.message.author.id;
 			},
 		});
 
