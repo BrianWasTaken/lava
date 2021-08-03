@@ -60,7 +60,7 @@ export default class extends Command {
 						name: `${ctx.author.username}'s Multipliers`,
 						iconURL: ctx.author.avatarURL({ dynamic: true })
 					},
-					color: Colors.BLUE,
+					color: Colors.BLURPLE,
 					fields: [{
 						name: `Total Multi: ${multis.unlocked.reduce((p, c) => p + c.value, 0)}% (max of ${Currency.MAX_MULTI}%)`,
 						value: currPage.join('\n')
