@@ -110,12 +110,12 @@ export class AbstractPaginator {
 		switch(int.customId) {
 			case PaginatorControlId.FIRST:
 				this.current = 0;
-				await int.update(this.pages[this.current]);
+				await this.message.edit(this.pages[this.current]);
 				break;
 
 			case PaginatorControlId.PREVIOUS:
 				this.current -= 1;
-				await int.update(this.pages[this.current] ?? this.pages[0]);
+				await this.message.edit(this.pages[this.current] ?? this.pages[0]);
 				break;
 
 			case PaginatorControlId.STOP:
@@ -125,12 +125,12 @@ export class AbstractPaginator {
 
 			case PaginatorControlId.NEXT:
 				this.current += 1;
-				await int.update(this.pages[this.current] ?? this.pages[this.pages.length - 1]);
+				await this.message.edit(this.pages[this.current] ?? this.pages[this.pages.length - 1]);
 				break;
 
 			case PaginatorControlId.LAST:
 				this.current = this.pages.length - 1;
-				await int.update(this.pages[this.current]);
+				await this.message.edit(this.pages[this.current]);
 				break;
 
 			default:
