@@ -83,7 +83,6 @@ export class AbstractPaginator {
 
 		this.collector = this.message.createMessageComponentCollector<ButtonInteraction>({
 			time: this.timeout,
-			idle: this.timeout,
 			maxComponents: Infinity,
 			filter: interaction => {
 				const controlIds = Object.values(PaginatorControlId);
@@ -96,36 +95,36 @@ export class AbstractPaginator {
 		this.collector.on('end', this._handleEnd.bind(this));
 	}
 
-	private async _disableAll(props = this.pages[this.current]) {
+	private async _disableAll(int: ButtonInteraction, props = this.pages[this.current]) {
 		const buttons = this.message.components.flatMap(row => row.components.filter(c => c.type === 'BUTTON')).map(c => c.setDisabled(true));
-		await this.message.edit({ ...props, components: [new MessageActionRow({ components: [...buttons] })] });
+		await int.update({ ...props, components: [new MessageActionRow({ components: [...buttons] })] });
 	}
 
 	private async _handleEnd(collected: Collection<Snowflake, ButtonInteraction>, reason: string) {
-		await this._disableAll();
+		await this._disableAll(collected.first());
 	}
 
 	private async _handleIncoming(int: ButtonInteraction) {
 		switch(int.customId) {
 			case PaginatorControlId.FIRST:
-				await this.message.edit(this.pages[this.current = 0]);
+				await int.update(this.pages[this.current = 0]);
 				break;
 
 			case PaginatorControlId.PREVIOUS:
-				await this.message.edit(this.pages[this.current > 0 ? this.current-- : this.current]);
+				await int.update(this.pages[this.current > 0 ? this.current-- : this.current]);
 				break;
 
 			case PaginatorControlId.STOP:
-				await this._disableAll();
+				await this._disableAll(int);
 				this.collector.stop('force');
 				break;
 
 			case PaginatorControlId.NEXT:
-				await this.message.edit(this.pages[this.current === this.pages.length - 1 ? this.current++ : this.current]);
+				await int.update(this.pages[this.current === this.pages.length - 1 ? this.current++ : this.current]);
 				break;
 
 			case PaginatorControlId.LAST:
-				await this.message.edit(this.pages[this.pages.length - 1]);
+				await int.update(this.pages[this.pages.length - 1]);
 				break;
 
 			default:

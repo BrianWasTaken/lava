@@ -57,11 +57,11 @@ export default class extends Command {
 				}]
 			})),
 			controls: [
-				{ customId: PaginatorControlId.FIRST, label: '«', style: 'PRIMARY' },
-				{ customId: PaginatorControlId.PREVIOUS, label: '◄', style: 'PRIMARY' },
-				{ customId: PaginatorControlId.STOP, label: '●', style: 'DANGER' },
-				{ customId: PaginatorControlId.FIRST, label: '►', style: 'PRIMARY' },
-				{ customId: PaginatorControlId.FIRST, label: '»', style: 'PRIMARY' },
+				{ customId: PaginatorControlId.FIRST, label: 'First', style: 'PRIMARY' },
+				{ customId: PaginatorControlId.PREVIOUS, label: 'Previous', style: 'PRIMARY' },
+				{ customId: PaginatorControlId.STOP, label: 'Stop', style: 'DANGER' },
+				{ customId: PaginatorControlId.FIRST, label: 'Next', style: 'PRIMARY' },
+				{ customId: PaginatorControlId.FIRST, label: 'Last', style: 'PRIMARY' },
 			]
 		});
 
