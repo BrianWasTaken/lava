@@ -1,4 +1,4 @@
-import { Message, Collection, MessageOptions, MessageButtonOptions, MessageActionRow, InteractionCollector, ButtonInteraction } from 'discord.js';
+import { Message, Collection, MessageOptions, MessageButton, MessageButtonOptions, MessageActionRow, InteractionCollector, ButtonInteraction } from 'discord.js';
 import { LavaClient } from 'lava/akairo';
 
 export type PaginatorPage = Omit<MessageOptions, 'components'>;
@@ -74,6 +74,12 @@ export class AbstractPaginator {
 		this.message = options.message;
 		this.timeout = options.time;
 		this.pages = options.pages;
+
+		(async () => {
+			await this.message.edit({ components: [new MessageActionRow({
+				components: [options.controls.map(c => new MessageButton(c))]
+			})] })
+		})();
 
 		this.collector = this.message.createMessageComponentCollector<ButtonInteraction>({
 			time: this.timeout,
