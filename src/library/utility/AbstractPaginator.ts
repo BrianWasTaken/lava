@@ -115,6 +115,7 @@ class AbstractPaginator {
 			case PaginatorControlId.STOP:
 				await this._disableAll();
 				this.collector.stop('user');
+				break;
 
 			case PaginatorControlId.NEXT:
 				await this.message.edit(this.pages[this.current === this.pages.length - 1 ? this.current++ : this.current]);
