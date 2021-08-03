@@ -75,12 +75,6 @@ export class AbstractPaginator {
 		this.timeout = options.time;
 		this.pages = options.pages;
 
-		(async () => {
-			await this.message.edit({ components: [new MessageActionRow({
-				components: [...options.controls.map(c => new MessageButton(c))]
-			})] })
-		})();
-
 		this.collector = this.message.createMessageComponentCollector<ButtonInteraction>({
 			time: this.timeout,
 			maxComponents: Infinity,

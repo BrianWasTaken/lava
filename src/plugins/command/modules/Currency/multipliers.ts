@@ -1,4 +1,4 @@
-import { AbstractPaginator, PaginatorControlId, Command, Currency, Colors } from 'lava/index';
+import { AbstractPaginator, PaginatorControlId, MessageButton, MessageActionRow, Command, Currency, Colors } from 'lava/index';
 import { Message } from 'discord.js';
 
 export default class extends Command {
@@ -28,14 +28,27 @@ export default class extends Command {
 			return ctx.reply(`Page \`${page}\` doesn't exist.`).then(() => false);
 		}
 
-		const msg = await ctx.channel.send({ embeds: [{
-			author: { name: `${ctx.author.username}'s Multipliers`, iconURL: ctx.author.avatarURL({ dynamic: true }) },
-			footer: { text: `${multis.unlocked.length}/${multis.all.length} Active — Page ${page} of ${pages.length}` },
-			color: Colors.BLURPLE, fields: [{
-				name: `Total Multi: ${multis.unlocked.reduce((p, c) => p + c.value, 0)}% (max of ${Currency.MAX_MULTI}%)`,
-				value: pages[page - 1].join('\n')
-			}],
-		}]});
+		const controls = [
+			{ customId: PaginatorControlId.FIRST, label: 'First', style: 'PRIMARY' },
+			{ customId: PaginatorControlId.PREVIOUS, label: 'Previous', style: 'PRIMARY' },
+			{ customId: PaginatorControlId.STOP, label: 'Stop', style: 'DANGER' },
+			{ customId: PaginatorControlId.FIRST, label: 'Next', style: 'PRIMARY' },
+			{ customId: PaginatorControlId.FIRST, label: 'Last', style: 'PRIMARY' },
+		]
+
+		const msg = await ctx.channel.send({ 
+			components: [new MessageActionRow({
+				components: [...controls.map(c => new MessageButton(c))]
+			})],
+			embeds: [{
+				author: { name: `${ctx.author.username}'s Multipliers`, iconURL: ctx.author.avatarURL({ dynamic: true }) },
+				footer: { text: `${multis.unlocked.length}/${multis.all.length} Active — Page ${page} of ${pages.length}` },
+				color: Colors.BLURPLE, fields: [{
+					name: `Total Multi: ${multis.unlocked.reduce((p, c) => p + c.value, 0)}% (max of ${Currency.MAX_MULTI}%)`,
+					value: pages[page - 1].join('\n')
+				}],
+			}]
+		});
 
 		const paginator = new AbstractPaginator({
 			message: msg,
@@ -56,13 +69,7 @@ export default class extends Command {
 					}
 				}]
 			})),
-			controls: [
-				{ customId: PaginatorControlId.FIRST, label: 'First', style: 'PRIMARY' },
-				{ customId: PaginatorControlId.PREVIOUS, label: 'Previous', style: 'PRIMARY' },
-				{ customId: PaginatorControlId.STOP, label: 'Stop', style: 'DANGER' },
-				{ customId: PaginatorControlId.FIRST, label: 'Next', style: 'PRIMARY' },
-				{ customId: PaginatorControlId.FIRST, label: 'Last', style: 'PRIMARY' },
-			]
+			controls
 		});
 
 		return false;
