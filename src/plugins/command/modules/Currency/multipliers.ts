@@ -67,8 +67,6 @@ export default class extends Command {
 			}]
 		}));
 
-		await ctx.channel.send({ content: 'oof', embeds: [...paged.flatMap(p => p.embeds)] });
-
 		const paginator = new AbstractPaginator({
 			controls,
 			user: ctx.author,
@@ -76,6 +74,8 @@ export default class extends Command {
 			message: msg,
 			time: 10000,
 		});
+
+		await ctx.channel.send({ content: 'oof', embeds: [...paginator.pages.flatMap(p => p.embeds)] });
 
 		return false;
 	}
