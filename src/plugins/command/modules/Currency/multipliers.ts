@@ -1,5 +1,5 @@
-import { AbstractPaginator, PaginatorControlId, MessageButton, MessageActionRow, Command, Currency, Colors } from 'lava/index';
-import { Message } from 'discord.js';
+import { AbstractPaginator, PaginatorControlId, Command, Currency, Colors } from 'lava/index';
+import { Message, MessageButton, MessageActionRow } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
