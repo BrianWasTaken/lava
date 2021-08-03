@@ -86,7 +86,7 @@ export class AbstractPaginator {
 			},
 		});
 
-		collector.on('collect', this._handleIncoming.bind(this));
+		collector.on('collect', (int: ButtonInteraction) => this._handleIncoming(int));
 		collector.on('end', this._handleEnd.bind(this));
 		this.collector = collector;
 	}
