@@ -100,7 +100,7 @@ export default class extends Command {
 						}
 					],
 					footer: {
-						text: `Owned Items — Page ${page + 1} of ${array.length}`
+						text: `Owned Items — Page ${index + 1} of ${array.length}`
 					}
 				}]
 			}))
