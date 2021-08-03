@@ -109,13 +109,11 @@ export class AbstractPaginator {
 	private async _handleIncoming(int: ButtonInteraction) {
 		switch(int.customId) {
 			case PaginatorControlId.FIRST:
-				await this.message.channel.send('first');
 				this.current = 0;
 				await this.message.edit(this.pages[this.current]);
 				break;
 
 			case PaginatorControlId.PREVIOUS:
-				await this.message.channel.send('prev');
 				this.current -= 1;
 				await this.message.edit(this.pages[this.current] ?? this.pages[0]);
 				break;
@@ -126,13 +124,11 @@ export class AbstractPaginator {
 				break;
 
 			case PaginatorControlId.NEXT:
-				await this.message.channel.send('next');
 				this.current += 1;
 				await this.message.edit(this.pages[this.current] ?? this.pages[this.pages.length - 1]);
 				break;
 
 			case PaginatorControlId.LAST:
-				await this.message.channel.send('last');
 				this.current = this.pages.length - 1;
 				await this.message.edit(this.pages[this.current]);
 				break;

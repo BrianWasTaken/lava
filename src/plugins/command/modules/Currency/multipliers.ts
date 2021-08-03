@@ -1,5 +1,5 @@
 import { AbstractPaginator, PaginatorControlId, PaginatorControl, Command, Currency, Colors } from 'lava/index';
-import { Message, MessageButton, MessageActionRow, MessageOptions } from 'discord.js';
+import { Message, MessageButton, MessageActionRow } from 'discord.js';
 
 export default class extends Command {
 	constructor() {
@@ -34,7 +34,7 @@ export default class extends Command {
 			{ customId: PaginatorControlId.STOP, label: 'Stop', style: 'DANGER' },
 			{ customId: PaginatorControlId.NEXT, label: 'Next', style: 'PRIMARY' },
 			{ customId: PaginatorControlId.LAST, label: 'Last', style: 'PRIMARY' },
-		]
+		];
 
 		const msg = await ctx.channel.send({ 
 			components: [new MessageActionRow({
@@ -50,29 +50,27 @@ export default class extends Command {
 			}]
 		});
 
-		const paged: MessageOptions[] = pages.map((currPage, index, arr) => ({
-			embeds: [{
-				author: {
-					name: `${ctx.author.username}'s Multipliers`,
-					iconURL: ctx.author.avatarURL({ dynamic: true })
-				},
-				color: Colors.BLUE,
-				fields: [{
-					name: `Total Multi: ${multis.unlocked.reduce((p, c) => p + c.value, 0)}% (max of ${Currency.MAX_MULTI}%)`,
-					value: currPage.join('\n')
-				}],
-				footer: {
-					text: `${multis.unlocked.length}/${multis.all.length} Active — Page ${index + 1} of ${arr.length}`
-				}
-			}]
-		}));
-
 		const paginator = new AbstractPaginator({
 			controls,
 			user: ctx.author,
-			pages: paged,
 			message: msg,
 			time: 10000,
+			pages: pages.map((currPage, index, arr) => ({
+				embeds: [{
+					author: {
+						name: `${ctx.author.username}'s Multipliers`,
+						iconURL: ctx.author.avatarURL({ dynamic: true })
+					},
+					color: Colors.BLUE,
+					fields: [{
+						name: `Total Multi: ${multis.unlocked.reduce((p, c) => p + c.value, 0)}% (max of ${Currency.MAX_MULTI}%)`,
+						value: currPage.join('\n')
+					}],
+					footer: {
+						text: `${multis.unlocked.length}/${multis.all.length} Active — Page ${index + 1} of ${arr.length}`
+					}
+				}]
+			})),
 		});
 
 		return false;
