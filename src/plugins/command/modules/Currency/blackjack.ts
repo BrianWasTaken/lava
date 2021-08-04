@@ -144,7 +144,7 @@ export default class extends GambleCommand {
 			let state: string = '';
 			let desc = '';
 			if (status.constructor === Object) {
-				const newEntry = await ctx.author.currency.fetch(); // ugh don't really know else how to do this thanks to reversal
+				const newEntry = await ctx.author.currency.fetch();
 				if (bet > newEntry.props.pocket) {
 					await newEntry.removePocket(bet).updateStats(this.id, bet, false).save();
 					return ctx.reply(`What the hell man, you don't have the coins to cover this bet anymore??? I'm keeping your bet since you tried to SCAM ME.`).then(() => true);
@@ -232,7 +232,6 @@ export default class extends GambleCommand {
 			if (final) return;
 			const choice = await ctx.awaitMessage();
 			if (!choice) {
-				// No bank space for you bitch
 				await entry.removePocket(bet).updateStats(this.id, bet, false).save();
 				return ctx.reply("You ended the game since you didn't respond. The dealer is keeping your money to deal with your bullcrap.").then(() => true);
 			}
@@ -244,11 +243,9 @@ export default class extends GambleCommand {
 					stood = true;
 					return dealersTurn(stood);
 				case 'e':
-					// You too, no space for you :P
 					await entry.removePocket(bet).updateStats(this.id, bet, false).save();
 					return ctx.reply('You ended the game. The dealer is keeping your money to deal with your bullcrap.').then(() => true);
 				default:
-					// You too, no space for you :P
 					await entry.removePocket(bet).updateStats(this.id, bet, false).save();
 					return ctx.reply('Ur an idiot you need to give a valid response. You lost your entire bet.').then(() => true);
 			}

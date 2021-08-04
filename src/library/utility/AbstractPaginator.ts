@@ -56,10 +56,10 @@ export interface PaginatorOptions {
 export class Paginator {
 	public collector: InteractionCollector<ButtonInteraction>;
 	public controls: PaginatorControl[];
-	public message: Message;
 	public current: number;
-	public timeout: number;
+	public message: Message;
 	public pages: PaginatorPage[];
+	public timeout: number;
 	public user: User;
 
 	/**
@@ -87,7 +87,7 @@ export class Paginator {
 			max: Infinity,
 		});
 
-		collector.on('collect', (int: ButtonInteraction) => this._handleIncoming(int));
+		collector.on('collect', this._handleIncoming.bind(this));
 		collector.on('end', this._handleEnd.bind(this));
 		this.collector = collector;
 	}

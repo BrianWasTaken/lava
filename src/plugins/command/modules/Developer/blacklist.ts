@@ -32,18 +32,11 @@ export default class extends Command {
 			return ctx.reply('dont try and break ur own bot smfh').then(() => false);
 		}
 
-		const buttons: MessageButton[] = [
-			new MessageButton({
-				style: 'PRIMARY',
-				label: 'Blacklist',
-				customId: 'blacklist'
-			}),
-			new MessageButton({
-				style: 'DANGER',
-				label: 'Cancel',
-				customId: 'cancel',
-			})
-		];
+		const buttons: MessageButton[] = ['Blacklist', 'Cancel']
+			.map(label => new MessageButton({ 
+				label, customId: label.toLowerCase(), style: 'PRIMARY' 
+			}));
+
 		const msg = await ctx.channel.send({
 			components: [new MessageActionRow().addComponents(...buttons)],
 			content: `are you sure?`,

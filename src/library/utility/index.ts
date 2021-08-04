@@ -3,6 +3,8 @@
  * @author BrianWasTaken
 */
 
+export * from './discord/ButtonPaginator';
+
 export * from './AbstractPaginator';
 export * from './AbstractPrompt';
 export * from './AbstractTimer';
