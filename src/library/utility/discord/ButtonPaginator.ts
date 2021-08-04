@@ -65,6 +65,7 @@ export class ButtonPaginator extends Paginator<ButtonInteraction> {
 				break;
 
 			case ButtonControls.STOP:
+				await int.update(this.pages[0]);
 				this.collector.stop();
 				break;
 

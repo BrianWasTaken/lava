@@ -78,7 +78,7 @@ export abstract class Paginator<V, T extends unknown[] = []>  {
 	 * @param collector this paginator's collector
 	 */
 	public bind(collector: this['collector']) {
-		collector.on('collect', this.collect.bind(this));
+		collector.on('collect', i => this.collect(i));
 		collector.on('end', this.end.bind(this));
 		return collector;
 	}
