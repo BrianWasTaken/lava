@@ -90,7 +90,7 @@ export abstract class Paginator<V, T extends unknown[] = []>  {
 	public shift(to: number) {
 		this.page += to;
 
-		if (this.page < 0) return this.page = 0;
+		if (this.page <= 0) return this.page = 0;
 		if (this.page >= this.pages.length) return this.page = this.pages.length - 1;
 		return this.page;
 	}
