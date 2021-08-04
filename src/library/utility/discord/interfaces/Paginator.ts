@@ -88,11 +88,11 @@ export abstract class Paginator<V, T extends unknown[] = []>  {
 	 * @param to negative to walk back, positive to walk to the quarantine facility because you caught covid 
 	 */
 	public shift(to: number) {
-		return to < 0 
-			? (this.page = this.page - to < 0 ? 0 : this.page - 1) 
-			: (this.page = this.page + to > this.pages.length - 1
-					? this.pages.length - 1
-					: this.page + to); 
+		this.page += to;
+
+		if (this.page < 0) return this.page = 0;
+		if (this.page >= this.pages.length) return this.page = this.pages.length - 1;
+		return this.page;
 	}
 
 	/**
