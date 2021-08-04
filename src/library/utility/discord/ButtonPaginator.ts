@@ -57,11 +57,11 @@ export class ButtonPaginator extends Paginator<ButtonInteraction> {
 	public async collect(int: ButtonInteraction) {
 		switch(int.customId) {
 			case ButtonControls.FIRST:
-				await this.message.edit(this.pages[0]);
+				await int.update(this.pages[0]);
 				break;
 
 			case ButtonControls.PREVIOUS:
-				await this.message.edit(this.pages[super.shift(-1)]);
+				await int.update(this.pages[super.shift(-1)]);
 				break;
 
 			case ButtonControls.STOP:
@@ -69,11 +69,11 @@ export class ButtonPaginator extends Paginator<ButtonInteraction> {
 				break;
 
 			case ButtonControls.NEXT:
-				await this.message.edit(this.pages[super.shift(1)]);
+				await int.update(this.pages[super.shift(1)]);
 				break;
 
 			case ButtonControls.LAST:
-				await this.message.edit(this.pages[this.pages.length - 1]);
+				await int.update(this.pages[this.pages.length - 1]);
 				break;
 		}
 	}
