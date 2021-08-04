@@ -2,9 +2,6 @@ import { MessageAttachment } from 'discord.js';
 import fetch from 'node-fetch';
 
 export class Imgen {
-	/**
-	 * Construct dank memer's image generation.
-	 */
 	public constructor(
 		/**
 		 * Dank Memer's api URL
@@ -17,7 +14,10 @@ export class Imgen {
 	) {}
 
 	/**
-	 * Generate an image from a certain endpoint.
+	 * The main thing. Generate something from a certain endpoint.
+	 * @param endpoint a valid endpoint from it's docs
+	 * @param args the main body of the request
+	 * @param ext the extension to use on the attachment
 	 */
 	generate(endpoint: string, args: URLSearchParams, ext: 'gif' | 'png') {
 		return fetch(`${this.apiURL}/api/${endpoint}?${args.toString()}`, {
@@ -25,8 +25,7 @@ export class Imgen {
 			headers: {
 				Authorization: this.token,
 			},
-		})
-			.then(response => response.body)
+		}).then(response => response.body)
 			.then(body => new MessageAttachment(body, `${endpoint}.${ext}`));
 	}
 }

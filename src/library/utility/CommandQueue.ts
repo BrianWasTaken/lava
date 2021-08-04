@@ -44,11 +44,10 @@ export class CommandQueue {
 	}
 
 	/**
-	 * Defer a promise.
+	 * Resolve the current item.
 	 */
 	public next(id: string) {
 		const next = this.queues[id].shift();
 		if (typeof next !== 'undefined') next.resolve();
-		if (this.queues[id].length < 1) delete this.queues[id];
 	}
 }
