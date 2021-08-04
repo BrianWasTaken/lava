@@ -1,4 +1,4 @@
-import { User, Collection, ButtonInteraction, MessageActionRow, MessageButtonOptions, InteractionCollector } from 'discord.js';
+import {Collection, ButtonInteraction, MessageActionRow, MessageButtonOptions, InteractionCollector } from 'discord.js';
 import { Paginator, PaginatorOptions, PaginatorControl } from './interfaces/Paginator';
 
 /**
