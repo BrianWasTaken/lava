@@ -1,4 +1,4 @@
-import { Paginator, PaginatorControlId, PaginatorControl, Command, Currency, Colors } from 'lava/index';
+import { ButtonPaginator, ButtonControls, ButtonPaginatorControl, Command, Currency, Colors } from 'lava/index';
 import { Message, MessageButton, MessageActionRow } from 'discord.js';
 
 export default class extends Command {
@@ -28,10 +28,10 @@ export default class extends Command {
 			return ctx.reply(`Page \`${page}\` doesn't exist.`).then(() => false);
 		}
 
-		const controls: PaginatorControl[] = [
-			{ customId: PaginatorControlId.PREVIOUS, label: 'Previous', style: 'PRIMARY' },
-			{ customId: PaginatorControlId.STOP, label: 'Stop', style: 'DANGER' },
-			{ customId: PaginatorControlId.NEXT, label: 'Next', style: 'PRIMARY' },
+		const controls: ButtonPaginatorControl[] = [
+			{ customId: ButtonControls.PREVIOUS, label: 'Previous', style: 'PRIMARY' },
+			{ customId: ButtonControls.STOP, label: 'Stop', style: 'DANGER' },
+			{ customId: ButtonControls.NEXT, label: 'Next', style: 'PRIMARY' },
 		];
 
 		const msg = await ctx.channel.send({ 
@@ -48,7 +48,7 @@ export default class extends Command {
 			}]
 		});
 
-		const paginator = new Paginator({
+		const paginator = new ButtonPaginator({
 			controls,
 			user: ctx.author,
 			message: msg,
