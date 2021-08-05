@@ -57,8 +57,7 @@ export class ButtonPaginator extends Paginator<ButtonInteraction> {
 	public async collect(int: ButtonInteraction) {
 		switch(int.customId) {
 			case ButtonControls.FIRST:
-				this.page = 0;
-				await int.update(this.pages[0]);
+				await int.update(this.pages[super.shift(-(this.page - 1))]);
 				break;
 
 			case ButtonControls.PREVIOUS:
