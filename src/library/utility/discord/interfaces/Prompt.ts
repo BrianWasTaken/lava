@@ -1,4 +1,4 @@
-import { User, Snowflake, Collector, Collection } from 'discord.js';
+import { User, Snowflake, Collector, CollectorOptions, Collection } from 'discord.js';
 import { EventEmitter } from 'events';
 
 /**
@@ -10,7 +10,7 @@ export interface PromptChoicePredicate<V, E extends unknown[]> {
 	 * @param res the initial value passed by the collector
 	 * @param args the extra arguments after the initial argument
 	*/
-	(this: Prompt<V, E>, res: V, ...args: E): boolean;
+	(this: Prompt<V, E>, res: V, ...args: E): PromiseUnion<boolean>;
 }
 
 /**
@@ -30,7 +30,7 @@ export interface PromptChoice<V, E extends unknown[]> {
 /**
  * Options for this prompt.
  */
-export interface PromptOptions<V, E extends unknown[]> {
+export interface PromptOptions<V, E extends unknown[]> extends CollectorOptions<[V, ...E]> {
 	/**
 	 * The choices for this prompt.
 	 */

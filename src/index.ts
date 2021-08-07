@@ -12,5 +12,5 @@ Lava.db.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true
 });
 
-Lava.handlers.argument.addTypes();
+Lava.handlers.argument.addTypes(Lava.handlers.command);
 Lava.login(process.env.DISCORD_TOKEN);

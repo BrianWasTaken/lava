@@ -28,7 +28,7 @@ export class LavaClient extends AkairoClient {
 	/**
 	 * Dank Memer imgen.
 	 */
-	public memer = new Imgen('https://dankmemer.services');
+	public memer = new Imgen('https://dankmemer.services', process.env.MEME_TOKEN);
 	
 	/**
 	 * Akairo client utils.
@@ -49,6 +49,7 @@ export class LavaClient extends AkairoClient {
 
 	/**
 	 * Check whether someone is a bot owner.
+	 * @param res a user resolvable
 	 */
 	public isOwner(res: UserResolvable) {
 		const owners = Array.isArray(this.ownerID) ? [...this.ownerID] : [this.ownerID];
@@ -107,10 +108,20 @@ export class LavaClient extends AkairoClient {
 		};
 	}
 
+	/**
+	 * Temporary fix against discord-akairo smh.
+	 * @param fn the function to call when the timeout ends
+	 * @param timeout the timeout in ms
+	 */
 	setTimeout(fn: (...args: any[]) => any, timeout: number) {
 		return setTimeout(fn, timeout);
 	}
 
+	/**
+	 * Temporary fix against akairo smfh.
+	 * @param fn the function to call when the interval ticks
+	 * @param timeout the interval in ms
+	 */
 	setInterval(fn: (...args: any[]) => any, timeout: number) {
 		return setInterval(fn, timeout);
 	}

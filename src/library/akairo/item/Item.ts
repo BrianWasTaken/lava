@@ -158,6 +158,8 @@ export abstract class Item extends AbstractModule {
 
 	/**
 	 * The constructor for any item.
+	 * @param id the id of this item
+	 * @param options the options for this item
 	 */
 	public constructor(id: string, options: Partial<ItemOptions>) {
 		const { assets, config } = options;
@@ -221,8 +223,9 @@ export abstract class Item extends AbstractModule {
 
 	/**
 	 * Assign the default properties of constructed items to default ones.
+	 * @param o1 the object passed by in constructor
+	 * @param o2 the default values 
 	 * @private
-	 * @returns {object} the object
 	 */
 	private _assign<A>(o1: A, o2: Partial<A>): A {
 		return Object.assign(o2, o1);
@@ -230,6 +233,9 @@ export abstract class Item extends AbstractModule {
 
 	/**
 	 * Main method to use items.
+	 * @param message the discord message object
+	 * @param entry the entry to manage their datashit
+	 * @param times amount of times to use this item
 	*/
 	public use(message: Message, entry: CurrencyEntry, times = 1): PromiseUnion<any> {
 		return message.reply({ embeds: [{
@@ -240,6 +246,8 @@ export abstract class Item extends AbstractModule {
 
 	/**
 	 * Simple method to buy this item from the shop.
+	 * @param entry the entry to manage their data
+	 * @param options the options when buying this item
 	 */
 	public buy(entry: CurrencyEntry, options: {
 		discount?: number;
@@ -257,6 +265,8 @@ export abstract class Item extends AbstractModule {
 
 	/**
 	 * Simple method to sell this item to the shop.
+	 * @param entry the entry to manage 
+	 * @param options the options when selling this item
 	 */
 	public sell(entry: CurrencyEntry, options: {
 		discount?: number;
@@ -274,10 +284,11 @@ export abstract class Item extends AbstractModule {
 
 	/**
 	 * Get the upgrade of this item.
+	 * @param inventory the item in user's inventory
 	 */
-	public getUpgrade({ level }: Inventory) {
+	public getUpgrade(inventory: Inventory) {
 		const { discount, item } = this.handler.sale;
-		const upgrade = this.upgrades[level];	
+		const upgrade = this.upgrades[inventory.level];	
 
 		const icon = upgrade.premium ? ':key:' : ':coin:';	
 		const discounted = this.calcDiscount(upgrade.price, discount);
@@ -288,6 +299,7 @@ export abstract class Item extends AbstractModule {
 
 	/**
 	 * Get the sale of this item.
+	 * @param inv the item in user's inventory
 	 */
 	public getSale(inv: Inventory) {
 		const { price, sellRate } = this.getUpgrade(inv);
@@ -299,6 +311,7 @@ export abstract class Item extends AbstractModule {
 
 	/**
 	 * Design the shop info embed.
+	 * @param embed the embed in shop info
 	 */
 	public getEmbed(embed: MessageEmbed): MessageEmbed {
 		return embed;
@@ -306,6 +319,8 @@ export abstract class Item extends AbstractModule {
 
 	/**
 	 * Calc discount for shit.
+	 * @param amount the price of the item
+	 * @param discount the discount to debuff the price
 	 */
 	public calcDiscount(amount: number, discount: number) {
 		return Math.round(amount - (amount * (discount / 100)));

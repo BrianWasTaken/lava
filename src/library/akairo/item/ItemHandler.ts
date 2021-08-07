@@ -40,6 +40,8 @@ export class ItemHandler extends AbstractHandler<Item> {
 
 	/**
 	 * Construct an item handler.
+	 * @param client the client instance
+	 * @param options the options for this item handler
 	 */
 	public constructor(client: LavaClient, options: ItemHandlerOptions) {
 		super(client, options);

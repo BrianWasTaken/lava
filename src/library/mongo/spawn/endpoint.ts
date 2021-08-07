@@ -1,5 +1,5 @@
 import { Endpoint, SpawnEntry, EndpointEvents } from 'lava/mongo';
-import { User } from 'discord.js';
+import { User, Snowflake } from 'discord.js';
 
 export interface SpawnEndpointEvents extends EndpointEvents<SpawnEntry> {
 	/** Emitted on profile creation. */

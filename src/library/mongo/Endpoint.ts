@@ -1,5 +1,5 @@
 import { LavaClient, AbstractHandler } from 'lava/akairo';
-import { Collection, User } from 'discord.js';
+import { Collection, User, Snowflake } from 'discord.js';
 import { Document, Model } from 'mongoose';
 import { AkairoHandler } from 'discord-akairo';
 import { EventEmitter } from 'events';

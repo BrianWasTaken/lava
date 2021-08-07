@@ -13,7 +13,7 @@
 		"url": "git+https://github.com/BrianWasTaken/lava.git"
 	},
 	"engines": {
-		"node": "14"
+		"node": ">=16.6"
 	},
 	"keywords": [
 		"discord-akairo",
@@ -28,7 +28,7 @@
 		"chalk": "^4.1.0",
 		"discord-akairo": "^8.1.0",
 		"discord-api-types": "^0.18.1",
-		"discord.js": "^13.0.0-dev.5e433b5.1627473836",
+		"discord.js": "^13.0.0",
 		"dotenv": "^8.6.0",
 		"module-alias": "^2.2.2",
 		"moment": "^2.29.1",

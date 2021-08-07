@@ -35,6 +35,8 @@ export abstract class Setting extends AbstractModule {
 	public description: string;
 	/**
 	 * Construct a setting.
+	 * @param id the id of this setting
+	 * @param options the options for this setting
 	 */
 	public constructor(id: string, options: SettingOptions) {
 		super(id, { name: options.name, category: options.category });

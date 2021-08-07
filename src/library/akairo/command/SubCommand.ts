@@ -19,6 +19,8 @@ export class SubCommand extends Command {
 	public parent: string;
 	/**
 	 * Construct a subcommand.
+	 * @param id the id of this subcommand
+	 * @param options the command options, omitting the type of this command
 	 */
 	public constructor(id: string, options: Omit<SubCommandOptions, 'type'>) {
 		super(id, { ...options, type: 'subcommand' });

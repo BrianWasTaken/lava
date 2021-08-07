@@ -17,6 +17,8 @@ export class GiveawayDonation extends Structure {
 
 	/**
 	 * Constructor for this donation.
+	 * @param client the client instance
+	 * @param data the data from db
 	 */
 	public constructor(client: LavaClient, data: CribDonation) {
 		super({ client, id: data.id });

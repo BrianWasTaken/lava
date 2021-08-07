@@ -30,13 +30,13 @@ export abstract class UserEntry<Data extends BaseProfile = BaseProfile> {
 	 * Fetch this item from mongodb.
 	 */
 	public async fetch(): Promise<this> {
-		if (this.endpoint.cache.has(this.context.id as Snowflake)) {
-			this.cache = this.endpoint.cache.get(this.context.id as Snowflake);
+		if (this.endpoint.cache.has(this.context.id)) {
+			this.cache = this.endpoint.cache.get(this.context.id);
 			return this;
 		}
 		
-		this.cache = await this.endpoint.fetch(this.context.id as Snowflake);
-		this.endpoint.cache.set(this.context.id as Snowflake, this.cache);
+		this.cache = await this.endpoint.fetch(this.context.id);
+		this.endpoint.cache.set(this.context.id, this.cache);
 		return this;
 	}
 

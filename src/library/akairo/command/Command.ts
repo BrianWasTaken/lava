@@ -51,6 +51,8 @@ export class Command extends OldCommand implements AbstractModule {
 
 	/**
 	 * Construct a command.
+	 * @param id the id of this command
+	 * @param options the options for this command
 	 */
 	public constructor(id: string, options: CommandOptions) {
 		super(id, options);
@@ -72,6 +74,7 @@ export class Command extends OldCommand implements AbstractModule {
 
 	/**
 	 * Make use of currency events.
+	 * @param ctx the discord.js message object
 	 */
 	public async event(ctx: Message) {
 		if (this.category.id !== 'Currency') return;
@@ -93,6 +96,8 @@ export class Command extends OldCommand implements AbstractModule {
 	/**
 	 * Method to run this command.
 	 * Return `true` to add cooldown, `false` otherwise.
+	 * @param context the message context
+	 * @param args the parsed arguments
 	 */
 	public exec(context: Message, args?: any): PromiseUnion<boolean> {
 		return super.exec(context, args);
@@ -103,6 +108,6 @@ export class Command extends OldCommand implements AbstractModule {
 	 */
 	get subCommands(): SubCommand[] {
 		const subs = this.handler.modules.filter(m => m.type === 'subcommand');
-		return subs.size > 0 ? subs.array() as SubCommand[] : null;
+		return subs.size > 0 ? [...subs.values()] as SubCommand[] : null;
 	}
 }

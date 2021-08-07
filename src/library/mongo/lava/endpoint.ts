@@ -1,6 +1,6 @@
 import { Endpoint, LavaEntry, EndpointEvents } from 'lava/mongo';
 import { Command, Setting } from 'lava/akairo';
-import { User } from 'discord.js';
+import { User, Snowflake } from 'discord.js';
 
 export interface LavaEndpointEvents extends EndpointEvents<LavaEntry> {
 	/** Emitted on profile creation. */

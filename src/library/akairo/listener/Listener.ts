@@ -30,6 +30,8 @@ export class Listener extends OldListener implements AbstractModule {
 
 	/**
 	 * Construct a listener.
+	 * @param id the id of this listener
+	 * @param options the options for this listener
 	 */
 	public constructor(id: string, options: ListenerOptions) {
 		super(id, options);

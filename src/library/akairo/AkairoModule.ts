@@ -38,8 +38,8 @@ export class AbstractModule extends AkairoModule {
 
 	/**
 	 * The constructor for this module.
-	 * @param {string} id the id of this module.
-	 * @param {AbstractModuleOptions} options the options for this module.
+	 * @param id the id of this module.
+	 * @param options the options for this module.
 	 */
 	public constructor(id: string, options: AbstractModuleOptions) {
 		super(id, options);

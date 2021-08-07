@@ -10,6 +10,8 @@ export class SpawnHandler extends AbstractHandler<Spawn> {
 	public cooldowns: CollectionPlus<CollectionPlus<Message>> = new Collection();
 	/**
 	 * Construct a spawn handler.
+	 * @param client the client instance
+	 * @param options the options for this spawn handler
 	 */
 	public constructor(client: LavaClient, options: AbstractHandlerOptions) {
 		super(client, options);
@@ -18,14 +20,13 @@ export class SpawnHandler extends AbstractHandler<Spawn> {
 		 * Message Listener to spawn bullshit.
 		 */
 		client.once('ready', () => {
-			client.on('message', (ctx: Message) => {
+			client.on('messageCreate', (ctx: Message) => {
 				const { randomInArray, randomNumber } = ctx.client.util;
-				const spawn = randomInArray(this.modules.array());
+				const spawn = randomInArray([...this.modules.values()]);
 				const odds = randomNumber(1, 100);
 
 				if (ctx.author.bot || ctx.channel.type === 'DM') return;
 				if (this.cooldowns.has(ctx.channel.id)) return;
-				if (spawn.queue.has(ctx.channel.id)) return;
 				if (odds < 100 - spawn.config.odds) return;
 
 				this.handle(ctx, spawn);

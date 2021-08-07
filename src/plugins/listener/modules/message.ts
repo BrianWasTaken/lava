@@ -42,10 +42,10 @@ type DonationType = keyof typeof donorQuestions;
 
 export default class extends Listener {
 	constructor() {
-		super('message', {
+		super('messageCreate', {
 			category: 'Client',
 			emitter: 'client',
-			event: 'message',
+			event: 'messageCreate',
 			name: 'Message',
 		});
 	}

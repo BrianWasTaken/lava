@@ -26,22 +26,28 @@ export declare interface CommandHandler extends OldCommandHandler {
 	client: LavaClient;
 	/**
 	 * Add a command.
+	 * @param filename the name of the module file
 	 */
 	add: (filename: string) => Command;
 	/**
 	 * Find a category of commands.
+	 * @param name the name of the category to resolve
 	 */
 	findCategory: (name: string) => Category<string, Command>;
 	/**
 	 * Load a command based from the file path or a class.
+	 * @param thing the path of the module or the module class to load
+	 * @param isReload whether loading the module is a reload or not
 	 */
 	load: (thing: string | Function, isReload?: boolean) => Command;
 	/**
 	 * Reload a command.
+	 * @param id the id of the command
 	 */
 	reload: (id: string) => Command;
 	/**
 	 * Remove a command.
+	 * @param id the id of the command
 	 */
 	remove: (id: string) => Command;
 }
@@ -58,6 +64,8 @@ export class CommandHandler extends OldCommandHandler implements AbstractHandler
 
 	/**
 	 * Run all post type inhibitors.
+	 * @param context the message object emitted by the client
+	 * @param command the command to be abused by this handler
 	 */
 	public async runPostTypeInhibitors(context: Message, command: Command): Promise<boolean> {
 		if (command.ownerOnly) {
@@ -97,6 +105,8 @@ export class CommandHandler extends OldCommandHandler implements AbstractHandler
 
 	/**
 	 * Run cooldowns.
+	 * @param context the discord.js message object
+	 * @param command the command to manage
 	 */
 	public async checkCooldowns(context: Message, command: Command): Promise<boolean> {
 		const ignorer = command.ignoreCooldown || this.ignoreCooldown;
@@ -126,18 +136,19 @@ export class CommandHandler extends OldCommandHandler implements AbstractHandler
 
 	/**
 	 * Run a command.
+	 * @param context the discord.js message object
+	 * @param command the command to execute
+	 * @param args the parsed command arguments
 	 */
 	public async runCommand(context: Message, command: Command, args: any) {
 		await this.commandQueue.wait(context.author.id);
 		this.emit(CommandHandlerEvents.COMMAND_STARTED, context, command, args);
+
 		try {
 			const returned = await command.exec(context, args);
 			const lava = await context.author.lava.fetch();
 			if (returned) lava.addCooldown(command);
-			await lava.updateCommand(command.id)
-				.addUsage(command.id)
-				.save();
-
+			await lava.updateCommand(command.id).addUsage(command.id).save();
 			this.emit(CommandHandlerEvents.COMMAND_FINISHED, context, command, args);
 		} catch (error) {
 			this.emit(CommandHandlerEvents.ERROR, error, context, command);

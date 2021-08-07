@@ -42,6 +42,7 @@ export class PluginManager extends EventEmitter {
 
 	/**
 	 * Walks in all folders on the given directory.
+	 * @param dir the directory to walk to
 	 */
 	readSync(dir: string) {
 		return fs.statSync(dir).isDirectory()
@@ -53,6 +54,7 @@ export class PluginManager extends EventEmitter {
 
 	/**
 	 * Register all plugins.
+	 * @param dir the directory where the plugins are stored
 	 */
 	register(dir = this.directory) {
 		const plugins: Plugin[] = this.readSync(dir)
@@ -78,7 +80,7 @@ export class PluginManager extends EventEmitter {
 			if (plugin.handler) this.emit('load', plugin);
 		}
 
-		const plug = (id: string) => this.plugins.get(id).handler as unknown 
+		const plug = (id: string) => this.plugins.get(id).handler as unknown;
 		const l = plug('listener') as ListenerHandler;
 		const c = plug('command') as CommandHandler;
 		c.useInhibitorHandler(plug('inhibitor') as InhibitorHandler);

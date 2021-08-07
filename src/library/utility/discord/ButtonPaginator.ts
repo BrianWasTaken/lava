@@ -1,4 +1,4 @@
-import {Collection, ButtonInteraction, MessageActionRow, MessageButtonOptions, InteractionCollector } from 'discord.js';
+import { Snowflake, Collection, ButtonInteraction, MessageActionRow, InteractionButtonOptions, InteractionCollector } from 'discord.js';
 import { Paginator, PaginatorOptions, PaginatorControl } from './interfaces/Paginator';
 
 /**
@@ -15,7 +15,7 @@ export enum ButtonControls {
 /**
  * The controls for this button paginator.
  */
-export interface ButtonPaginatorControl extends PaginatorControl, MessageButtonOptions {
+export interface ButtonPaginatorControl extends PaginatorControl, InteractionButtonOptions {
 	/**
 	 * The custom id for this controller.
 	 */

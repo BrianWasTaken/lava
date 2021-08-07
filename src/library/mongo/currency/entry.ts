@@ -476,7 +476,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 	/** Update their item effects */
 	updateEffects() {
 		const { effects, modules } = this.client.handlers.item;
-		const powerUps = modules.filter(i => i.category.id === 'Power-Up').array() as PowerUpItem[];
+		const powerUps = [...modules.filter(i => i.category.id === 'Power-Up').values()] as PowerUpItem[];
 		const instance = this.client.util.effects();
 
 		const filter = (p: PowerUpItem) => this.props.items.get(p.id).isActive();

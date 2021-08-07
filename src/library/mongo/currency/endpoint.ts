@@ -1,6 +1,6 @@
 import { Endpoint, UserEntry, CurrencyEntry, EndpointEvents } from 'lava/mongo';
+import { User, Snowflake } from 'discord.js';
 import { Item, Command } from 'lava/akairo';
-import { User } from 'discord.js';
 
 export interface CurrencyEndpointEvents extends EndpointEvents<CurrencyEntry> {
 	/** Emitted when a user dies.  */

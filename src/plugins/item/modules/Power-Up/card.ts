@@ -71,24 +71,29 @@ export default class Tool extends PowerUpItem {
 		const { owned, level } = entry.props.items.get(this.id);
 
 		await ctx.reply(`You have **${owned.toLocaleString()} cards** to swipe right now, how many of it do you wanna swipe?`);
-		const choice = await ctx.awaitMessage(ctx.author.id, 15000);
-		if (!choice) {
-			return ctx.reply(`You need to reply and not waste my time okay?`);
-		}
-		if (!isInteger(choice.content) || Number(choice.content) > owned) {
-			return ctx.reply(`It needs to be a real number and no more than what you own alright?`);
+		let choice: number;
+		if (owned > 1) {
+			choice = await ctx.awaitMessage(ctx.author.id, 15000).then(m => Number(m.content));
+			if (!choice) {
+				return ctx.reply(`You need to reply and not waste my time okay?`);
+			}
+			if (!isInteger(choice) || choice > owned) {
+				return ctx.reply(`It needs to be a real number and no more than what you own alright?`);
+			}
+		} else {
+			choice = owned; // just to make sure
 		}
 
-		const gained = Array.from({ length: Number(choice.content) }, () => randomNumber(1000, this.thresholds[level])).reduce((p, c) => p + c, 0);
-		const space = await entry.subItem(this.id, Number(choice.content)).expandVault(gained).save(false).then(e => e.props.space);
-		return ctx.reply(`**You swiped __${
-			Number(choice.content).toLocaleString()
+		const gained = Array.from({ length: choice }, () => randomNumber(1000, this.thresholds[level])).reduce((p, c) => p + c, 0);
+		const space = await entry.subItem(this.id, choice).expandVault(gained).save(false).then(e => e.props.space);
+		return ctx.reply(`**${this.emoji} You swiped __${
+			choice.toLocaleString()
 		}__ cards into your bank.**\nThis brings you to **${
 			space.toLocaleString()
 		}** of total bank capacity, with **${
 			gained.toLocaleString()
 		} (${
-			Math.round(gained / Number(choice.content)).toLocaleString()
+			Math.round(gained / choice).toLocaleString()
 		} average)** being increased.`);
 	}
 }

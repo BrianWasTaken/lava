@@ -23,7 +23,7 @@ export declare interface Inhibitor extends OldInhibitor {
 	client: LavaClient;
 }
 
-export class Inhibitor extends OldInhibitor implements AbstractModule {
+export abstract class Inhibitor extends OldInhibitor implements AbstractModule {
 	/**
 	 * The name of this inhibitor.
 	 */
@@ -31,6 +31,8 @@ export class Inhibitor extends OldInhibitor implements AbstractModule {
 
 	/**
 	 * Construct an inhibitor.
+	 * @param id the id of this inhibitor
+	 * @param options the options for this inhibitor
 	 */
 	public constructor(id: string, options: InhibitorOptions) {
 		super(id, options);
@@ -40,8 +42,8 @@ export class Inhibitor extends OldInhibitor implements AbstractModule {
 
 	/**
 	 * Main method to run this inhibitor.
+	 * @param message the discord message object
+	 * @param command the command to manage for this inhibitor
 	 */
-	public exec(message: Message, command?: Command): PromiseUnion<boolean> {
-		return super.exec(message, command);
-	}
+	public abstract exec(message: Message, command?: Command): PromiseUnion<boolean>;
 }

@@ -58,17 +58,17 @@ export class Spawn extends AbstractModule {
 	public config: SpawnConfig;
 	/** The text u see in ur discord chats. */
 	public display: SpawnDisplay;
-	/** The queue? idk. */
-	public queue: SpawnQueue;
 
-	/** Construct a spawner. */
+	/** 
+	 * Construct a spawner. 
+	 * @param id the id of this spawner
+	 * @param options the options for this spawner
+	 */
 	public constructor(id: string, options: SpawnOptions) {
 		super(id, { name: options.name, category: options.category });
 		/** @type {SpawnConfig} */
 		this.config = options.config;
 		/** @type {SpawnDisplay} */
 		this.display = options.display;
-		/** @type {SpawnQueue} */
-		this.queue = new Collection();
 	}
 }

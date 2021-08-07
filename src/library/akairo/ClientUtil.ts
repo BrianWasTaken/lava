@@ -15,42 +15,23 @@ export declare interface ClientUtil<Client extends LavaClient = never> extends O
 	client: Client;
 }
 
-export interface HeistQueue {
-	/** The channel ID */
-	channel: Snowflake;
-	/** The host user ID */
-	host: Snowflake;
-}
-
-export interface BankRob {
-	/** The victim */
-	victim: Snowflake;
-	/** The host */
-	host: Snowflake;
-}
-
 export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil {
 	/**
-	 * The heist events mapped from guild id to heist queue.
+	 * The constructor for utilities of our client.
+	 * @param client the discord.js client instance
 	 */
-	public heistEvents: Collection<Snowflake, HeistQueue>;
-	/**
-	 * The currency bankrobs.
-	 */
-	public bankrobs: BankRob;
-
 	public constructor(client: Client) {
 		super(client);
 		client.once('ready', this._patch.bind(this));
 	}
 
+	/**
+	 * Patch certain stuff when the bot's ready.
+	 */
 	protected _patch() {
 		for (const color of Object.keys(Colors)) {
 			require('discord.js').Constants.Colors[color.toUpperCase()] = Colors[color];
 		}
-
-		this.heistEvents = new Collection();
-		this.bankrobs = Object.create(null);
 	}
 	
 	/**
@@ -60,6 +41,8 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 
 	/**
 	 * Deeply filter an array.
+	 * @param src the array to filter from
+	 * @param filt array of elements to exclude from the source array
 	 */
 	deepFilter = <T>(src: T[], filt: T[]): T[] => {
 		return src.filter(s => !filt.some(f => f === s));
@@ -67,7 +50,9 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 
 	/**
 	 * Divide the items of an array into chunks of arrays. 
-	 * {@link Source https://dankmemer.lol/source}
+	 * {@link https://dankmemer.lol/source Source}
+	 * @param array the array to paginate
+	 * @param size the number of elements per page
 	*/
 	paginateArray = <T>(array: T[], size?: number): T[][] => {
 		let pages: T[][] = [];
@@ -81,6 +66,9 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 
 	/**
 	 * Create a simple progress bar.
+	 * @param percent a valid integer between 1 and 10
+	 * @param filledChar the character to fill on completed parts
+	 * @param emptyChar the character in-place on incomplete parts
 	*/
 	progressBar = (percent = 1, filledChar = '■', emptyChar = '□') => {
 		return `${filledChar.repeat(percent)}${emptyChar.repeat(10 - percent)}`;
@@ -88,16 +76,20 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 
 	/**
 	 * Simple number check.
+	 * @param x a string or number to check
 	*/
 	isInteger = (x: string | number): x is number => Number.isInteger(Number(x));
 
 	/**
 	 * Pick a random item from the array.
+	 * @param array the array to pick a random element from
 	*/
 	randomInArray = <T>(array: T[]): T => array[Math.floor(Math.random() * array.length)];
 
 	/**
 	 * Pick random items from the array.
+	 * @param array the array to pick the random elements from
+	 * @param amount amount of elements to pick
 	 */
 	randomsInArray = <T>(array: T[], amount = 1): T[] => {
 		const randoms: T[] = [];
@@ -112,6 +104,8 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 
 	/**
 	 * Generate a random number between 2 numbers. 
+	 * @param min the possible minimum number
+	 * @param max the max possible number
 	*/
 	randomNumber = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -122,16 +116,19 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 
 	/**
 	 * Shuffle the array.
+	 * @param array the array to shuffle
 	 */
 	shuffle = <T>(array: T[]): T[] => array.sort(() => Math.random() - 0.5);
 
 	/**
 	 * Delay something for x time.
+	 * @param ms the amount of time in milliseconds
 	*/
 	sleep = (ms: number): Promise<number> => new Promise(resolve => setTimeout(() => resolve(ms), ms));
 
 	/**
 	 * Convert a number to roman numerals. 
+	 * @param int the interger to convert to roman numerals
 	*/
 	romanize = (int: number): string => {
 		let romans = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'],
@@ -149,6 +146,7 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 
 	/**
 	 * Opposite of that shit above.
+	 * @param roman a roman numeral to convert to numbers
 	*/
 	deromanize = (roman: string): number => {
 		const split = roman.split('');
@@ -180,6 +178,9 @@ export class ClientUtil<Client extends LavaClient = never> extends OldClientUtil
 
 	/**
 	 * Parse time to human readables for god sake.
+	 * @param time the time in seconds
+	 * @param short whether to short 
+	 * @param returnArray whether to return the parsed times in array
 	*/
 	parseTime = (time: number, short = false, returnArray = false) => {
 		const methods = [
