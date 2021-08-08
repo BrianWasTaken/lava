@@ -57,7 +57,7 @@ export default class extends GambleCommand {
 			await ctx.client.util.sleep(1000);
 			return await msg.edit({ embeds: [{ 
 				...msg.embeds[0], 
-				color: null
+				color: null,
 				description: `:${pair.join(':    :')}:\nYou didn't get an outstanding pair sad. You lost your bet.\nNow you have **${props.pocket.toLocaleString()}**`
 			}]}).then(() => true);
 		}
