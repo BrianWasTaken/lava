@@ -103,7 +103,7 @@ export class GambleCommand extends Command {
 	 * @param [cap] wether to cap their winnings
 	 */
 	public static getWinnings(multi: number, bet: number, cap = true, extraWinnings = 0) {
-		const base = Math.ceil(bet * (Math.random() + 0.1 + extraWinnings));
+		const base = Math.ceil(bet * ((Math.random() * 0.8) + 0.1 + extraWinnings));
 		const raw = base + Math.ceil(base * (multi / 100));
 		return cap ? Math.min(Currency.MAX_WIN, raw) : raw;
 	}

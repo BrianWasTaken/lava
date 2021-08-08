@@ -13,12 +13,12 @@ export default class extends GambleCommand {
 
 	get pairs() {
 		return <{ [emoji: string]: number }> {
-			zero: 20,
-			one: 15,
-			two: 12,
-			three: 9,
-			four: 6,
-			five: 3,
+			zero: 10,
+			one: 0,
+			two: 0,
+			three: 0,
+			four: 0,
+			five: 1.8,
 		};
 	}
 
@@ -72,8 +72,9 @@ export default class extends GambleCommand {
 
 	calcPair(pair: string[], bet: number) {
 		const emojis = Object.keys(this.pairs);
+		const first = emojis[0];
 
-		if (pair.every((e, i, arr) => arr[0] === e)) {
+		if (pair.every((e, i, arr) => arr[0] === e && e === first)) {
 			return { ok: 2, w: Math.round(this.pairs[pair[0]] * bet) };
 		}
 		if (pair.some(e => emojis[0] === e)) {
