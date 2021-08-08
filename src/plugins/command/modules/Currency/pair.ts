@@ -54,15 +54,16 @@ export default class extends GambleCommand {
 		const won = this.calcPair(pair, bet);
 		if (!won) {
 			const { props } = await entry.removePocket(bet).updateStats(this.id, bet, false).save();
-			await ctx.client.util.sleep(1500);
+			await ctx.client.util.sleep(1000);
 			return await msg.edit({ embeds: [{ 
 				...msg.embeds[0], 
+				color: null
 				description: `:${pair.join(':    :')}:\nYou didn't get an outstanding pair sad. You lost your bet.\nNow you have **${props.pocket.toLocaleString()}**`
 			}]}).then(() => true);
 		}
 
 		const { props } = await entry.addPocket(won.w).updateStats(this.id, won.w, true).save();
-		await ctx.client.util.sleep(1500);
+		await ctx.client.util.sleep(1000);
 		return await msg.edit({ embeds: [{
 			...msg.embeds[0],
 			color: null,
