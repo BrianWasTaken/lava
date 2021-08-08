@@ -18,7 +18,7 @@ export default class extends GambleCommand {
 			two: 0,
 			three: 0,
 			four: 0,
-			five: 1.8,
+			five: 0,
 		};
 	}
 
@@ -78,7 +78,7 @@ export default class extends GambleCommand {
 			return { ok: 2, w: Math.round(this.pairs[pair[0]] * bet) };
 		}
 		if (pair.some(e => emojis[0] === e)) {
-			return { ok: 1, w: Math.round(bet * 1.5) };
+			return { ok: 1, w: Math.round(bet * 1.8) };
 		}
 	} 
 }
