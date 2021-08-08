@@ -13,7 +13,7 @@ export default class extends GambleCommand {
 
 	get pairs() {
 		return <{ [emoji: string]: number }> {
-			zero: 10,
+			zero: 20,
 			one: 0,
 			two: 0,
 			three: 0,
@@ -79,7 +79,7 @@ export default class extends GambleCommand {
 			return { ok: 2, w: Math.round(this.pairs[pair[0]] * bet) };
 		}
 		if (pair.some(e => emojis[0] === e)) {
-			return { ok: 1, w: Math.round(bet * 1.8) };
+			return { ok: 1, w: Math.round(bet * 4) };
 		}
 	} 
 }
