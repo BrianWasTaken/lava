@@ -66,7 +66,7 @@ export class BoxItem extends Item {
 			return ctx.reply(`Jokes on you, you only have ${thisBox.owned.toLocaleString()} of these.`);
 		}
 
-		const msg = await ctx.reply(`**__${this.emoji} | Opening your ${this.name}...__**`);
+		const msg = await ctx.reply(`**__${this.emoji} | Opening ${uses} ${this.name}...__**`);
 		const cois = Array.from({ length: uses }, () => randomNumber(...coins)).reduce((p, c) => p + c, 0);
 		const ites: { item: Inventory, amount: number }[] = [];
 		Array.from({ length: uses }, () => randomsInArray(items.map(i => i.item.id), randomNumber(1, Math.max(1, Math.min(3, items.length))))

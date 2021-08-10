@@ -13,15 +13,24 @@ export default class extends GambleCommand {
 
 	get slots() {
 		return (multi: number) => ({
-			coin: [1, 3],
-			gem: [1, 3],
-			medal: [1, 3],
-			ring: [1, 3],
-			trophy: [2, 5],
-			crown: [2, 5],
-			trident: [2, 5],
-			fist: [2, 5],
-			fire: [10, multi]
+			skull: [0.1, 0.3],
+			clown: [0.1, 0.3],
+			alien: [0.2, 0.4],
+			peach: [0.2, 0.4],
+			eggplant: [0.3, 0.5],
+			flushed: [0.3, 0.5],
+			trident: [0.4, 0.6],
+			trophy: [0.4, 0.6],
+			fire: [0.5, 1.0],
+			// coin: [1, 3],
+			// gem: [1, 3],
+			// medal: [1, 3],
+			// ring: [1, 3],
+			// trophy: [2, 5],
+			// crown: [2, 5],
+			// trident: [2, 5],
+			// fist: [2, 5],
+			// fire: [10, multi]
 		});
 	}
 
@@ -30,7 +39,7 @@ export default class extends GambleCommand {
 		const first = randomInArray(emojis);
 		const odds = randomNumber(1, 100);
 
-		if (randomNumber(1, 100) >= 100 - entry.effects.slots) return Array(3).fill(first);
+		if (randomNumber(1, 100) > 100 - entry.effects.slots) return Array(3).fill(first);
 		return Array.from({ length: 3 }, () => randomInArray(emojis));
 		
 		if (odds > 95) {
@@ -49,52 +58,55 @@ export default class extends GambleCommand {
 		if (typeof bet === 'string') return ctx.reply(bet).then(() => false);
 
 		const multi = GambleCommand.getMulti(ctx, entry);
-		const slots = this.getSlots(entry, Object.keys(this.slots(multi)));
+		const emojis = Object.keys(this.slots(multi));
+		const slots = this.getSlots(entry, emojis);
 		const { winnings, length } = this.calcSlots(slots, bet, multi);
 
+		const msg = await ctx.channel.send({
+			embeds: [{
+				author: {
+					name: `${ctx.author.username}'s slot machine`,
+					iconURL: ctx.author.avatarURL({ dynamic: true })
+				},
+				color: ctx.client.util.randomColor(),
+				description: `**>** :${Array(3).fill(emojis[emojis.length - 1]).join(':    :')}: **<**`
+			}]
+		});
+
+		await ctx.client.util.sleep(1000);
 		if ([1, 2].every(l => l !== length)) {
 			const { props } = await entry.removePocket(bet).updateStats(this.id, bet, false).save();
-			return ctx.channel.send({
+			return msg.edit({
 				embeds: [{
+					...msg.embeds[0],
 					color: Colors.RED,
-					author: {
-						name: `${ctx.author.username}'s slot machine`,
-					},
 					description: [
 						`**>** :${slots.join(':    :')}: **<**\n`,
 						`You lost **${bet.toLocaleString()}**.`,
 						`You now have **${props.pocket.toLocaleString()}**.`
 					].join('\n'),
-					footer: {
-						text: 'sucks to suck'
-					}
 				}]
 			}).then(() => true);
 		}
 
 		const { props } = await entry.addPocket(winnings).updateStats(this.id, winnings, true).save();
-		return ctx.channel.send({
+		return msg.edit({
 			embeds: [{
+				...msg.embeds[0],
 				color: Colors[length === 1 ? 'GOLD' : 'GREEN'],
-				author: {
-					name: `${ctx.author.username}'s slot machine`,
-				},
 				description: [
 					`**>** :${slots.join(':    :')}: **<**\n`,
 					`You won **${winnings.toLocaleString()}**.`,
-					`**Multiplier** \`${Math.floor(winnings / bet)}x\``,
+					`**Multiplier** \`${Number((winnings / bet).toFixed(2)) * 100}x\``,
 					`You now have **${props.pocket.toLocaleString()}**.`
 				].join('\n'),
-				footer: {
-					text: length === 1 ? 'poggers' : 'winner winner'
-				}
 			}]
 		}).then(() => true);
 	}
 
 	calcSlots(slots: string[], bet: number, multis: number) {
-		const rate = Object.values(this.slots(multis));
 		const emojis = Object.keys(this.slots(multis));
+		const rate = Object.values(this.slots(multis));
 
 		const length = slots.filter((e, i, arr) => arr.indexOf(e) === i).length;
 		const rates = rate.map((_, i, arr) => arr[emojis.indexOf(slots[i])]).filter(Boolean);
@@ -102,10 +114,9 @@ export default class extends GambleCommand {
 
 		if ([1, 2].some(l => length === l)) {
 			const index = length === 1 ? 1 : 0;
-			const winnings = bet * multi[index];
-			// let winnings = Math.round(bet + (bet * mult));
-			// winnings = winnings + Math.round(winnings * (multis / 10000));
-			// winnings = Math.min(Currency.MAX_WIN, winnings + Math.ceil(winnings * (multis / 100)));
+			let winnings = Math.round(bet + (bet * multi[index]));
+			winnings = winnings + Math.round(winnings * (multis / 1000));
+			winnings = Math.min(Currency.MAX_WIN, winnings + Math.ceil(winnings * (multis / 100)));
 
 			return { length, winnings };
 		}

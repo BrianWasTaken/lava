@@ -6,7 +6,7 @@ export default class Box extends BoxItem {
 			assets: {
 				name: 'Daily Box',
 				price: 0,
-				intro: 'Do you grind daily?',
+				intro: 'Do you grind daily injections?',
 				info: 'A box of goodies for daily streakers!'
 			},
 			config: {
@@ -14,13 +14,13 @@ export default class Box extends BoxItem {
 				shop: false,
 			},
 			contents: {
-				coins: [1, 1000],
+				coins: [1000, 100000],
 				items: [
-					{ item: 'bacon', amount: [1, 3] },
-					{ item: 'taco', amount: [1, 3] },
-					{ item: 'beer', amount: [1, 3] },
-					{ item: 'wine', amount: [1, 3] },
-					{ item: 'computer', amount: [1, 3] },
+					{ item: 'bacon', amount: [1, 100] },
+					{ item: 'taco', amount: [1, 20] },
+					{ item: 'beer', amount: [1, 30] },
+					{ item: 'wine', amount: [1, 30] },
+					{ item: 'computer', amount: [1, 10] },
 				]
 			}
 		});

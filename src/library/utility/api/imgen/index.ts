@@ -25,7 +25,6 @@ export class Imgen {
 			headers: {
 				Authorization: this.token,
 			},
-		}).then(response => response.body)
-			.then(body => new MessageAttachment(body, `${endpoint}.${ext}`));
+		}).then(res => new MessageAttachment(res.body, `${endpoint}.${ext}`));
 	}
 }
