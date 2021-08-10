@@ -97,7 +97,7 @@ export default class extends GambleCommand {
 				description: [
 					`**>** :${slots.join(':    :')}: **<**\n`,
 					`You won **${winnings.toLocaleString()}**.`,
-					`**Multiplier** \`${Number((winnings / bet).toFixed(2)) * 100}x\``,
+					`**Multiplier** \`${Number((winnings / bet).toFixed(2))}x\``,
 					`You now have **${props.pocket.toLocaleString()}**.`
 				].join('\n'),
 			}]
