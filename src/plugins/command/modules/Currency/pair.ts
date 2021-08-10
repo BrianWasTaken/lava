@@ -71,7 +71,7 @@ export default class extends GambleCommand {
 		}]}).then(() => true);
 	}
 
-	calcPair(pair: string[], bet: number) {
+	calcPair(pair: string[], bet: number): { ok: number, w: number } | null {
 		const emojis = Object.keys(this.pairs);
 		const first = emojis[0];
 
