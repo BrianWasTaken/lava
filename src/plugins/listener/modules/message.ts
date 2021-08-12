@@ -53,7 +53,7 @@ export default class extends Listener {
 	get roles() {
 		return <{ [role: string]: Snowflake }> {
 			giveaway: '692892567787929691',
-			heist: '697007407011725312',
+			heist: '828423866689912884',
 			event: '697007407011725312',
 			nitro: '692892567787929691',
 			donQ: '715507078860505091',
