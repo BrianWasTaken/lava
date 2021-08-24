@@ -1,0 +1,11 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"#core/*": ["sapphire/*"],
+			"#db/*": ["mongodb/*"],
+			"#util/*": ["utility/*"]
+		}
+	}
+}

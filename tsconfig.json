@@ -1,24 +1,20 @@
 {
 	"compilerOptions": {
 		"module": "commonJS",
-		"target": "esnext",
+		"target": "ESNext",
 		"outDir": "dist",
 		"strict": true,
 		"incremental": true,
 		"removeComments": true,
-		"strictNullChecks": false,
 		"moduleResolution": "node",
+		"experimentalDecorators": true,
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"sourceMap": false,
 		"baseUrl": ".",
-		"paths": {
-			"lava/*": ["src/library/*"],
-		},
 		"typeRoots": [
 			"./node_modules/@types",
-			"./src/typings"
 		]
 	}
 }

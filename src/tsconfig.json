@@ -1,0 +1,14 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"strict": true,
+		"strictNullChecks": false,
+		"baseUrl": ".",
+		"paths": {
+			"lava/*": ["library/*"]
+		},
+		"typeRoots": [
+			"./typings"			
+		]
+	}
+}

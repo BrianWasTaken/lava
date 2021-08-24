@@ -1,6 +1,6 @@
 {
 	"name": "lava",
-	"version": "3.1.0-dev",
+	"version": "4.0.0-dev",
 	"private": true,
 	"description": "A multi-purpose discord bot.",
 	"scripts": {
@@ -25,12 +25,13 @@
 	"author": "BrianWasTaken",
 	"license": "MIT",
 	"dependencies": {
+		"@sapphire/decorators": "^2.2.0",
+		"@sapphire/framework": "^2.0.0-next.e9bd6aa3.0",
 		"chalk": "^4.1.0",
-		"discord-akairo": "^8.1.0",
+		"discord-akairo": "github:discord-akairo/discord-akairo",
 		"discord-api-types": "^0.18.1",
-		"discord.js": "^13.0.0",
+		"discord.js": "^13.0.1",
 		"dotenv": "^8.6.0",
-		"module-alias": "^2.2.2",
 		"moment": "^2.29.1",
 		"mongoose": "^5.12.7",
 		"ms": "^2.1.2",
@@ -38,7 +39,6 @@
 		"programmatic-repl": "^1.1.4"
 	},
 	"devDependencies": {
-		"@types/module-alias": "^2.0.0",
 		"@types/node": "^14.14.35",
 		"@types/node-fetch": "^2.5.10",
 		"prettier": "2.2.1",
@@ -47,5 +47,10 @@
 	},
 	"_moduleAliases": {
 		"lava": "dist/library"
+	},
+	"imports": {
+		"#core": "./dist/sapphire",
+		"#db": "./dist/mongodb",
+		"#util": "./dist/utility"
 	}
 }

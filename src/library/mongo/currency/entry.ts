@@ -125,7 +125,7 @@ export class CurrencyEntry extends UserEntry<CurrencyProfile> {
 
 		// Power-Ups multipliers
 		this.props.items.filter(i => i.multiplier > 0 && i.module.categoryID === ItemCategories.POWER_UP).forEach(i => {
-			return unlock(i.module.name, i.multiplier, i.isActive());
+			unlock(i.module.name, i.multiplier, i.isActive());
 		});
 
 		// Mastery 10
